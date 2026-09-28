@@ -1,0 +1,229 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Karla", sans-serif;
+  background: #ffffff;
+  color: #142720;
+}
+
+a {
+  color: #007a73;
+}
+
+a:hover {
+  color: #005f59;
+}
+
+button {
+  font-family: inherit;
+}
+
+img {
+  max-width: 100%;
+}
+
+/* ================= Responsive =================
+   Page styles are inline (desktop values). These rules override them on
+   smaller screens, which is why they need !important. */
+
+.eb-nav-burger,
+.eb-mobile-panel,
+.eb-diag-mobile {
+  display: none;
+}
+
+/* ---------- Nav: dropdowns and phone move into the ☰ panel ---------- */
+@media (max-width: 1270px) {
+  .eb-nav-menus,
+  .eb-nav-phone {
+    display: none !important;
+  }
+  .eb-nav-burger {
+    display: flex;
+  }
+  .eb-mobile-panel {
+    display: block;
+  }
+}
+
+/* ---------- Tablet and below ---------- */
+@media (max-width: 1024px) {
+  .eb-root {
+    overflow-x: clip;
+  }
+
+  .eb-section {
+    padding: 80px 32px !important;
+  }
+  .eb-pain-inner {
+    padding: 32px 32px 80px !important;
+    gap: 40px !important;
+  }
+  .eb-stats {
+    padding: 56px 32px !important;
+  }
+  .eb-footer {
+    padding: 56px 32px 40px !important;
+  }
+  .eb-trusted {
+    margin-left: 32px !important;
+  }
+
+  /* Nav: floating bar hugs the screen edges */
+  .eb-nav-float {
+    left: 16px !important;
+    right: 16px !important;
+  }
+  .eb-nav-bar.is-scrolled {
+    padding: 12px 24px !important;
+  }
+
+  .eb-hero-card {
+    margin-left: 32px !important;
+  }
+
+  /* Services: swipe instead of hover zones + arrows */
+  .eb-carousel {
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .eb-carousel::-webkit-scrollbar {
+    display: none;
+  }
+  .eb-carousel-track {
+    transform: none !important;
+    gap: 20px !important;
+  }
+  .eb-svc-card {
+    flex: 0 0 min(460px, 85%) !important;
+    scroll-snap-align: start;
+  }
+  /* No hover on touch screens: keep the description visible */
+  .eb-svc-panel {
+    height: auto !important;
+    padding-top: 12px !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+  }
+
+  .eb-diag-box {
+    padding: 32px !important;
+  }
+}
+
+/* ---------- Phones ---------- */
+@media (max-width: 768px) {
+  .eb-section {
+    padding: 64px 20px !important;
+  }
+  .eb-pain-inner {
+    padding: 24px 20px 64px !important;
+  }
+  .eb-stats {
+    padding: 48px 20px !important;
+    gap: 32px !important;
+  }
+  .eb-footer {
+    padding: 48px 20px 36px !important;
+  }
+  .eb-trusted {
+    margin-left: 20px !important;
+  }
+
+  .eb-h2 {
+    font-size: 28px !important;
+  }
+
+  .eb-ann {
+    padding: 10px 48px 10px 16px !important;
+  }
+  .eb-ann button {
+    right: 12px !important;
+  }
+  .eb-ann-close-text {
+    display: none;
+  }
+
+  .eb-nav-float {
+    left: 12px !important;
+    right: 12px !important;
+  }
+  .eb-nav-bar {
+    padding: 8px 10px 8px 16px !important;
+    gap: 10px !important;
+  }
+
+  /* Hero: card full width, height follows content */
+  .eb-hero {
+    height: auto !important;
+    padding: 150px 16px 48px !important;
+  }
+  .eb-hero-card {
+    margin: 0 !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    padding: 28px 24px !important;
+  }
+  .eb-hero-title {
+    font-size: 27px !important;
+  }
+
+  /* Two-column sections become one column */
+  .eb-seeit {
+    gap: 40px !important;
+  }
+  /* Stacked under the text on phones: no scroll lag, so it never overlaps it */
+  .eb-chat-card {
+    transform: none !important;
+  }
+  .eb-col,
+  .eb-pain-left,
+  .eb-pain-right {
+    flex: 1 1 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+  .eb-how-steps {
+    gap: 40px !important;
+  }
+
+  .eb-svc-img {
+    height: 300px !important;
+  }
+
+  /* Lead routing diagram: vertical version */
+  .eb-diag-box {
+    padding: 24px 20px !important;
+    border-radius: 18px !important;
+  }
+  .eb-diag-desktop {
+    display: none !important;
+  }
+  .eb-diag-mobile {
+    display: block;
+  }
+
+  .eb-testimonial {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 20px !important;
+  }
+  .eb-testimonial-quote {
+    font-size: 19px !important;
+  }
+}
+
+/* ---------- Small phones: the booking button moves into the ☰ panel ---------- */
+@media (max-width: 480px) {
+  .eb-nav-book {
+    display: none !important;
+  }
+}
