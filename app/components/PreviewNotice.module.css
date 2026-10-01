@@ -1,0 +1,38 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(20, 39, 32, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.dialog {
+  background: #ffffff;
+  border-radius: 16px;
+  max-width: 420px;
+  width: 100%;
+  padding: 28px 28px 24px;
+  box-shadow: 0 24px 60px rgba(20, 39, 32, 0.25);
+  text-align: center;
+}
+
+.text {
+  margin: 0 0 22px 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #142720;
+}
+
+.button {
+  background: #007a73;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 28px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+}

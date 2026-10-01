@@ -1,0 +1,37 @@
+.section {
+  background: #f3f6f3;
+  padding: 100px 80px;
+}
+
+.inner {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  max-width: 760px;
+}
+
+.avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 999px;
+  background: #01c3cc33;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.quote {
+  margin: 0 0 16px 0;
+  font-family: Fraunces, serif;
+  font-size: 22px;
+  font-style: italic;
+  line-height: 1.5;
+  color: #142720;
+}
+
+.name {
+  margin: 0;
+  font-size: 15px;
+  color: #5e6d64;
+}

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { Texts } from "./types";
+import styles from "./HowItWorks.module.css";
 
 export default function HowItWorks({ t }: { t: Texts }) {
   const [howVisible, setHowVisible] = useState(false);
@@ -20,13 +21,10 @@ export default function HowItWorks({ t }: { t: Texts }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, [howVisible]);
 
-  const howOpacity = howVisible ? 1 : 0;
-  const howTransform = howVisible ? "translateX(0)" : "translateX(70px)";
-
   return (
-    <div id="how-it-works" ref={howRef} className="eb-section" style={{ background: "#f3f6f3", padding: "100px 80px", boxSizing: "border-box" }}>
-      <h2 className="eb-h2" style={{ fontFamily: "Fraunces, serif", fontWeight: 600, fontSize: 34, margin: "0 0 48px 0", color: "#142720" }}>{t.howTitle}</h2>
-      <div className="eb-how-steps" style={{ display: "flex", gap: 56, flexWrap: "wrap" }}>
+    <div id="how-it-works" ref={howRef} className={`eb-section ${styles.section}`}>
+      <h2 className={`eb-h2 ${styles.title}`}>{t.howTitle}</h2>
+      <div className={`eb-how-steps ${styles.steps}`}>
         {[
           { label: t.step1Label, title: t.step1Title, desc: t.step1Desc, delay: 0, icon: <StepIcon1 /> },
           { label: t.step2Label, title: t.step2Title, desc: t.step2Desc, delay: 220, icon: <StepIcon2 /> },
@@ -34,20 +32,13 @@ export default function HowItWorks({ t }: { t: Texts }) {
         ].map((step, i) => (
           <div
             key={i}
-            style={{
-              flex: 1,
-              minWidth: 260,
-              opacity: howOpacity,
-              transform: howTransform,
-              transition: `opacity 1500ms cubic-bezier(.16,.8,.4,1) ${step.delay}ms, transform 1500ms cubic-bezier(.16,.8,.4,1) ${step.delay}ms`,
-            }}
+            className={`${styles.step} ${howVisible ? styles.stepVisible : ""}`}
+            style={{ transitionDelay: `${step.delay}ms` }}
           >
-            <div style={{ width: 56, height: 56, borderRadius: 999, background: "#01c3cc33", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
-              {step.icon}
-            </div>
-            <p style={{ margin: "0 0 6px 0", fontSize: 13, color: "#5e6d64" }}>{step.label}</p>
-            <h3 style={{ fontFamily: "Fraunces, serif", fontWeight: 600, fontSize: 20, margin: "0 0 10px 0", color: "#142720" }}>{step.title}</h3>
-            <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "#5e6d64", maxWidth: 320 }}>{step.desc}</p>
+            <div className={styles.icon}>{step.icon}</div>
+            <p className={styles.label}>{step.label}</p>
+            <h3 className={styles.stepTitle}>{step.title}</h3>
+            <p className={styles.desc}>{step.desc}</p>
           </div>
         ))}
       </div>

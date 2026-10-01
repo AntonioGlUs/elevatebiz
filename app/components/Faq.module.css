@@ -1,0 +1,146 @@
+.section {
+  padding: 100px 80px;
+}
+
+.header {
+  max-width: 640px;
+  margin: 0 0 56px 0;
+}
+
+.title {
+  font-family: Fraunces, serif;
+  font-weight: 600;
+  font-size: 34px;
+  margin: 0 0 14px 0;
+  color: #142720;
+}
+
+.subtitle {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #5e6d64;
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr));
+  gap: 28px;
+}
+
+.card {
+  background: #ffffff;
+  border: 1.5px solid rgba(20, 39, 32, 0.14);
+  border-radius: 14px;
+  padding: 26px;
+  transition: border-color 200ms ease;
+}
+
+.cardOpen {
+  border-color: #01c3cc;
+}
+
+.toggle {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  display: block;
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Cards alternate between teal and navy icons */
+.iconTeal {
+  background: #01c3cc1f;
+}
+
+.iconNavy {
+  background: #1e3a5f14;
+}
+
+.number {
+  font-family: Fraunces, serif;
+  font-weight: 600;
+  font-size: 13px;
+  color: #5e6d64;
+}
+
+.cardTitle {
+  font-family: Fraunces, serif;
+  font-weight: 600;
+  font-size: 19px;
+  margin: 18px 0 6px 0;
+  color: #142720;
+}
+
+.cardSubtitle {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: #5e6d64;
+}
+
+/* Collapsible answer: max-height animates open/closed */
+.answer {
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 500ms ease;
+}
+
+.answerOpen {
+  max-height: 480px;
+}
+
+.answerInner {
+  padding-top: 18px;
+  margin-top: 18px;
+  border-top: 1px solid rgba(20, 39, 32, 0.1);
+}
+
+.steps {
+  margin: 0 0 16px 0;
+  padding-left: 20px;
+  font-size: 14.5px;
+  color: #142720;
+  line-height: 1.7;
+}
+
+.action {
+  background: #01c3cc1a;
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.actionLabel {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #142720;
+  font-weight: 600;
+}
+
+/* :hover too, so the global a:hover color doesn't take over */
+.actionLink,
+.actionLink:hover {
+  font-size: 14px;
+  font-weight: 600;
+  color: #007a73;
+}

@@ -1,0 +1,363 @@
+.section {
+  padding: 100px 80px;
+}
+
+.title {
+  font-family: Fraunces, serif;
+  font-weight: 600;
+  font-size: 34px;
+  margin: 0 0 12px 0;
+  color: #142720;
+}
+
+.subtitle {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #5e6d64;
+  margin: 0 0 48px 0;
+  max-width: 560px;
+}
+
+.box {
+  background: #07080b;
+  border-radius: 24px;
+  padding: 56px;
+  box-shadow: 0 30px 70px rgba(20, 39, 32, 0.28);
+}
+
+/* Small uppercase labels: NEW LEAD, YOUR TEAM, AI ROUTER */
+.label {
+  font-weight: 700;
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.routerLabel {
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Router box border lights up while a lead is being routed (glow is set inline, it pulses) */
+.router {
+  background: #050608;
+  border: 2px solid rgba(63, 169, 245, 0.55);
+  transition: border-color 200ms ease;
+}
+
+.routerActive {
+  border-color: #3fa9f5;
+}
+
+/* "ROUTE · ..." pill: fades in, border brightens once assigned */
+.pill {
+  background: rgba(63, 169, 245, 0.08);
+  border: 1px solid rgba(63, 169, 245, 0.25);
+  border-radius: 999px;
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.pillVisible {
+  opacity: 1;
+}
+
+.pillAssigned {
+  border-color: rgba(63, 169, 245, 0.6);
+}
+
+.pillText {
+  font-weight: 700;
+  color: #3fa9f5;
+}
+
+/* ---------- Desktop: fixed 1000x390 stage, scaled down inline to fit ---------- */
+.desktop {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.stage {
+  position: relative;
+  width: 1000px;
+  height: 390px;
+  transform-origin: top left;
+}
+
+.lines {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.glow {
+  filter: blur(5px);
+}
+
+.leadLabel {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+}
+
+.leadHalo {
+  position: absolute;
+  left: 62px;
+  top: 102px;
+  width: 176px;
+  height: 176px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(63, 169, 245, 0.1) 0%, rgba(63, 169, 245, 0) 70%);
+}
+
+.leadRing {
+  position: absolute;
+  left: 62px;
+  top: 102px;
+  width: 176px;
+  height: 176px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.leadAvatar {
+  position: absolute;
+  left: 74px;
+  top: 114px;
+  width: 152px;
+  height: 152px;
+  border-radius: 999px;
+  background: #2b2e34;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.leadPhone {
+  position: absolute;
+  left: 20px;
+  top: 288px;
+  width: 220px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 19px;
+  color: #ffffff;
+}
+
+.leadVia {
+  position: absolute;
+  left: 20px;
+  top: 314px;
+  width: 220px;
+  text-align: center;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.routerDesktop {
+  position: absolute;
+  left: 435px;
+  top: 125px;
+  width: 130px;
+  height: 130px;
+  border-radius: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.routerLogo {
+  width: 52px;
+  height: auto;
+  display: block;
+}
+
+.pillDesktop {
+  position: absolute;
+  left: 405px;
+  top: 270px;
+  width: 190px;
+  text-align: center;
+  padding: 9px 4px;
+}
+
+.pillDesktop .pillText {
+  font-size: 11.5px;
+  letter-spacing: 0.12em;
+}
+
+.teamLabel {
+  position: absolute;
+  left: 740px;
+  top: 20px;
+}
+
+.teamDesktop {
+  position: absolute;
+  left: 740px;
+  top: 40px;
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ---------- Team cards (both layouts) ---------- */
+.member {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  box-shadow: none;
+  transition:
+    border-color 250ms ease,
+    box-shadow 250ms ease;
+}
+
+.memberActive {
+  background: rgba(63, 169, 245, 0.06);
+  border-color: #3fa9f5;
+  box-shadow: 0 0 24px rgba(63, 169, 245, 0.3);
+}
+
+/* background color comes from each team member (inline) */
+.memberAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.memberInitial,
+.memberName {
+  font-weight: 700;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.memberInfo {
+  flex: 1;
+}
+
+.memberSpecialty {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.assigned {
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: #3fa9f5;
+  white-space: nowrap;
+}
+
+/* ---------- Mobile: same animation, stacked vertically ---------- */
+.mobileLabel {
+  font-size: 12px;
+  margin-bottom: 16px;
+}
+
+.mobileTeamLabel {
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+.mobileRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.mobileLeadAvatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  background: #2b2e34;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mobileLeadPhone {
+  font-weight: 700;
+  font-size: 17px;
+  color: #ffffff;
+}
+
+.mobileLeadVia {
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.routerMobile {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.routerLogoMobile {
+  width: 32px;
+  height: auto;
+  display: block;
+}
+
+.mobileRouterInfo {
+  min-width: 0;
+}
+
+.mobileRouterLabel {
+  margin-bottom: 6px;
+}
+
+.pillMobile {
+  display: inline-block;
+  padding: 6px 12px;
+}
+
+.pillMobile .pillText {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+
+.teamMobile {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Vertical connector; its fill height and glow are set inline (animated) */
+.mobileLine {
+  position: relative;
+  width: 3px;
+  height: 36px;
+  margin: 10px 0 10px 30px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+}
+
+.mobileLineFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #3fa9f5;
+  border-radius: 2px;
+}

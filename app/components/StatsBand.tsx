@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { STATS, Lang } from "@/lib/content";
+import styles from "./StatsBand.module.css";
 
 export default function StatsBand({ lang }: { lang: Lang }) {
   const [statValues, setStatValues] = useState([0, 0, 0]);
@@ -47,11 +48,11 @@ export default function StatsBand({ lang }: { lang: Lang }) {
   }));
 
   return (
-    <div ref={statsRef} className="eb-stats" style={{ background: "#1e3a5f", padding: "64px 80px", boxSizing: "border-box", display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 48 }}>
+    <div ref={statsRef} className={`eb-stats ${styles.band}`}>
       {statsDisplay.map((stat, i) => (
-        <div key={i} style={{ flex: 1, minWidth: 220 }}>
-          <div style={{ fontFamily: "Fraunces, serif", fontWeight: 600, fontSize: 52, color: "#01c3cc", marginBottom: 8 }}>{stat.value}</div>
-          <div style={{ fontSize: 15, color: "rgba(255,255,255,.78)" }}>{stat.label}</div>
+        <div key={i} className={styles.stat}>
+          <div className={styles.value}>{stat.value}</div>
+          <div className={styles.label}>{stat.label}</div>
         </div>
       ))}
     </div>

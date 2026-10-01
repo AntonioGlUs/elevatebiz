@@ -9,6 +9,7 @@ import LogoMarquee from "./components/LogoMarquee";
 import StatsBand from "./components/StatsBand";
 import WhatsAppDemo from "./components/WhatsAppDemo";
 import PainPoints from "./components/PainPoints";
+import WaveSection from "./components/WaveSection";
 import ServicesCarousel from "./components/ServicesCarousel";
 import HowItWorks from "./components/HowItWorks";
 import LeadRoutingDiagram from "./components/LeadRoutingDiagram";
@@ -18,6 +19,7 @@ import ContactForm from "./components/ContactForm";
 import CtaBand from "./components/CtaBand";
 import Footer from "./components/Footer";
 import PreviewNotice from "./components/PreviewNotice";
+import styles from "./page.module.css";
 
 export default function Page() {
   const [lang, setLang] = useState<Lang>("en");
@@ -41,7 +43,7 @@ export default function Page() {
   const heroOffset = showAnnouncement ? 0 : annHeight;
 
   return (
-    <div className="eb-root" style={{ width: "100%", boxSizing: "border-box" }}>
+    <div className={`eb-root ${styles.root}`}>
       {showAnnouncement && (
         <AnnouncementBar t={t} barRef={annRef} onClose={() => setShowAnnouncement(false)} />
       )}
@@ -49,8 +51,10 @@ export default function Page() {
       <Hero t={t} heroOffset={heroOffset} />
       <LogoMarquee t={t} />
       <StatsBand lang={lang} />
-      <WhatsAppDemo t={t} lang={lang} />
       <PainPoints t={t} />
+      <WaveSection>
+        <WhatsAppDemo t={t} lang={lang} />
+      </WaveSection>
       <ServicesCarousel t={t} />
       <HowItWorks t={t} />
       <LeadRoutingDiagram t={t} lang={lang} />

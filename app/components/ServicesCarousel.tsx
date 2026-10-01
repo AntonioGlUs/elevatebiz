@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { Texts } from "./types";
+import styles from "./ServicesCarousel.module.css";
 
 export default function ServicesCarousel({ t }: { t: Texts }) {
   const [servicesVisible, setServicesVisible] = useState(false);
@@ -54,8 +55,6 @@ export default function ServicesCarousel({ t }: { t: Texts }) {
     return () => window.removeEventListener("resize", measure);
   }, []);
 
-  const svcRevealOpacity = servicesVisible ? 1 : 0;
-  const svcRevealTransform = servicesVisible ? "translateY(0)" : "translateY(48px)";
   const carouselTransform = `translateX(-${carouselX}px)`;
 
   // Desktop moves the track with carouselX; on smaller screens the carousel is a
@@ -94,12 +93,10 @@ export default function ServicesCarousel({ t }: { t: Texts }) {
 
   function svcPanel(i: number) {
     const hover = svcImgHover[i];
-    // Darken on mouse hover, or on touch screens once "See more" is open
-    const dark = hover || svcOpen[i];
     return {
-      height: hover ? 170 : 46,
-      bg: hover ? "rgba(255,255,255,.88)" : "rgba(255,255,255,.55)",
-      overlay: dark ? "rgba(20,39,32,.48)" : "rgba(20,39,32,0)",
+      hover,
+      // Darken on mouse hover, or on touch screens once "See more" is open
+      dark: hover || svcOpen[i],
       enter: () =>
         setSvcImgHover((prev) => prev.map((v, idx) => (idx === i ? true : v))),
       leave: () =>
@@ -118,11 +115,11 @@ export default function ServicesCarousel({ t }: { t: Texts }) {
   const svcDelay = [0, 0, 800, 800];
 
   return (
-    <div className="eb-section" style={{ padding: "100px 80px", boxSizing: "border-box" }}>
-      <h2 className="eb-h2" style={{ fontFamily: "Fraunces, serif", fontWeight: 600, fontSize: 34, margin: "0 0 56px 0", color: "#142720" }}>{t.servicesTitle}</h2>
+    <div className={`eb-section ${styles.section}`}>
+      <h2 className={`eb-h2 ${styles.title}`}>{t.servicesTitle}</h2>
       <div
         ref={servicesRef}
-        className="eb-carousel"
+        className={`eb-carousel ${styles.carousel}`}
         onMouseMove={(e) => {
           const rect = e.currentTarget.getBoundingClientRect();
           const pct = (e.clientX - rect.left) / rect.width;
@@ -132,55 +129,34 @@ export default function ServicesCarousel({ t }: { t: Texts }) {
           if (dir !== carouselDir) setCarouselDir(dir);
         }}
         onMouseLeave={() => setCarouselDir(0)}
-        style={{ position: "relative", overflow: "hidden" }}
       >
-        <div className="eb-carousel-track" style={{ display: "flex", gap: 64, transform: carouselTransform, transition: "transform 120ms linear" }}>
+        <div className={`eb-carousel-track ${styles.track}`} style={{ transform: carouselTransform }}>
           {svcImages.map((src, i) => {
             const panel = svcPanel(i);
             return (
               <div
                 key={i}
-                className="eb-svc-card"
-                style={{
-                  flex: "0 0 460px",
-                  opacity: svcRevealOpacity,
-                  transform: svcRevealTransform,
-                  transition: `opacity 2200ms cubic-bezier(.16,.8,.4,1) ${svcDelay[i]}ms, transform 2200ms cubic-bezier(.16,.8,.4,1) ${svcDelay[i]}ms`,
-                }}
+                className={`eb-svc-card ${styles.card} ${servicesVisible ? styles.cardVisible : ""}`}
+                style={{ transitionDelay: `${svcDelay[i]}ms` }}
               >
                 <div
                   // Hover only with a real mouse; touch screens use "See more" instead
                   onPointerEnter={(e) => e.pointerType === "mouse" && !window.matchMedia("(hover: none)").matches && panel.enter()}
                   onPointerLeave={panel.leave}
-                  className="eb-svc-img"
-                  style={{ position: "relative", overflow: "hidden", borderRadius: 16, height: 340, boxShadow: "0 10px 28px rgba(20,39,32,.16)" }}
+                  className={`eb-svc-img ${styles.image}`}
                 >
-                  <img src={src} alt="" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-                  <div style={{ position: "absolute", inset: 0, background: panel.overlay, transition: "background 450ms ease", pointerEvents: "none" }} />
+                  <img src={src} alt="" className={styles.img} />
+                  <div className={`${styles.shade} ${panel.dark ? styles.shadeDark : ""}`} />
                   <div
-                    className={svcOpen[i] ? "eb-svc-panel is-open" : "eb-svc-panel"}
+                    className={`eb-svc-panel${svcOpen[i] ? " is-open" : ""} ${styles.panel} ${panel.hover ? styles.panelHover : ""}`}
                     // Touch screens: tapping anywhere on the panel opens/closes the description
                     onClick={() => {
                       if (!window.matchMedia("(hover: none)").matches) return;
                       setSvcOpen((prev) => prev.map((v, idx) => (idx === i ? !v : v)));
                     }}
-                    style={{
-                      position: "absolute",
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      background: panel.bg,
-                      backdropFilter: "blur(14px)",
-                      WebkitBackdropFilter: "blur(14px)",
-                      padding: "8px 24px 16px",
-                      height: panel.height,
-                      overflow: "hidden",
-                      boxSizing: "border-box",
-                      transition: "height 450ms cubic-bezier(.16,.8,.4,1), background 450ms ease",
-                    }}
                   >
-                    <h3 style={{ fontFamily: "Fraunces, serif", fontWeight: 600, fontSize: 21, margin: 0, color: "#142720" }}>{svcTitles[i]}</h3>
-                    <p className="eb-svc-desc" style={{ margin: "12px 0 0 0", fontSize: 15.5, lineHeight: 1.55, color: "#142720" }}>{svcDescs[i]}</p>
+                    <h3 className={styles.cardTitle}>{svcTitles[i]}</h3>
+                    <p className={`eb-svc-desc ${styles.desc}`}>{svcDescs[i]}</p>
                     <button type="button" className="eb-svc-more">
                       {svcOpen[i] ? t.svcLess : t.svcMore}
                     </button>
@@ -193,13 +169,13 @@ export default function ServicesCarousel({ t }: { t: Texts }) {
       </div>
 
       {/* Scroll buttons below the carousel */}
-      <div style={{ display: "flex", justifyContent: "center", gap: 14, marginTop: 32 }}>
-        <button type="button" onClick={() => scrollServices(-1)} aria-label="Scroll left" style={carouselNavButtonStyle}>
+      <div className={styles.nav}>
+        <button type="button" onClick={() => scrollServices(-1)} aria-label="Scroll left" className={styles.navButton}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#142720" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M15 18l-6-6 6-6" />
           </svg>
         </button>
-        <button type="button" onClick={() => scrollServices(1)} aria-label="Scroll right" style={carouselNavButtonStyle}>
+        <button type="button" onClick={() => scrollServices(1)} aria-label="Scroll right" className={styles.navButton}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#142720" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M9 18l6-6-6-6" />
           </svg>
@@ -208,16 +184,3 @@ export default function ServicesCarousel({ t }: { t: Texts }) {
     </div>
   );
 }
-
-const carouselNavButtonStyle: React.CSSProperties = {
-  width: 44,
-  height: 44,
-  borderRadius: 999,
-  border: "1px solid rgba(20,39,32,.15)",
-  background: "#ffffff",
-  boxShadow: "0 4px 12px rgba(20,39,32,.12)",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  cursor: "pointer",
-};

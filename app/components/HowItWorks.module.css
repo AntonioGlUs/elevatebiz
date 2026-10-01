@@ -1,0 +1,67 @@
+.section {
+  background: #f3f6f3;
+  padding: 100px 80px;
+}
+
+.title {
+  font-family: Fraunces, serif;
+  font-weight: 600;
+  font-size: 34px;
+  margin: 0 0 48px 0;
+  color: #142720;
+}
+
+.steps {
+  display: flex;
+  gap: 56px;
+  flex-wrap: wrap;
+}
+
+/* Steps slide in from the right when the section scrolls into view (delay set per step) */
+.step {
+  flex: 1;
+  min-width: 260px;
+  opacity: 0;
+  transform: translateX(70px);
+  transition:
+    opacity 1500ms cubic-bezier(0.16, 0.8, 0.4, 1),
+    transform 1500ms cubic-bezier(0.16, 0.8, 0.4, 1);
+}
+
+.stepVisible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  background: #01c3cc33;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.label {
+  margin: 0 0 6px 0;
+  font-size: 13px;
+  color: #5e6d64;
+}
+
+.stepTitle {
+  font-family: Fraunces, serif;
+  font-weight: 600;
+  font-size: 20px;
+  margin: 0 0 10px 0;
+  color: #142720;
+}
+
+.desc {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #5e6d64;
+  max-width: 320px;
+}

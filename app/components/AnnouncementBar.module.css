@@ -1,0 +1,45 @@
+.bar {
+  background: #01c3cc;
+  padding: 10px 80px;
+  text-align: center;
+  position: relative;
+}
+
+.text {
+  font-size: 14px;
+  color: #0b2027;
+  font-weight: 600;
+}
+
+/* :hover too, so the global a:hover color doesn't take over */
+.link,
+.link:hover {
+  color: #0b2027;
+  text-decoration: underline;
+}
+
+.close {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  padding: 4px 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #5e6d64;
+}
+
+.closeText {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.closeX {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+}

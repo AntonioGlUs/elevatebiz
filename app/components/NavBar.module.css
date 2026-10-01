@@ -1,0 +1,263 @@
+/* Floating nav; becomes a full-width bar once the page scrolls (.wrapScrolled / .barScrolled).
+   top is set inline: it depends on the announcement bar height. */
+.wrap {
+  position: fixed;
+  left: 80px;
+  right: 80px;
+  z-index: 1000;
+  transition:
+    top 300ms ease,
+    left 300ms ease,
+    right 300ms ease;
+}
+
+.wrapScrolled {
+  left: 0;
+  right: 0;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background: #ffffff;
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(20, 39, 32, 0.06);
+  border-radius: 18px;
+  padding: 10px 26px;
+  box-shadow:
+    0 14px 32px rgba(20, 39, 32, 0.1),
+    0 2px 6px rgba(20, 39, 32, 0.05);
+  transition:
+    background 300ms ease,
+    border-radius 300ms ease,
+    box-shadow 300ms ease,
+    padding 300ms ease;
+}
+
+.barScrolled {
+  background: rgba(255, 255, 255, 0.72);
+  border-radius: 0px;
+  padding: 14px 80px;
+  box-shadow: 0 6px 20px rgba(20, 39, 32, 0.12);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.logo {
+  height: 34px;
+  width: auto;
+  display: block;
+}
+
+.brandName {
+  font-family: Fraunces, serif;
+  font-weight: 600;
+  font-size: 19px;
+  color: #142720;
+}
+
+/* ---------- Desktop dropdown menus ---------- */
+.menus {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+  justify-content: center;
+}
+
+.menu {
+  position: relative;
+}
+
+.menuButton {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #142720;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.chevron {
+  transform: rotate(0deg);
+  transition: transform 200ms ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 6px;
+  background: #ffffff;
+  border: 1px solid rgba(20, 39, 32, 0.12);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(20, 39, 32, 0.16);
+  padding: 8px;
+  min-width: 210px;
+  z-index: 40;
+}
+
+/* Links: :hover too, so the global a:hover color doesn't take over */
+.dropdownLink,
+.dropdownLink:hover {
+  display: block;
+  padding: 9px 12px;
+  border-radius: 6px;
+  font-size: 14.5px;
+  color: #142720;
+  text-decoration: none;
+}
+
+/* ---------- Right side: language, phone, booking, burger ---------- */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.langToggle {
+  display: flex;
+  align-items: center;
+  background: rgba(20, 39, 32, 0.06);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 2px;
+}
+
+.langButton {
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: none;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  background: transparent;
+  color: #5e6d64;
+}
+
+.langButtonActive {
+  background: #007a73;
+  color: #ffffff;
+}
+
+.phone,
+.phone:hover {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #142720;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.book,
+.book:hover {
+  background: #007a73;
+  color: #ffffff;
+  padding: 9px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+  box-shadow: 0 4px 10px rgba(0, 122, 115, 0.28);
+}
+
+/* No display here: globals.css shows the burger only on small screens */
+.burger {
+  background: transparent;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  color: #142720;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------- Mobile panel (no display here either, see globals.css) ---------- */
+.mobilePanel {
+  margin-top: 8px;
+  background: #ffffff;
+  border: 1px solid rgba(20, 39, 32, 0.12);
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(20, 39, 32, 0.16);
+  padding: 12px;
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+}
+
+.mobileMenu {
+  border-bottom: 1px solid rgba(20, 39, 32, 0.08);
+}
+
+.mobileMenuButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  border: none;
+  padding: 12px 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #142720;
+  cursor: pointer;
+}
+
+.mobileItems {
+  padding: 0 0 8px 8px;
+}
+
+.mobileLink,
+.mobileLink:hover {
+  display: block;
+  padding: 9px 8px;
+  font-size: 14.5px;
+  color: #142720;
+  text-decoration: none;
+}
+
+.mobilePhone,
+.mobilePhone:hover {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 8px;
+  color: #142720;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.mobileBook,
+.mobileBook:hover {
+  display: block;
+  text-align: center;
+  background: #007a73;
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+}

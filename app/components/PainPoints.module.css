@@ -1,0 +1,92 @@
+/* Mission section (white background) */
+.section {
+  background: #ffffff;
+}
+
+.inner {
+  padding: 100px 80px;
+  display: flex;
+  gap: 56px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.left {
+  flex: 0 0 400px;
+}
+
+/* 3D robot: third column on wide screens; wraps to its own centered row on smaller ones */
+.robot {
+  flex: 0 0 260px;
+  height: 340px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .robot {
+    flex-basis: 220px;
+    height: 280px;
+  }
+}
+
+.title {
+  font-family: Fraunces, serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 1.1;
+  margin: 0;
+  color: #1e3a5f;
+}
+
+/* Short aqua bar under the title */
+.accent {
+  display: block;
+  width: 60px;
+  height: 5px;
+  border-radius: 999px;
+  background: #01c3cc;
+  margin: 24px 0;
+}
+
+.subtitle {
+  font-size: 19px;
+  line-height: 1.65;
+  color: #5e6d64;
+  margin: 0;
+}
+
+.right {
+  flex: 1;
+  min-width: 360px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Lines only between items */
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: 22px;
+  padding: 28px 0;
+}
+
+.row + .row {
+  border-top: 1px solid rgba(30, 58, 95, 0.12);
+}
+
+.dot {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: #01c3cc;
+  margin-top: 6px;
+}
+
+.text {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #1e3a5f;
+  max-width: 560px;
+}

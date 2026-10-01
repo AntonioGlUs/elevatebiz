@@ -30,8 +30,9 @@ img {
 }
 
 /* ================= Responsive =================
-   Page styles are inline (desktop values). These rules override them on
-   smaller screens, which is why they need !important. */
+   Component styles live in each *.module.css (desktop values), which load after
+   this file. These rules override them on smaller screens, which is why they
+   need !important. */
 
 .eb-nav-burger,
 .eb-mobile-panel,
@@ -73,7 +74,7 @@ img {
     padding: 80px 32px !important;
   }
   .eb-pain-inner {
-    padding: 32px 32px 80px !important;
+    padding: 80px 32px !important;
     gap: 40px !important;
   }
   .eb-stats {
@@ -129,7 +130,7 @@ img {
     padding: 64px 20px !important;
   }
   .eb-pain-inner {
-    padding: 24px 20px 64px !important;
+    padding: 64px 20px !important;
   }
   .eb-stats {
     padding: 48px 20px !important;

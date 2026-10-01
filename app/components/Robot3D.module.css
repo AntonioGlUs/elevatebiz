@@ -1,0 +1,38 @@
+.wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Three.js draws into a <canvas> inside this box */
+.canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.canvas canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.fallback {
+  display: block;
+  height: 100%;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+/* Soft floor shadow under the feet */
+.shadow {
+  position: absolute;
+  left: 50%;
+  bottom: 2%;
+  width: 46%;
+  height: 18px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(30, 58, 95, 0.28) 0%, rgba(30, 58, 95, 0) 70%);
+  filter: blur(2px);
+  pointer-events: none;
+}

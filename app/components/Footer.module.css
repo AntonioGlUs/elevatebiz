@@ -1,0 +1,113 @@
+.footer {
+  background: #1e3a5f;
+  padding: 64px 80px 48px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding-bottom: 40px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 8px;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: #eef1f3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.logoImg {
+  height: 20px;
+  width: auto;
+  display: block;
+}
+
+.brandName {
+  font-family: Fraunces, serif;
+  font-weight: 600;
+  font-size: 19px;
+  color: #ffffff;
+}
+
+.tagline {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.65);
+  max-width: 280px;
+}
+
+/* Links: :hover too, so the global a:hover color doesn't take over */
+.bookCall,
+.bookCall:hover {
+  background: #01c3cc;
+  color: #0b2027;
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.copyright {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.contact {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.social {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.socialLink,
+.socialLink:hover {
+  display: flex;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.email,
+.email:hover {
+  font-size: 14px;
+  color: #01c3cc;
+}
+
+.demoNotice {
+  text-align: center;
+  padding-top: 18px;
+}
+
+.demoNoticeText {
+  font-size: 16px;
+  font-weight: 600;
+  color: #f5c518;
+}

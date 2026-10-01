@@ -1,0 +1,44 @@
+.band {
+  background: #01c3cc;
+  padding: 100px 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+
+.copy {
+  max-width: 520px;
+}
+
+.title {
+  font-family: Fraunces, serif;
+  font-weight: 600;
+  font-size: 34px;
+  margin: 0 0 12px 0;
+  color: #0b2027;
+}
+
+.subtitle {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #0b2027;
+  opacity: 0.85;
+  margin: 0;
+  max-width: 480px;
+}
+
+/* :hover too, so the global a:hover color doesn't take over */
+.button,
+.button:hover {
+  background: #007a73;
+  color: #ffffff;
+  padding: 16px 32px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 17px;
+  text-decoration: none;
+  display: inline-block;
+  white-space: nowrap;
+}

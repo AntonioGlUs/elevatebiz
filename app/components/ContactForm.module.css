@@ -1,0 +1,100 @@
+.section {
+  padding: 100px 80px;
+}
+
+.inner {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin: 0 0 40px 0;
+}
+
+.title {
+  font-family: Fraunces, serif;
+  font-weight: 600;
+  font-size: 28px;
+  margin: 0 0 12px 0;
+  color: #142720;
+}
+
+.subtitle {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #5e6d64;
+  margin: 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #142720;
+  margin-bottom: 6px;
+}
+
+.input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid rgba(20, 39, 32, 0.25);
+  border-radius: 8px;
+  font-size: 15px;
+  color: #142720;
+}
+
+.textarea {
+  resize: vertical;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  flex-shrink: 0;
+  accent-color: #007a73;
+}
+
+.checkboxText {
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: #5e6d64;
+}
+
+.button {
+  background: #007a73;
+  color: #ffffff;
+  padding: 14px 26px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.buttonSending {
+  cursor: wait;
+}
+
+.buttonSent {
+  background: #01c3cc;
+}
+
+/* Keeps "Sent" fully visible: globals.css fades disabled buttons */
+.buttonSent:disabled {
+  opacity: 1;
+}
