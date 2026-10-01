@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Chatbot from './components/Chatbot';
+
 
 export const metadata: Metadata = {
   title: "ElevateBiz — AI Automation & Marketing",
@@ -21,7 +23,9 @@ export default function RootLayout({
         />
         <link rel="icon" href="/images/logo-icon-v2.png" />
       </head>
-      <body>{children}</body>
+      <body>{children}
+        <Chatbot />
+      </body>
     </html>
   );
 }

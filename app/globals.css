@@ -41,6 +41,16 @@ img {
 
 /* ---------- Nav: dropdowns and phone move into the ☰ panel ---------- */
 @media (max-width: 1270px) {
+  /* Not enough room beside the WhatsApp card: small robot on its bottom-left corner */
+  .eb-seeit-robot {
+    position: absolute !important;
+    width: 96px !important;
+    left: -48px; /* half the robot sits outside the card */
+    bottom: -18px;
+    margin: 0 !important;
+    z-index: 2 !important;
+  }
+
   .eb-nav-menus,
   .eb-nav-phone {
     display: none !important;
@@ -106,12 +116,6 @@ img {
   .eb-svc-card {
     flex: 0 0 min(460px, 85%) !important;
     scroll-snap-align: start;
-  }
-  /* No hover on touch screens: keep the description visible */
-  .eb-svc-panel {
-    height: auto !important;
-    padding-top: 12px !important;
-    background: rgba(255, 255, 255, 0.9) !important;
   }
 
   .eb-diag-box {
@@ -223,7 +227,172 @@ img {
 
 /* ---------- Small phones: the booking button moves into the ☰ panel ---------- */
 @media (max-width: 480px) {
+  .eb-seeit-robot {
+    width: 72px !important;
+    left: -36px;
+    bottom: -16px;
+  }
+  /* Room on the left so the half of the robot outside the card stays on screen */
+  .eb-seeit-stage {
+    margin-left: 18px;
+    max-width: calc(100% - 18px) !important;
+  }
+
   .eb-nav-book {
     display: none !important;
   }
+}
+
+#n8n-chat {
+  --chat--color--primary: #01a9b4;
+  --chat--color--primary-shade-50: #0197a1;
+  --chat--color--primary--shade-100: #01858e;
+  --chat--font-family: "Karla", sans-serif;
+
+  --chat--window--width: 380px;
+  --chat--window--height: 600px;
+  --chat--window--border-radius: 18px;
+  --chat--window--border: none;
+
+  --chat--header--background: linear-gradient(135deg, #01c3cc, #01a9b4 55%, #01858e);
+  --chat--header--color: #ffffff;
+  --chat--header--padding: 16px 20px;
+  --chat--header--border-bottom: none;
+  --chat--close--button--color-hover: #d9fbfd;
+  --chat--heading--font-size: 17px;
+
+  --chat--body--background: #ffffff;
+  --chat--message--font-size: 15px;
+  --chat--message--padding: 12px 16px;
+  --chat--message--border-radius: 18px;
+  --chat--message--bot--background: #f1f3f5;
+  --chat--message--bot--color: #1f2d27;
+  --chat--message--bot--border: none;
+  --chat--message--user--background: #01a9b4;
+  --chat--message--user--color: #ffffff;
+  --chat--message--user--border: none;
+
+  --chat--footer--background: #ffffff;
+  --chat--input--background: #ffffff;
+  --chat--input--text-color: #142720;
+  --chat--input--border: none;
+  --chat--input--send--button--background: #01a9b4;
+  --chat--input--send--button--background-hover: #01858e;
+  --chat--input--send--button--color: #ffffff;
+  --chat--input--send--button--color-hover: #ffffff;
+
+  --chat--toggle--size: 62px;
+  --chat--toggle--background: #01a9b4;
+  --chat--toggle--hover--background: #0197a1;
+  --chat--toggle--active--background: #01858e;
+  --chat--toggle--color: #ffffff;
+}
+
+#n8n-chat .chat-window {
+  background: #ffffff;
+  box-shadow: 0 16px 48px rgba(20, 39, 32, 0.18);
+  overflow: hidden;
+}
+
+/* Header: aqua bar with the robot avatar + title, no subtitle */
+#n8n-chat .chat-header {
+  background: linear-gradient(135deg, #01c3cc, #01a9b4 55%, #01858e);
+  color: #ffffff;
+}
+
+#n8n-chat .chat-heading {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+#n8n-chat .chat-heading::before {
+  content: "";
+  flex-shrink: 0;
+  width: 34px;
+  height: 48px;
+  background: url("/images/chatbot-avatar.png") center / contain no-repeat;
+  filter: drop-shadow(0 3px 6px rgba(0, 60, 64, 0.35));
+}
+
+#n8n-chat .chat-heading h1 {
+  color: #ffffff;
+  font-weight: 700;
+  margin-right: auto;
+}
+
+#n8n-chat .chat-header p {
+  display: none;
+}
+
+/* Bot bubbles: small tail on the bottom-left corner */
+#n8n-chat .chat-message-from-bot {
+  border-bottom-left-radius: 6px;
+}
+
+#n8n-chat .chat-message-from-user {
+  border-bottom-right-radius: 6px;
+}
+
+/* Input: light divider and round send button */
+#n8n-chat .chat-footer {
+  border-top: 1px solid #e8ecef;
+}
+
+#n8n-chat .chat-input-send-button {
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  margin: 0 8px;
+  align-self: center;
+}
+
+/* Floating button: turquoise circle with a soft ring */
+#n8n-chat .chat-window-toggle {
+  box-shadow: 0 8px 24px rgba(1, 169, 180, 0.35), 0 0 0 5px rgba(1, 195, 204, 0.18);
+}
+
+/* Wide screens: robot + WhatsApp card sit a bit further left */
+@media (min-width: 1271px) {
+  .eb-seeit-stage {
+    left: -60px;
+  }
+}
+
+/* "See more" toggle on the service cards: touch screens only */
+.eb-svc-more {
+  display: none;
+  margin-top: 6px;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: #01858e;
+  cursor: pointer;
+}
+
+/* No hover on touch screens (any size): title + "See more", tap to open the description */
+@media (hover: none) {
+  .eb-svc-panel {
+    height: auto !important;
+    cursor: pointer;
+    padding-top: 12px !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+  }
+  .eb-svc-panel:not(.is-open) .eb-svc-desc {
+    display: none;
+  }
+  .eb-svc-panel .eb-svc-more {
+    display: inline-block;
+  }
+}
+
+/* Action buttons switched off in preview mode (see ACTIONS_ENABLED) */
+a[aria-disabled="true"],
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed !important;
 }

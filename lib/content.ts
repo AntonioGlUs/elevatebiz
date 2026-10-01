@@ -34,13 +34,15 @@ export const TEXT = {
       "We put your business in front of everyone, across the whole country and beyond, right where they spend the most time: their phone. Bringing new customers to your business, right away.",
     svc2Title: "Customer service automation",
     svc2Desc:
-      "It's not just about bringing you more clients. We help you answer every customer service channel with AI, just like a real person would, guiding the customer from their first interaction all the way to closing the sale. 24 hours a day, every day, your business stays open without taking up any more of your time.",
+      "On top of bringing you more clients, our AI answers every channel like a real person and guides each customer from first message to closed sale. Your business stays open 24/7, without taking more of your time.",
     svc3Title: "Custom automation",
     svc3Desc:
       "We don't stop at customer service. We automate your most repetitive, time-consuming tasks and build software tailored to your business. All without you ever needing technical knowledge.",
     svc4Title: "Make your business AI-ready",
     svc4Desc:
       "Get suggestions on how to implement AI in your business, plus access to a resource library you can use on your own to bring AI into your everyday tasks.",
+    svcMore: "See more",
+    svcLess: "See less",
     howTitle: "It's that simple",
     step1Label: "Step 1",
     step1Title: "We talk about your business",
@@ -125,13 +127,15 @@ export const TEXT = {
       "Ponemos a tu empresa a la vista de todos, en todo el país y más allá, justo donde pasan más tiempo: en su teléfono. Atrayendo más clientes a tu negocio de forma inmediata.",
     svc2Title: "Automatización del servicio al cliente",
     svc2Desc:
-      "No solo se trata de traerte más clientes. Te ayudamos a responder todos tus canales de atención al cliente con IA, como lo haría cualquier persona, llevando al cliente desde la primera interacción hasta el cierre de la venta. Las 24 horas, los 7 días, tu negocio sigue abierto sin que te quite más tiempo.",
+      "Además de conseguirte más clientes, nuestra IA responde todos tus canales como una persona real y lleva a cada cliente del primer mensaje al cierre de la venta. Tu negocio abierto 24/7, sin quitarte más tiempo.",
     svc3Title: "Automatización a tu medida",
     svc3Desc:
       "No nos quedamos solo en el servicio al cliente. Automatizamos tus tareas más repetitivas y que más tiempo te quitan, además de construir software hecho a la medida de tu negocio. Todo sin que necesites conocimientos técnicos.",
     svc4Title: "Haz que tu negocio esté listo para la IA",
     svc4Desc:
       "Recibe sugerencias sobre cómo implementar IA en tu negocio, además de acceso a una biblioteca de recursos que puedes usar por tu cuenta para aprovechar la IA en las tareas diarias de tu negocio.",
+    svcMore: "Ver más",
+    svcLess: "Ver menos",
     howTitle: "Así de simple",
     step1Label: "Paso 1",
     step1Title: "Hablamos de tu negocio",
