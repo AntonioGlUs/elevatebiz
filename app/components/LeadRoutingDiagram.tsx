@@ -137,7 +137,7 @@ export default function LeadRoutingDiagram({ t, lang }: { t: Texts; lang: Lang }
             <div className={styles.leadVia}>{t.diagLeadVia}</div>
 
             <div className={`${routerClass} ${styles.routerDesktop}`} style={{ boxShadow: routerShadow }}>
-              <img src="/images/logo-icon-v2.png" alt="" className={styles.routerLogo} />
+              <img src="/images/logo-icon-v2.webp" alt="" loading="lazy" className={styles.routerLogo} />
               <div className={styles.routerLabel}>{t.diagRouterLabel}</div>
             </div>
 
@@ -167,7 +167,7 @@ export default function LeadRoutingDiagram({ t, lang }: { t: Texts; lang: Lang }
 
           <div className={styles.mobileRow}>
             <div className={`${routerClass} ${styles.routerMobile}`} style={{ boxShadow: routerShadow }}>
-              <img src="/images/logo-icon-v2.png" alt="" className={styles.routerLogoMobile} />
+              <img src="/images/logo-icon-v2.webp" alt="" loading="lazy" className={styles.routerLogoMobile} />
             </div>
             <div className={styles.mobileRouterInfo}>
               <div className={`${styles.routerLabel} ${styles.mobileRouterLabel}`}>{t.diagRouterLabel}</div>

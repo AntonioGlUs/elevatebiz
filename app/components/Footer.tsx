@@ -9,7 +9,7 @@ export default function Footer({ t }: { t: Texts }) {
         <div>
           <div className={styles.brand}>
             <div className={styles.logo}>
-              <img src="/images/logo-icon-v2.png" alt="" className={styles.logoImg} />
+              <img src="/images/logo-icon-v2.webp" alt="" loading="lazy" className={styles.logoImg} />
             </div>
             <span className={styles.brandName}>{BRAND_NAME}</span>
           </div>

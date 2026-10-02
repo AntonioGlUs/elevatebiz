@@ -105,10 +105,10 @@ export default function ServicesCarousel({ t }: { t: Texts }) {
   }
 
   const svcImages = [
-    "/images/svc-marketing.jpg",
-    "/images/svc-customer-service.png",
-    "/images/svc-custom-automation.png",
-    "/images/svc-ai-ready.png",
+    "/images/svc-marketing.webp",
+    "/images/svc-customer-service.webp",
+    "/images/svc-custom-automation.webp",
+    "/images/svc-ai-ready.webp",
   ];
   const svcTitles = [t.svc1Title, t.svc2Title, t.svc3Title, t.svc4Title];
   const svcDescs = [t.svc1Desc, t.svc2Desc, t.svc3Desc, t.svc4Desc];
@@ -145,7 +145,7 @@ export default function ServicesCarousel({ t }: { t: Texts }) {
                   onPointerLeave={panel.leave}
                   className={`eb-svc-img ${styles.image}`}
                 >
-                  <img src={src} alt="" className={styles.img} />
+                  <img src={src} alt="" loading="lazy" className={styles.img} />
                   <div className={`${styles.shade} ${panel.dark ? styles.shadeDark : ""}`} />
                   <div
                     className={`eb-svc-panel${svcOpen[i] ? " is-open" : ""} ${styles.panel} ${panel.hover ? styles.panelHover : ""}`}

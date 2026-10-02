@@ -313,7 +313,7 @@ img {
   flex-shrink: 0;
   width: 34px;
   height: 48px;
-  background: url("/images/chatbot-avatar.png") center / contain no-repeat;
+  background: url("/images/chatbot-avatar.webp") center / contain no-repeat;
   filter: drop-shadow(0 3px 6px rgba(0, 60, 64, 0.35));
 }
 

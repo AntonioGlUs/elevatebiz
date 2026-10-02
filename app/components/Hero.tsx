@@ -26,7 +26,7 @@ export default function Hero({ t, heroOffset }: Props) {
       style={{ height: 660 + heroOffset, paddingTop: heroOffset }}
     >
       <img
-        src="/images/hero-bg.png"
+        src="/images/hero-bg.webp"
         alt="A calm, organized workspace with a tablet showing the ElevateBiz dashboard"
         className={styles.bg}
       />

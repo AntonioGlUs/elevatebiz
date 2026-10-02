@@ -49,7 +49,7 @@ export default function NavBar({ t, lang, setLang, showAnnouncement, annHeight }
     >
       <div className={`eb-nav-bar${scrolled ? " is-scrolled" : ""} ${styles.bar} ${scrolled ? styles.barScrolled : ""}`}>
         <div className={styles.brand}>
-          <img src="/images/logo-icon.png" alt="" className={styles.logo} />
+          <img src="/images/logo-icon.webp" alt="" className={styles.logo} />
           <span className={styles.brandName}>{BRAND_NAME}</span>
         </div>
 

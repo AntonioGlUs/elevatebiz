@@ -66,7 +66,7 @@ export default function WhatsAppDemo({ t, lang }: { t: Texts; lang: Lang }) {
         <h2 className={`eb-h2 ${styles.title}`}>{t.seeItTitle}</h2>
         <p className={styles.subtitle}>{t.seeItSubtitle}</p>
         <div className={styles.checks}>
-          {[t.seeItCheck1, t.seeItCheck2, t.seeItCheck3].map((check, i) => (
+          {[t.seeItCheck1, t.seeItCheck2, t.seeItCheck3, t.seeItCheck4].map((check, i) => (
             <div key={i} className={styles.check}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#01c3cc" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.checkIcon}>
                 <path d="M5 12l4 4 10-10" />
@@ -83,7 +83,7 @@ export default function WhatsAppDemo({ t, lang }: { t: Texts; lang: Lang }) {
           <div className={`eb-seeit-robot ${styles.robot}`} aria-hidden="true">
             {/* Floor shadow under the feet */}
             <div className={styles.robotShadow} />
-            <img src="/images/robot-pointing.png" alt="" width={412} height={440} className={styles.robotImg} />
+            <img src="/images/robot-pointing.webp" alt="" width={412} height={440} loading="lazy" className={styles.robotImg} />
           </div>
           <div className={`eb-chat-card ${styles.card}`} style={{ transform: chatLagTransform }}>
             <div className={styles.header}>
@@ -91,10 +91,7 @@ export default function WhatsAppDemo({ t, lang }: { t: Texts; lang: Lang }) {
                 <path d="M15 19l-7-7 7-7" />
               </svg>
               <div className={styles.avatar}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="4" y="8" width="16" height="12" rx="2" />
-                  <path d="M9 8V6a3 3 0 0 1 6 0v2M9 13h.01M15 13h.01" />
-                </svg>
+                <img src="/images/wa-avatar.webp" alt="" width={38} height={38} loading="lazy" className={styles.avatarImg} />
               </div>
               <div className={styles.contact}>
                 <div className={styles.contactName}>{t.waName}</div>

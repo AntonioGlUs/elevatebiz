@@ -7,6 +7,7 @@ export default function PainPoints({ t }: { t: Texts }) {
     { bold: t.pain1Bold, text: t.pain1 },
     { bold: t.pain2Bold, text: t.pain2 },
     { bold: t.pain3Bold, text: t.pain3 },
+    { bold: t.pain4Bold, text: t.pain4 },
   ];
 
   return (

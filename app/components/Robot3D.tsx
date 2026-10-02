@@ -240,7 +240,7 @@ export default function Robot3D() {
 
   return (
     <div className={styles.wrap} aria-hidden="true">
-      {fallback ? <img src="/images/chatbot-avatar.png" alt="" className={styles.fallback} /> : <div ref={mountRef} className={styles.canvas} />}
+      {fallback ? <img src="/images/chatbot-avatar.webp" alt="" className={styles.fallback} /> : <div ref={mountRef} className={styles.canvas} />}
       <div className={styles.shadow} />
     </div>
   );
