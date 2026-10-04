@@ -11,5 +11,5 @@ export const BOOK_CALL_HREF = ACTIONS_ENABLED
   ? "mailto:hello@elevatebiz.ai?subject=I%27d%20like%20to%20book%20a%20call"
   : COMING_SOON_HREF;
 
-// URL of the ElevateBiz API (change to the real domain when deployed)
-export const API_URL = "http://localhost:8000";
+// URL of the ElevateBiz API (use "http://localhost:8000" when testing the API locally)
+export const API_URL = "https://api.elevatebiz.ai";
