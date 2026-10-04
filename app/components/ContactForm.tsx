@@ -3,8 +3,15 @@ import { API_URL } from "./constants";
 import { useState } from "react";
 import styles from "./ContactForm.module.css";
 
+const DEPARTMENT_NAMES: Record<string, string> = {
+  sales: "Sales",
+  support: "Support",
+  partnerships: "Partnerships",
+};
+
 export default function ContactForm({ t }: { t: Texts }) {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [department, setDepartment] = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -24,6 +31,8 @@ export default function ContactForm({ t }: { t: Texts }) {
         }),
       });
       if (!res.ok) throw new Error();
+      const data = await res.json();
+      setDepartment(data.department);
       setStatus("sent");
       formEl.reset();
       // Back to the normal button text after 20 seconds
@@ -64,6 +73,13 @@ export default function ContactForm({ t }: { t: Texts }) {
           >
             {status === "sending" ? "Sending..." : status === "sent" ? "✓ Sent!" : status === "error" ? "Try again" : t.newsletterButton}
           </button>
+                    {status === "sent" && (
+            <p className={styles.successMessage} role="status">
+              {DEPARTMENT_NAMES[department]
+                ? `Your message was assigned to the ${DEPARTMENT_NAMES[department]} department. An advisor will contact you soon.`
+                : "Thanks! An advisor will contact you soon."}
+            </p>
+          )}
         </form>
       </div>
     </div>

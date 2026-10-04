@@ -15,11 +15,12 @@ export default function WhatsAppDemo({ t, lang }: { t: Texts; lang: Lang }) {
     let timer: ReturnType<typeof setTimeout>;
     function playNext(index: number) {
       if (index >= CHAT_SCRIPT.length) {
+        // Hold the full conversation for 7s so it can be read, then clear and restart
         timer = setTimeout(() => {
           setVisibleCount(0);
           setTyping(false);
           timer = setTimeout(() => playNext(0), 700);
-        }, 2600);
+        }, 7000);
         return;
       }
       const msg = CHAT_SCRIPT[index];

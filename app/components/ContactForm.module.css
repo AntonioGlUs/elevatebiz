@@ -98,3 +98,13 @@
 .buttonSent:disabled {
   opacity: 1;
 }
+
+.successMessage {
+  margin: 0;
+  padding: 14px 18px;
+  border-radius: 8px;
+  background: #e6f9fa;
+  color: #0b5a5f;
+  font-size: 15px;
+  line-height: 1.5;
+}
