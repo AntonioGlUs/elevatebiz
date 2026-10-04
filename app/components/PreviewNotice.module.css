@@ -26,6 +26,35 @@
   color: #142720;
 }
 
+/* Additional note under the main text: smaller, softer, left-aligned */
+.note {
+  margin: -6px 0 22px 0;
+  padding-top: 14px;
+  border-top: 1px solid rgba(20, 39, 32, 0.1);
+  text-align: left;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #5e6d64;
+}
+
+.noteTitle {
+  margin: 0 0 6px 0;
+  font-weight: 600;
+}
+
+.noteList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.noteList strong {
+  color: #142720;
+}
+
 .button {
   background: #007a73;
   color: #ffffff;

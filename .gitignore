@@ -4,3 +4,6 @@ out
 .env*.local
 .DS_Store
 *.log
+
+# Build zip for the hosting upload (generated, not source code)
+elevatebiz-site.zip

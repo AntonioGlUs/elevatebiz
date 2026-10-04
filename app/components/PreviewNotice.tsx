@@ -32,6 +32,15 @@ export default function PreviewNotice({ t }: { t: Texts }) {
         <p id="preview-notice-text" className={styles.text}>
           {t.previewNotice}
         </p>
+        {/* Additional note: smaller and softer than the main notice */}
+        <div className={styles.note}>
+          <p className={styles.noteTitle}>{t.previewNoteTitle}</p>
+          <ul className={styles.noteList}>
+            <li>
+              <span aria-hidden="true">💬</span> <strong>{t.previewNoteChatBold}</strong> {t.previewNoteChat} <strong>{t.previewNoteMoreBold}</strong> {t.previewNoteMore}
+            </li>
+          </ul>
+        </div>
         <button type="button" onClick={() => setShowPreviewNotice(false)} autoFocus className={styles.button}>
           {t.previewNoticeButton}
         </button>

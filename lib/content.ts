@@ -87,6 +87,8 @@ export const TEXT = {
       "I'm part of, or lead, a community (veterans, seniors, or others)",
     newsletterCommentsLabel: "Comments (optional)",
     newsletterCommentsPlaceholder: "Anything else you want us to know?",
+    formErrorName: "Please enter your name.",
+    formErrorEmail: "Please enter a valid email address.",
     newsletterButton: "Send",
     ctaTitle: "Ready to get your time back?",
     ctaSubtitle:
@@ -99,6 +101,12 @@ export const TEXT = {
     footerDemoNotice: "This is a demo site, still a work in progress.",
     previewNotice:
       "Preview mode: some features are fully built but intentionally switched off until our official launch.",
+    // Extra note under the preview notice (bold part + rest of the sentence)
+    previewNoteTitle: "In the meantime:",
+    previewNoteChatBold: "Have questions?",
+    previewNoteChat: "Ask our chatbot. It's live and ready to help.",
+    previewNoteMoreBold: "Need more info?",
+    previewNoteMore: "Fill out the contact form.",
     previewNoticeButton: "Got it",
   },
   es: {
@@ -183,6 +191,8 @@ export const TEXT = {
       "Pertenezco a, o lidero, una comunidad (veteranos, tercera edad, u otras)",
     newsletterCommentsLabel: "Comentarios (opcional)",
     newsletterCommentsPlaceholder: "¿Algo más que quieras contarnos?",
+    formErrorName: "Por favor escribe tu nombre.",
+    formErrorEmail: "Por favor escribe un correo electrónico válido.",
     newsletterButton: "Enviar",
     ctaTitle: "¿Listo para recuperar tu tiempo?",
     ctaSubtitle: "Agenda una llamada gratis y te mostramos exactamente cómo empezar.",
@@ -193,6 +203,11 @@ export const TEXT = {
     footerDemoNotice: "Este es un sitio de demostración, sigue en desarrollo.",
     previewNotice:
       "Modo vista previa: algunas funciones ya están desarrolladas, pero las mantenemos desactivadas a propósito hasta nuestro lanzamiento oficial.",
+    previewNoteTitle: "Mientras tanto:",
+    previewNoteChatBold: "¿Tienes preguntas?",
+    previewNoteChat: "Escríbele a nuestro chatbot; ya está activo y listo para ayudarte.",
+    previewNoteMoreBold: "¿Necesitas más información?",
+    previewNoteMore: "Llena el formulario de contacto.",
     previewNoticeButton: "Entendido",
   },
 } as const;
