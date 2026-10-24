@@ -7,3 +7,4 @@ out
 
 # Build zip for the hosting upload (generated, not source code)
 elevatebiz-site.zip
+*.tsbuildinfo

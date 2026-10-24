@@ -3,12 +3,6 @@ import { API_URL } from "./constants";
 import { useState } from "react";
 import styles from "./ContactForm.module.css";
 
-const DEPARTMENT_NAMES: Record<string, string> = {
-  sales: "Sales",
-  support: "Support",
-  partnerships: "Partnerships",
-};
-
 // something@domain.ext, with no spaces
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -138,14 +132,17 @@ export default function ContactForm({ t }: { t: Texts }) {
             disabled={status === "sending" || status === "sent"}
             className={`${styles.button} ${status === "sending" ? styles.buttonSending : ""} ${status === "sent" ? styles.buttonSent : ""}`}
           >
-            {status === "sending" ? "Sending..." : status === "sent" ? "✓ Sent!" : status === "error" ? "Try again" : t.newsletterButton}
+            {status === "sending" ? t.formSending : status === "sent" ? t.formSent : status === "error" ? t.formRetry : t.newsletterButton}
           </button>
                     {status === "sent" && (
             <p className={styles.successMessage} role="status">
-              {DEPARTMENT_NAMES[department]
-                ? `Your message was assigned to the ${DEPARTMENT_NAMES[department]} department. An advisor will contact you soon.`
-                : "Thanks! An advisor will contact you soon."}
+              {t.formDepartments[department]
+                ? t.formSuccessDept.replace("{dept}", t.formDepartments[department])
+                : t.formSuccessGeneric}
             </p>
+          )}
+          {status === "error" && (
+            <p className={styles.errorText} role="alert">{t.formErrorSend}</p>
           )}
         </form>
       </div>

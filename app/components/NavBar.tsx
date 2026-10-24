@@ -35,7 +35,7 @@ export default function NavBar({ t, lang, setLang, showAnnouncement, annHeight }
   const navMenus = NAV_DATA.map((menu, i) => ({
     label: menu.label[lang],
     open: openMenuIndex === i,
-    items: menu.items.map((it) => it[lang]),
+    items: menu.items.map((it) => ({ text: it[lang], href: it.href ?? COMING_SOON_HREF })),
     toggle: () => setOpenMenu(openMenuIndex === i ? null : i),
   }));
 
@@ -49,7 +49,7 @@ export default function NavBar({ t, lang, setLang, showAnnouncement, annHeight }
     >
       <div className={`eb-nav-bar${scrolled ? " is-scrolled" : ""} ${styles.bar} ${scrolled ? styles.barScrolled : ""}`}>
         <div className={styles.brand}>
-          <img src="/images/logo-icon.webp" alt="" className={styles.logo} />
+          <img src="/images/logo-icon.webp" alt="" width={93} height={80} className={styles.logo} />
           <span className={styles.brandName}>{BRAND_NAME}</span>
         </div>
 
@@ -64,9 +64,9 @@ export default function NavBar({ t, lang, setLang, showAnnouncement, annHeight }
               </button>
               {menu.open && (
                 <div className={styles.dropdown}>
-                  {menu.items.map((text, j) => (
-                    <a key={j} href={COMING_SOON_HREF} className={styles.dropdownLink}>
-                      {text}
+                  {menu.items.map((item, j) => (
+                    <a key={j} href={item.href} className={styles.dropdownLink}>
+                      {item.text}
                     </a>
                   ))}
                 </div>
@@ -118,9 +118,9 @@ export default function NavBar({ t, lang, setLang, showAnnouncement, annHeight }
               </button>
               {menu.open && (
                 <div className={styles.mobileItems}>
-                  {menu.items.map((text, j) => (
-                    <a key={j} href={COMING_SOON_HREF} onClick={() => setMobileNavOpen(false)} className={styles.mobileLink}>
-                      {text}
+                  {menu.items.map((item, j) => (
+                    <a key={j} href={item.href} onClick={() => setMobileNavOpen(false)} className={styles.mobileLink}>
+                      {item.text}
                     </a>
                   ))}
                 </div>

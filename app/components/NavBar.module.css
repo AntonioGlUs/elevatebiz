@@ -261,3 +261,109 @@
   font-weight: 600;
   font-size: 15px;
 }
+
+/* ---------- Hover / focus / open feedback ----------
+   Kept at the end of the file so these rules win over the combined
+   ".x, .x:hover" rules above (same specificity, later wins). */
+.menuButton,
+.dropdownLink,
+.langButton,
+.phone,
+.book,
+.burger,
+.mobileMenuButton,
+.mobileLink,
+.mobilePhone,
+.mobileBook {
+  /* Same timing in and out: the effect fades in on hover and fades out on leave */
+  transition:
+    background-color 300ms ease-in-out,
+    box-shadow 300ms ease-in-out,
+    color 300ms ease-in-out,
+    transform 300ms ease-in-out;
+}
+
+/* Explicit "invisible" starting state, so the aqua fill and ring fade
+   from/to transparent instead of popping in */
+.menuButton,
+.dropdownLink,
+.mobileMenuButton,
+.mobileLink {
+  background-color: rgba(46, 199, 189, 0);
+  box-shadow: inset 0 0 0 2px rgba(46, 199, 189, 0);
+}
+
+.langButton:not(.langButtonActive) {
+  background-color: rgba(46, 199, 189, 0);
+}
+
+.book,
+.mobileBook {
+  box-shadow:
+    0 0 0 3px rgba(46, 199, 189, 0),
+    0 4px 10px rgba(0, 122, 115, 0.28);
+}
+
+.burger {
+  background-color: rgba(46, 199, 189, 0);
+}
+
+/* Menu buttons: soft aqua fill and ring on hover, and while their dropdown is open */
+.menuButton:hover,
+.menuButton[aria-expanded="true"],
+.mobileMenuButton:hover,
+.mobileMenuButton[aria-expanded="true"] {
+  background: rgba(46, 199, 189, 0.14);
+  box-shadow: inset 0 0 0 2px #2ec7bd;
+  color: #005f59;
+}
+
+/* Dropdown and mobile links */
+.dropdownLink:hover,
+.mobileLink:hover {
+  background: rgba(46, 199, 189, 0.14);
+  box-shadow: inset 0 0 0 2px #2ec7bd;
+  color: #005f59;
+}
+
+.langButton:not(.langButtonActive):hover {
+  background: rgba(46, 199, 189, 0.2);
+  color: #005f59;
+}
+
+.phone:hover,
+.mobilePhone:hover {
+  color: #007a73;
+}
+
+/* Book button: darker teal, a lift and an aqua ring */
+.book:hover,
+.mobileBook:hover {
+  background: #005f59;
+  box-shadow:
+    0 0 0 3px rgba(46, 199, 189, 0.55),
+    0 6px 14px rgba(0, 122, 115, 0.35);
+}
+.book:hover {
+  transform: translateY(-1px);
+}
+
+.burger:hover {
+  background: rgba(46, 199, 189, 0.14);
+  border-radius: 8px;
+}
+
+/* Keyboard users get the same ring */
+.menuButton:focus-visible,
+.dropdownLink:focus-visible,
+.langButton:focus-visible,
+.phone:focus-visible,
+.book:focus-visible,
+.burger:focus-visible,
+.mobileMenuButton:focus-visible,
+.mobileLink:focus-visible,
+.mobilePhone:focus-visible,
+.mobileBook:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px #2ec7bd;
+}

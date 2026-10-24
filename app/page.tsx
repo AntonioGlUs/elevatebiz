@@ -19,11 +19,25 @@ import ContactForm from "./components/ContactForm";
 import CtaBand from "./components/CtaBand";
 import Footer from "./components/Footer";
 import PreviewNotice from "./components/PreviewNotice";
+import Chatbot from "./components/Chatbot";
 import styles from "./page.module.css";
 
 export default function Page() {
   const [lang, setLang] = useState<Lang>("en");
   const t = TEXT[lang];
+
+  // Initial language: saved choice, else the browser's language
+  useEffect(() => {
+    const saved = localStorage.getItem("eb-lang");
+    if (saved === "en" || saved === "es") setLang(saved);
+    else if (navigator.language.toLowerCase().startsWith("es")) setLang("es");
+  }, []);
+
+  // Keep <html lang> in sync and remember the choice
+  useEffect(() => {
+    document.documentElement.lang = lang;
+    localStorage.setItem("eb-lang", lang);
+  }, [lang]);
 
   // Announcement bar: the nav sits right below it, and the hero compensates when it is closed
   const [showAnnouncement, setShowAnnouncement] = useState(true);
@@ -43,6 +57,7 @@ export default function Page() {
   const heroOffset = showAnnouncement ? 0 : annHeight;
 
   return (
+    <>
     <div className={`eb-root ${styles.root}`}>
       {showAnnouncement && (
         <AnnouncementBar t={t} barRef={annRef} onClose={() => setShowAnnouncement(false)} />
@@ -65,5 +80,8 @@ export default function Page() {
       <Footer t={t} />
       <PreviewNotice t={t} />
     </div>
+    {/* The chatbot lives here (not in the root layout) so demo sites can have their own bot */}
+    <Chatbot />
+    </>
   );
 }

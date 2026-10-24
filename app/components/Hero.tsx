@@ -28,6 +28,9 @@ export default function Hero({ t, heroOffset }: Props) {
       <img
         src="/images/hero-bg.webp"
         alt="A calm, organized workspace with a tablet showing the ElevateBiz dashboard"
+        width={1672}
+        height={941}
+        fetchPriority="high"
         className={styles.bg}
       />
       <div className={styles.overlay} />
