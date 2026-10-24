@@ -7,7 +7,7 @@ import styles from "./PreviewNotice.module.css";
 export default function PreviewNotice({ t }: { t: Texts }) {
   const [showPreviewNotice, setShowPreviewNotice] = useState(false);
 
-  // Open on load, close with Escape
+  // Open on load (a small card in the corner, it doesn't block the page), close with Escape
   useEffect(() => {
     setShowPreviewNotice(true);
     function onKey(e: KeyboardEvent) {
@@ -19,16 +19,9 @@ export default function PreviewNotice({ t }: { t: Texts }) {
 
   if (!showPreviewNotice) return null;
 
-  // Closes with the button or a click outside the box
   return (
-    <div onClick={() => setShowPreviewNotice(false)} className={styles.overlay}>
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-describedby="preview-notice-text"
-        onClick={(e) => e.stopPropagation()}
-        className={styles.dialog}
-      >
+    <div className={styles.overlay}>
+      <div role="region" aria-describedby="preview-notice-text" className={styles.dialog}>
         <p id="preview-notice-text" className={styles.text}>
           {t.previewNotice}
         </p>
@@ -41,7 +34,7 @@ export default function PreviewNotice({ t }: { t: Texts }) {
             </li>
           </ul>
         </div>
-        <button type="button" onClick={() => setShowPreviewNotice(false)} autoFocus className={styles.button}>
+        <button type="button" onClick={() => setShowPreviewNotice(false)} className={styles.button}>
           {t.previewNoticeButton}
         </button>
       </div>

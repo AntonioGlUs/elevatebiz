@@ -1,9 +1,10 @@
-/* height and padding-top are set inline: they grow when the announcement bar closes */
+/* height and padding-top are set inline (padding-top leaves room for the announcement bar that floats over the top) */
 .hero {
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: center;
+  background: #0b1b2d; /* shows while the photo loads */
 }
 
 .bg {
@@ -13,37 +14,32 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 70% center; /* keeps the neon sign in view when the screen is narrower than the photo */
   z-index: 0;
   display: block;
+  opacity: 0; /* no transition: the photo must never get stuck half-visible */
+}
+
+.bgShown {
+  opacity: 1;
 }
 
 .overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(120deg, rgba(20, 39, 32, 0.18) 0%, rgba(20, 39, 32, 0) 55%);
+  background: linear-gradient(100deg, rgba(8, 28, 26, 0.88) 0%, rgba(8, 28, 26, 0.68) 40%, rgba(8, 28, 26, 0) 72%);
   z-index: 0;
 }
 
-/* Frosted card; slides in from the left on load (see .loaded) */
+/* Text column over the photo; slides in from the left on load (see .loaded) */
 .card {
   position: relative;
   z-index: 1;
-  background: rgba(255, 255, 255, 0.64);
-  -webkit-backdrop-filter: blur(18px);
-  backdrop-filter: blur(18px);
-  border-radius: 20px;
-  padding: 40px;
-  max-width: 387px;
-  min-height: 331px;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin: 0 0 0 80px;
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.6) inset,
-    0 8px 20px rgba(20, 39, 32, 0.14),
-    0 32px 72px rgba(20, 39, 32, 0.32);
-  border: 1px solid rgba(255, 255, 255, 0.55);
   opacity: 0;
   transform: translateX(-36px);
   transition:
@@ -54,17 +50,19 @@
 .title {
   font-family: Fraunces, serif;
   font-weight: 600;
-  font-size: 32px;
-  line-height: 1.2;
-  margin: 0 0 14px 0;
-  color: #142720;
+  font-size: 56px;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  margin: 0 0 20px 0;
+  color: #ffffff;
 }
 
 .subtitle {
-  font-size: 16px;
+  font-size: 19px;
   line-height: 1.55;
-  color: #5e6d64;
-  margin: 0 0 24px 0;
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 30em;
+  margin: 0 0 32px 0;
 }
 
 .actions {
@@ -88,22 +86,38 @@
 /* Links: :hover too, so the global a:hover color doesn't take over */
 .primary,
 .primary:hover {
-  background: #007a73;
-  color: #ffffff;
-  padding: 14px 28px;
-  border-radius: 8px;
+  background: #01c3cc;
+  color: #06201e;
+  padding: 16px 34px;
+  border-radius: 999px;
   text-decoration: none;
   font-weight: 600;
   font-size: 16px;
   display: inline-block;
 }
 
+.primary:hover {
+  background: #2fd6de;
+}
+
 .secondary,
 .secondary:hover {
-  color: #142720;
+  color: #ffffff;
   text-decoration: none;
   font-weight: 600;
   font-size: 16px;
   border-bottom: 2px solid #01c3cc;
   padding-bottom: 2px;
+}
+
+@media (max-width: 768px) {
+  .overlay {
+    background: rgba(8, 28, 26, 0.68);
+  }
+  .title {
+    font-size: 36px;
+  }
+  .subtitle {
+    font-size: 17px;
+  }
 }

@@ -1,26 +1,104 @@
+/* Pale-teal band; the background image drifts sideways with the scroll (parallax) */
 .band {
-  background: #1e3a5f;
-  padding: 64px 80px;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 48px;
+  position: relative;
+  overflow: hidden;
+  background: #cfe8e8;
+  padding: 40px 80px;
 }
 
-.stat {
-  flex: 1;
-  min-width: 220px;
+/* Wider than the band so it has room to move; StatsBand.tsx sets the transform on scroll */
+.shapes {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -25%;
+  right: -25%;
+  background: url("/images/stats-bg.webp") center 76% / cover no-repeat; /* 76% = a bit below the middle of the photo: buildings, river and just a hint of floor */
+  pointer-events: none;
+  will-change: transform;
+}
+
+.cards {
+  position: relative;
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 24px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 22px rgba(20, 60, 56, 0.08), 0 1px 3px rgba(20, 60, 56, 0.05);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.icon {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #d3ebe8;
+  color: #0b6b66;
+}
+
+.icon svg {
+  width: 21px;
+  height: 21px;
+}
+
+.text {
+  min-width: 0;
+}
+
+.eyebrow {
+  margin-bottom: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #4a5a54;
 }
 
 .value {
   font-family: Fraunces, serif;
   font-weight: 600;
-  font-size: 52px;
-  color: #01c3cc;
-  margin-bottom: 8px;
+  font-size: 36px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #007a73;
+  white-space: nowrap;
+}
+
+.rule {
+  display: block;
+  width: 28px;
+  height: 2px;
+  margin: 9px 0 8px;
+  border-radius: 99px;
+  background: #01c3cc;
+  opacity: 0.55;
 }
 
 .label {
-  font-size: 15px;
-  color: rgba(255, 255, 255, 0.78);
+  font-size: 14px;
+  line-height: 1.4;
+  color: #3a4a42;
+}
+
+@media (max-width: 900px) {
+  .cards {
+    grid-template-columns: 1fr;
+    max-width: 460px;
+    gap: 12px;
+  }
 }

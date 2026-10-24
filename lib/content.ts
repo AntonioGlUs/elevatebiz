@@ -48,8 +48,10 @@ export const TEXT = {
     svc4Title: "Make your business AI-ready",
     svc4Desc:
       "Get suggestions on how to implement AI in your business, plus access to a resource library you can use on your own to bring AI into your everyday tasks.",
+    svc5Title: "Live while it grows",
+    svc5Desc:
+      "Let AI take care of growing your business, from booking to follow-up. You enjoy your free time.",
     svcMore: "See more",
-    svcLess: "See less",
     howTitle: "It's that simple",
     step1Label: "Step 1",
     step1Title: "We talk about your business",
@@ -162,8 +164,10 @@ export const TEXT = {
     svc4Title: "Haz que tu negocio esté listo para la IA",
     svc4Desc:
       "Recibe sugerencias sobre cómo implementar IA en tu negocio, además de acceso a una biblioteca de recursos que puedes usar por tu cuenta para aprovechar la IA en las tareas diarias de tu negocio.",
+    svc5Title: "Vive mientras tu negocio crece",
+    svc5Desc:
+      "Deja que la IA se encargue de hacer crecer tu negocio, de las reservas al seguimiento. Tú disfruta tu tiempo libre.",
     svcMore: "Ver más",
-    svcLess: "Ver menos",
     howTitle: "Así de simple",
     step1Label: "Paso 1",
     step1Title: "Hablamos de tu negocio",
@@ -227,9 +231,9 @@ export const TEXT = {
 } as const;
 
 export const STATS = [
-  { target: 10, prefix: "", suffix: "+", label: { en: "hours saved every week", es: "horas ahorradas cada semana" } },
-  { target: 24, prefix: "", suffix: "/7", label: { en: "always on, even while you sleep", es: "siempre activo, incluso mientras duermes" } },
-  { target: 5, prefix: "<", suffix: " min", label: { en: "average time to respond to a lead", es: "tiempo promedio de respuesta a un cliente potencial" } },
+  { icon: "clock", eyebrow: { en: "Time back", es: "Tiempo ganado" }, target: 18, prefix: "", suffix: " hrs", label: { en: "saved every week", es: "ahorradas cada semana" } },
+  { icon: "moon", eyebrow: { en: "Always on", es: "Siempre activo" }, target: 24, prefix: "", suffix: "/7", label: { en: "always on, even while you sleep", es: "siempre activo, incluso mientras duermes" } },
+  { icon: "bolt", eyebrow: { en: "Fast response", es: "Respuesta rápida" }, target: 5, prefix: "<", suffix: " min", label: { en: "average time to respond to a lead", es: "tiempo promedio de respuesta a un cliente potencial" } },
 ];
 
 export const CLIENTS = [

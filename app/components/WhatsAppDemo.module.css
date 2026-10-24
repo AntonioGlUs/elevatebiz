@@ -26,37 +26,43 @@
 .title {
   font-family: Fraunces, serif;
   font-weight: 600;
-  font-size: 34px;
-  margin: 0 0 16px 0;
+  font-size: 44px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 18px 0;
   color: #ffffff;
 }
 
 .subtitle {
-  font-size: 17px;
+  font-size: 18px;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.78);
-  margin: 0 0 28px 0;
+  color: rgba(255, 255, 255, 0.82);
+  margin: 0 0 32px 0;
 }
 
 .checks {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 }
 
 .check {
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
+  align-items: center;
+  gap: 14px;
 }
 
+/* The check icon sits in a soft teal circle (same look as the mission section) */
 .checkIcon {
   flex-shrink: 0;
-  margin-top: 2px;
+  box-sizing: content-box;
+  padding: 5px;
+  border-radius: 999px;
+  background: rgba(1, 195, 204, 0.18);
 }
 
 .checkText {
-  font-size: 16px;
+  font-size: 17px;
   color: #ffffff;
 }
 
@@ -75,6 +81,15 @@
   display: flex;
   align-items: flex-end;
   max-width: 100%;
+}
+
+/* Soft teal glow behind the chat card */
+.stage::before {
+  content: "";
+  position: absolute;
+  inset: -70px -50px -50px 30%;
+  background: radial-gradient(ellipse at center, rgba(1, 195, 204, 0.22), rgba(1, 195, 204, 0) 68%);
+  pointer-events: none;
 }
 
 /* No left / bottom here: globals.css places the small robot on the card's corner */

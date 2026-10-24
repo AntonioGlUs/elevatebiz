@@ -1,181 +1,232 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { COMING_SOON_HREF } from "./constants";
 import type { Texts } from "./types";
 import styles from "./ServicesCarousel.module.css";
 
+const SERVICE_PHOTOS = [
+  { src: "/images/svc-marketing.webp", pos: "50% 50%" },
+  { src: "/images/svc-customer-service.webp", pos: "62% 40%" },
+  { src: "/images/svc-custom-automation.webp", pos: "50% 50%" },
+  { src: "/images/svc-ai-ready.webp", pos: "50% 50%" },
+  { src: "/images/svc-bookings.webp", pos: "68% 50%" },
+];
+
+// Curved 3D carousel: every card is narrow and vertical; the card in the middle is flat, and it widens when the mouse is over it.
 export default function ServicesCarousel({ t }: { t: Texts }) {
-  const [servicesVisible, setServicesVisible] = useState(false);
-  const servicesRef = useRef<HTMLDivElement>(null);
-  const [carouselX, setCarouselX] = useState(0);
-  const [carouselDir, setCarouselDir] = useState(0);
-  // How far the track can move depends on the screen width; measured below
-  const [carouselMax, setCarouselMax] = useState(752);
-  const [svcImgHover, setSvcImgHover] = useState([false, false, false, false]);
-  // Touch screens have no hover: "See more" opens each description
-  const [svcOpen, setSvcOpen] = useState([false, false, false, false]);
+  // The card in the middle; it starts on the central one of the list (the third of five)
+  const [active, setActive] = useState(Math.floor(SERVICE_PHOTOS.length / 2));
+  const [visible, setVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const dragStart = useRef<number | null>(null);
+  // Which card the mouse is resting on. "See more" only shows for the card in the middle, and only once the
+  // visitor has settled on it: hovering is ignored while the carousel is still moving.
+  const [hoverIdx, setHoverIdx] = useState<number | null>(null);
+  const lastMove = useRef(0);
+  const SETTLE_MS = 1300;
 
-  // Reveal the cards when the carousel scrolls into view
-  useEffect(() => {
-    function onScroll() {
-      if (!servicesVisible && servicesRef.current) {
-        const rect = servicesRef.current.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 0.78) setServicesVisible(true);
-      }
-    }
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [servicesVisible]);
+  // True right after a swipe/drag, so the end of the swipe is not taken as a click on the link
+  const justDragged = useRef(false);
+  // -1 / 1 while the mouse is over the cards on the left / right of the one in the middle, 0 otherwise
+  const [edgeDir, setEdgeDir] = useState<-1 | 0 | 1>(0);
+  // After clicking a side card the carousel must not keep sliding just because the mouse is still over the side cards;
+  // it is unlocked when the mouse comes back to the card in the middle or leaves the carousel
+  const edgeLocked = useRef(false);
 
-  // Auto-scroll while hovering the left/right zones
-  useEffect(() => {
-    const timer = setInterval(() => {
-      if (carouselDir !== 0) {
-        setCarouselX((prev) =>
-          Math.max(0, Math.min(carouselMax, prev + carouselDir * 5))
-        );
-      }
-    }, 20);
-    return () => clearInterval(timer);
-  }, [carouselDir, carouselMax]);
+  // Same order as SERVICE_PHOTOS
+  const titles = [t.svc1Title, t.svc2Title, t.svc3Title, t.svc4Title, t.svc5Title];
+  const descs = [t.svc1Desc, t.svc2Desc, t.svc3Desc, t.svc4Desc, t.svc5Desc];
+  const last = SERVICE_PHOTOS.length - 1;
 
-  // Measure the scroll limit (track width - visible width)
+  function go(next: number) {
+    setActive(Math.max(0, Math.min(last, next)));
+  }
+
+  // Every time the carousel moves, forget the hover: the visitor has to hover again once the card has arrived
   useEffect(() => {
-    function measure() {
-      const el = servicesRef.current;
-      const track = el?.firstElementChild as HTMLElement | null;
-      if (!el || !track) return;
-      const max = Math.max(0, track.scrollWidth - el.clientWidth);
-      setCarouselMax(max);
-      setCarouselX((prev) => Math.min(prev, max));
-    }
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
+    lastMove.current = performance.now();
+    setHoverIdx(null);
+  }, [active]);
+
+  function hoverCard(e: React.PointerEvent, i: number) {
+    if (e.pointerType !== "mouse") return;
+    if (i !== active) return; // only the card in the middle reacts to the mouse; the others just wait to be clicked
+    if (performance.now() - lastMove.current < SETTLE_MS) return;
+    setHoverIdx(i);
+  }
+
+  // Fade the carousel in when it scrolls into view
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
   }, []);
 
-  const carouselTransform = `translateX(-${carouselX}px)`;
-
-  // Desktop moves the track with carouselX; on smaller screens the carousel is a
-  // native swipe/scroll container (see globals.css), so scroll it instead.
-  function scrollServices(dir: -1 | 1) {
-    const el = servicesRef.current;
-    if (el && getComputedStyle(el).overflowX === "auto") {
-      // Go to the start of the next/previous card (or the end of the track)
-      const track = el.firstElementChild as HTMLElement | null;
-      const cards = track ? (Array.from(track.children) as HTMLElement[]) : [];
-      const max = el.scrollWidth - el.clientWidth;
-      const first = cards[0]?.offsetLeft ?? 0;
-      const stops = cards.map((c) => Math.min(c.offsetLeft - first, max));
-      const cur = el.scrollLeft;
-      const target =
-        dir === 1
-          ? stops.find((x) => x > cur + 1) ?? max
-          : [...stops].reverse().find((x) => x < cur - 1) ?? 0;
-      el.scrollTo({ left: target, behavior: "smooth" });
-    } else {
-      // Measure at click time so the limit is always right for the current width
-      const track = el?.firstElementChild as HTMLElement | null;
-      const max = el && track ? Math.max(0, track.scrollWidth - el.clientWidth) : carouselMax;
-      setCarouselMax(max);
-      // Stop at the start of a card (every 524px = card + gap), or at the end
-      const stops: number[] = [];
-      for (let x = 0; x < max; x += 524) stops.push(x);
-      stops.push(max);
-      setCarouselX((prev) =>
-        dir === 1
-          ? stops.find((x) => x > prev + 1) ?? max
-          : [...stops].reverse().find((x) => x < prev - 1) ?? 0
-      );
-    }
-  }
-
-  function svcPanel(i: number) {
-    const hover = svcImgHover[i];
-    return {
-      hover,
-      // Darken on mouse hover, or on touch screens once "See more" is open
-      dark: hover || svcOpen[i],
-      enter: () =>
-        setSvcImgHover((prev) => prev.map((v, idx) => (idx === i ? true : v))),
-      leave: () =>
-        setSvcImgHover((prev) => prev.map((v, idx) => (idx === i ? false : v))),
+  // Hovering the cards beside the middle one moves the carousel one card at a time, again and again while the mouse stays there
+  useEffect(() => {
+    if (edgeDir === 0) return;
+    const move = () => setActive((a) => Math.max(0, Math.min(last, a + edgeDir)));
+    const first = setTimeout(move, 450);
+    const repeat = setInterval(move, 1700);
+    return () => {
+      clearTimeout(first);
+      clearInterval(repeat);
     };
+  }, [edgeDir, last]);
+
+  function onPointerMove(e: React.PointerEvent<HTMLDivElement>) {
+    if (e.pointerType !== "mouse" || dragStart.current !== null) return;
+    // Everything to the left / right of the card in the middle counts: the side cards and the space around them
+    const mid = e.currentTarget.querySelector<HTMLElement>('[data-active="true"]')?.getBoundingClientRect();
+    let dir: -1 | 0 | 1 = 0;
+    if (mid) dir = e.clientX < mid.left - 12 ? -1 : e.clientX > mid.right + 12 ? 1 : 0;
+    if (dir === 0) edgeLocked.current = false;
+    else if (edgeLocked.current) dir = 0;
+    if (dir !== edgeDir) setEdgeDir(dir);
   }
 
-  const svcImages = [
-    "/images/svc-marketing.webp",
-    "/images/svc-customer-service.webp",
-    "/images/svc-custom-automation.webp",
-    "/images/svc-ai-ready.webp",
-  ];
-  const svcTitles = [t.svc1Title, t.svc2Title, t.svc3Title, t.svc4Title];
-  const svcDescs = [t.svc1Desc, t.svc2Desc, t.svc3Desc, t.svc4Desc];
-  const svcDelay = [0, 0, 800, 800];
+  // Arrow keys when the carousel has focus
+  function onKeyDown(e: React.KeyboardEvent) {
+    if (e.key === "ArrowLeft") go(active - 1);
+    if (e.key === "ArrowRight") go(active + 1);
+  }
+
+  // Swipe / drag with mouse or finger
+  function onPointerDown(e: React.PointerEvent) {
+    dragStart.current = e.clientX;
+  }
+  function onPointerUp(e: React.PointerEvent) {
+    if (dragStart.current === null) return;
+    const dx = e.clientX - dragStart.current;
+    dragStart.current = null;
+    justDragged.current = Math.abs(dx) > 8;
+    if (Math.abs(dx) > 50) go(active + (dx < 0 ? 1 : -1));
+  }
 
   return (
     <div className={`eb-section ${styles.section}`}>
       <h2 className={`eb-h2 ${styles.title}`}>{t.servicesTitle}</h2>
+
       <div
-        ref={servicesRef}
-        className={`eb-carousel ${styles.carousel}`}
-        onMouseMove={(e) => {
-          const rect = e.currentTarget.getBoundingClientRect();
-          const pct = (e.clientX - rect.left) / rect.width;
-          let dir = 0;
-          if (pct < 0.22) dir = -1;
-          else if (pct > 0.78) dir = 1;
-          if (dir !== carouselDir) setCarouselDir(dir);
+        ref={sectionRef}
+        className={`${styles.stage} ${hoverIdx === active ? styles.stageWide : ""} ${visible ? styles.stageVisible : ""}`}
+        role="group"
+        aria-roledescription="carousel"
+        aria-label={t.servicesTitle}
+        tabIndex={0}
+        onKeyDown={onKeyDown}
+        onPointerDown={onPointerDown}
+        onPointerUp={onPointerUp}
+        onPointerCancel={() => (dragStart.current = null)}
+        onPointerMove={onPointerMove}
+        onPointerLeave={() => {
+          setEdgeDir(0);
+          edgeLocked.current = false;
         }}
-        onMouseLeave={() => setCarouselDir(0)}
+        style={{ cursor: edgeDir === -1 ? "w-resize" : edgeDir === 1 ? "e-resize" : undefined }}
       >
-        <div className={`eb-carousel-track ${styles.track}`} style={{ transform: carouselTransform }}>
-          {svcImages.map((src, i) => {
-            const panel = svcPanel(i);
-            return (
-              <div
-                key={i}
-                className={`eb-svc-card ${styles.card} ${servicesVisible ? styles.cardVisible : ""}`}
-                style={{ transitionDelay: `${svcDelay[i]}ms` }}
-              >
-                <div
-                  // Hover only with a real mouse; touch screens use "See more" instead
-                  onPointerEnter={(e) => e.pointerType === "mouse" && !window.matchMedia("(hover: none)").matches && panel.enter()}
-                  onPointerLeave={panel.leave}
-                  className={`eb-svc-img ${styles.image}`}
+        {SERVICE_PHOTOS.map((photo, i) => {
+          const d = i - active; // 0 = in the middle, negative = left, positive = right
+          const abs = Math.abs(d);
+          return (
+            <div
+              key={i}
+              role="group"
+              className={`${styles.slide} ${d === 0 ? styles.slideActive : ""} ${d === 0 && hoverIdx === i ? `${styles.slideWide} ${styles.slideLifted}` : ""}`}
+              onPointerEnter={(e) => hoverCard(e, i)}
+              onPointerMove={(e) => hoverCard(e, i)}
+              onPointerLeave={() => setHoverIdx(null)}
+              style={{
+                transform: `translateX(calc(-50% + ${d} * var(--step))) translateZ(${-abs * 90}px) rotateY(${d * -36}deg) scale(${d === 0 ? 1 : 1 - abs * 0.1})`,
+                zIndex: 10 - abs,
+                opacity: abs > 2 ? 0 : 1,
+                filter: d === 0 ? "none" : `brightness(${1 - abs * 0.06})`,
+              }}
+              data-active={d === 0 ? "true" : undefined}
+              onClick={() => {
+                if (d === 0) return;
+                edgeLocked.current = true;
+                setEdgeDir(0);
+                go(i);
+              }}
+              aria-label={titles[i]}
+              aria-current={d === 0}
+            >
+              <img
+                src={photo.src}
+                alt=""
+                loading="lazy"
+                draggable={false}
+                className={styles.img}
+                style={{ objectPosition: photo.pos }}
+              />
+              {/* Only the card in the middle: after the zoom the photo darkens and invites to open the details page */}
+              {d === 0 && (
+                <a
+                  href={COMING_SOON_HREF}
+                  target="_blank"
+                  rel="noopener"
+                  draggable={false}
+                  className={styles.overlay}
+                  onClick={(e) => {
+                    if (justDragged.current) {
+                      e.preventDefault();
+                      justDragged.current = false;
+                    }
+                  }}
                 >
-                  <img src={src} alt="" loading="lazy" className={styles.img} />
-                  <div className={`${styles.shade} ${panel.dark ? styles.shadeDark : ""}`} />
-                  <div
-                    className={`eb-svc-panel${svcOpen[i] ? " is-open" : ""} ${styles.panel} ${panel.hover ? styles.panelHover : ""}`}
-                    // Touch screens: tapping anywhere on the panel opens/closes the description
-                    onClick={() => {
-                      if (!window.matchMedia("(hover: none)").matches) return;
-                      setSvcOpen((prev) => prev.map((v, idx) => (idx === i ? !v : v)));
-                    }}
-                  >
-                    <h3 className={styles.cardTitle}>{svcTitles[i]}</h3>
-                    <p className={`eb-svc-desc ${styles.desc}`}>{svcDescs[i]}</p>
-                    <button type="button" className="eb-svc-more">
-                      {svcOpen[i] ? t.svcLess : t.svcMore}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+                  <span className={styles.overlayText}>
+                    {t.svcMore}
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M7 17 17 7M8 7h9v9" />
+                    </svg>
+                  </span>
+                  <span className={styles.srOnly}>: {titles[i]} (opens in a new tab)</span>
+                </a>
+              )}
+            </div>
+          );
+        })}
       </div>
 
-      {/* Scroll buttons below the carousel */}
+      {/* Title and description of the active card: also a link to its details page, clickable at any time */}
+      <div className={styles.info} aria-live="polite">
+        <a href={COMING_SOON_HREF} target="_blank" rel="noopener" className={styles.infoLink}>
+          <h3 key={active} className={styles.cardTitle}>
+            {titles[active]}
+            <svg className={styles.titleArrow} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M7 17 17 7M8 7h9v9" />
+            </svg>
+          </h3>
+          <p key={`d${active}`} className={styles.desc}>
+            {descs[active]}
+          </p>
+        </a>
+      </div>
+
       <div className={styles.nav}>
-        <button type="button" onClick={() => scrollServices(-1)} aria-label="Scroll left" className={styles.navButton}>
+        <button type="button" onClick={() => go(active - 1)} disabled={active === 0} aria-label="Previous" className={styles.navButton}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#142720" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M15 18l-6-6 6-6" />
           </svg>
         </button>
-        <button type="button" onClick={() => scrollServices(1)} aria-label="Scroll right" className={styles.navButton}>
+        <div className={styles.dots} aria-hidden="true">
+          {SERVICE_PHOTOS.map((_, i) => (
+            <span key={i} className={`${styles.dot} ${i === active ? styles.dotActive : ""}`} />
+          ))}
+        </div>
+        <button type="button" onClick={() => go(active + 1)} disabled={active === last} aria-label="Next" className={styles.navButton}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#142720" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M9 18l6-6-6-6" />
           </svg>

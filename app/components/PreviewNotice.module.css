@@ -1,38 +1,37 @@
+/* Small card in the bottom-left corner (the chat bubble lives on the right); the page stays usable */
 .overlay {
   position: fixed;
-  inset: 0;
+  left: 20px;
+  bottom: 20px;
   z-index: 2000;
-  background: rgba(20, 39, 32, 0.35);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+  max-width: calc(100vw - 40px);
 }
 
 .dialog {
   background: #ffffff;
-  border-radius: 16px;
-  max-width: 420px;
-  width: 100%;
-  padding: 28px 28px 24px;
-  box-shadow: 0 24px 60px rgba(20, 39, 32, 0.25);
-  text-align: center;
+  border-radius: 14px;
+  width: 340px;
+  max-width: 100%;
+  padding: 18px 20px 16px;
+  box-shadow: 0 16px 40px rgba(20, 39, 32, 0.22);
+  border: 1px solid rgba(20, 39, 32, 0.08);
+  text-align: left;
 }
 
 .text {
-  margin: 0 0 22px 0;
-  font-size: 16px;
-  line-height: 1.55;
+  margin: 0 0 14px 0;
+  font-size: 14.5px;
+  line-height: 1.5;
   color: #142720;
 }
 
-/* Additional note under the main text: smaller, softer, left-aligned */
+/* Additional note under the main text: smaller, softer */
 .note {
-  margin: -6px 0 22px 0;
-  padding-top: 14px;
+  margin: -4px 0 14px 0;
+  padding-top: 12px;
   border-top: 1px solid rgba(20, 39, 32, 0.1);
   text-align: left;
-  font-size: 13.5px;
+  font-size: 13px;
   line-height: 1.5;
   color: #5e6d64;
 }
@@ -60,8 +59,50 @@
   color: #ffffff;
   border: none;
   border-radius: 8px;
-  padding: 12px 28px;
+  padding: 9px 20px;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 14px;
   cursor: pointer;
+}
+
+/* The "Got it" button trembles for a moment every few seconds to catch the eye, then rests */
+.button {
+  animation: tremble 4s ease-in-out 1.5s infinite;
+}
+
+.button:hover,
+.button:focus-visible {
+  animation: none;
+}
+
+@keyframes tremble {
+  0%,
+  22%,
+  100% {
+    transform: translateX(0) rotate(0);
+  }
+  3% {
+    transform: translateX(-3px) rotate(-2deg);
+  }
+  6% {
+    transform: translateX(3px) rotate(2deg);
+  }
+  9% {
+    transform: translateX(-3px) rotate(-2deg);
+  }
+  12% {
+    transform: translateX(3px) rotate(2deg);
+  }
+  15% {
+    transform: translateX(-2px) rotate(-1deg);
+  }
+  18% {
+    transform: translateX(2px) rotate(1deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    animation: none;
+  }
 }

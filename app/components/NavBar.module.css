@@ -21,15 +21,13 @@
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  background: #ffffff;
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(20, 39, 32, 0.06);
-  border-radius: 18px;
-  padding: 10px 26px;
-  box-shadow:
-    0 14px 32px rgba(20, 39, 32, 0.1),
-    0 2px 6px rgba(20, 39, 32, 0.05);
+  background: rgba(255, 255, 255, 0.86);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  backdrop-filter: blur(18px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 16px;
+  padding: 8px 22px;
+  box-shadow: 0 10px 30px rgba(20, 39, 32, 0.12);
   transition:
     background 300ms ease,
     border-radius 300ms ease,
@@ -52,7 +50,7 @@
 }
 
 .logo {
-  height: 34px;
+  height: 40px;
   width: auto;
   display: block;
 }
@@ -84,11 +82,11 @@
   background: transparent;
   border: none;
   padding: 8px 12px;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 500;
   color: #142720;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
 .chevron {
@@ -112,6 +110,19 @@
   padding: 8px;
   min-width: 210px;
   z-index: 40;
+}
+
+.moreDropdown {
+  min-width: 240px;
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+}
+
+.moreLabel {
+  margin: 6px 12px 2px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #5e6d64;
 }
 
 /* Links: :hover too, so the global a:hover color doesn't take over */
@@ -165,7 +176,7 @@
   gap: 6px;
   color: #142720;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 14px;
   white-space: nowrap;
 }
@@ -174,13 +185,13 @@
 .book:hover {
   background: #007a73;
   color: #ffffff;
-  padding: 9px 20px;
-  border-radius: 10px;
+  padding: 10px 24px;
+  border-radius: 999px;
   text-decoration: none;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 15px;
   white-space: nowrap;
-  box-shadow: 0 4px 10px rgba(0, 122, 115, 0.28);
+  box-shadow: 0 4px 12px rgba(0, 122, 115, 0.25);
 }
 
 /* No display here: globals.css shows the burger only on small screens */
@@ -313,17 +324,15 @@
 .menuButton[aria-expanded="true"],
 .mobileMenuButton:hover,
 .mobileMenuButton[aria-expanded="true"] {
-  background: rgba(46, 199, 189, 0.14);
-  box-shadow: inset 0 0 0 2px #2ec7bd;
-  color: #005f59;
+  background: rgba(1, 169, 180, 0.2);
+  color: #004f54;
 }
 
 /* Dropdown and mobile links */
 .dropdownLink:hover,
 .mobileLink:hover {
-  background: rgba(46, 199, 189, 0.14);
-  box-shadow: inset 0 0 0 2px #2ec7bd;
-  color: #005f59;
+  background: rgba(1, 169, 180, 0.2);
+  color: #004f54;
 }
 
 .langButton:not(.langButtonActive):hover {
@@ -340,9 +349,7 @@
 .book:hover,
 .mobileBook:hover {
   background: #005f59;
-  box-shadow:
-    0 0 0 3px rgba(46, 199, 189, 0.55),
-    0 6px 14px rgba(0, 122, 115, 0.35);
+  box-shadow: 0 6px 16px rgba(0, 122, 115, 0.32);
 }
 .book:hover {
   transform: translateY(-1px);
@@ -366,4 +373,72 @@
 .mobileBook:focus-visible {
   outline: none;
   box-shadow: 0 0 0 3px #2ec7bd;
+}
+
+
+/* ---------- Top of the page: transparent bar over the photo, menus in a centered pill ---------- */
+.barTop {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.barTop .brandName,
+.barTop .burger {
+  color: #ffffff;
+}
+
+.barTop .menus {
+  flex: 0 1 auto;
+  margin: 0 auto;
+  padding: 5px;
+  gap: 2px;
+  background: rgba(10, 24, 22, 0.42);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+}
+
+.barTop .menuButton {
+  color: #ffffff;
+  border-radius: 999px;
+}
+
+.barTop .menuButton:hover,
+.barTop .menuButton[aria-expanded="true"] {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+}
+
+.barTop .chevron {
+  stroke: #ffffff;
+}
+
+.barTop .phone,
+.barTop .phone:hover {
+  color: #ffffff;
+}
+
+.barTop .phone svg {
+  stroke: #ffffff;
+}
+
+.barTop .langToggle {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.barTop .langButton:not(.langButtonActive) {
+  color: #ffffff;
+}
+
+.barTop .langButton:not(.langButtonActive):hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.barTop .burger:hover {
+  background: rgba(255, 255, 255, 0.18);
 }

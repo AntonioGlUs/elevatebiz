@@ -1,6 +1,6 @@
 .footer {
   background: #1e3a5f;
-  padding: 64px 80px 48px;
+  padding: 72px 80px 48px;
 }
 
 .top {
@@ -15,23 +15,17 @@
 .brand {
   display: flex;
   align-items: center;
-  gap: 9px;
-  margin-bottom: 8px;
+  gap: 10px;
+  margin-bottom: 12px;
 }
 
 .logo {
-  width: 36px;
-  height: 36px;
-  border-radius: 999px;
-  background: #eef1f3;
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-shrink: 0;
 }
 
 .logoImg {
-  height: 20px;
+  height: 40px;
   width: auto;
   display: block;
 }
@@ -39,14 +33,15 @@
 .brandName {
   font-family: Fraunces, serif;
   font-weight: 600;
-  font-size: 19px;
+  font-size: 24px;
   color: #ffffff;
 }
 
 .tagline {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.65);
-  max-width: 280px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 320px;
 }
 
 /* Links: :hover too, so the global a:hover color doesn't take over */
@@ -54,11 +49,15 @@
 .bookCall:hover {
   background: #01c3cc;
   color: #0b2027;
-  padding: 12px 24px;
-  border-radius: 8px;
+  padding: 14px 30px;
+  border-radius: 999px;
   text-decoration: none;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 16px;
+}
+
+.bookCall:hover {
+  background: #2fd6de;
 }
 
 .bottom {
@@ -73,7 +72,7 @@
 
 .copyright {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.65);
 }
 
 .contact {
@@ -86,19 +85,37 @@
 .social {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 8px;
 }
 
+/* Round 40px targets; they light up on hover */
 .socialLink,
 .socialLink:hover {
   display: flex;
-  color: rgba(255, 255, 255, 0.6);
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.75);
+  transition:
+    background 160ms ease,
+    color 160ms ease;
+}
+
+.socialLink:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
 }
 
 .email,
 .email:hover {
-  font-size: 14px;
+  font-size: 15px;
   color: #01c3cc;
+}
+
+.email:hover {
+  text-decoration: underline;
 }
 
 .demoNotice {
@@ -110,4 +127,11 @@
   font-size: 16px;
   font-weight: 600;
   color: #f5c518;
+}
+
+/* Phones: leave room under the last line for the floating chat button */
+@media (max-width: 768px) {
+  .footer {
+    padding-bottom: 104px;
+  }
 }

@@ -1,16 +1,20 @@
 import styles from "./dental.module.css";
-import { Person } from "./art";
-import { Carousel, Reveal, Stars } from "./client";
+import { Carousel, Reveal, ServicesMenu, Stars } from "./client";
 import { BookButton } from "./booking";
-import { CLINIC_NAME, CONTACT, HOURS, PORTRAIT_CARDS, SERVICES, TEAM } from "./data";
+import { CLINIC_NAME, CONTACT, HOURS, PHOTOS, PORTRAIT_CARDS, REVIEWS, TEAM } from "./data";
 
 export function Hero() {
   return (
     <section id="top" className={styles.hero}>
-      <div className={styles.heroPeople} aria-hidden="true">
-        <Person skin="#e8b99a" hair="#2b1d16" className={styles.heroPersonA} />
-        <Person skin="#8d5a3c" hair="#1c1410" className={styles.heroPersonB} />
-      </div>
+      <img
+        src="/images/dental/team-banner.webp"
+        alt="The dental team smiling together in a bright reception area"
+        width={1536}
+        height={1024}
+        fetchPriority="high"
+        className={styles.heroBanner}
+      />
+      <div className={styles.heroShade} />
       <div className={styles.heroText}>
         <h1 className={styles.heroTitle}>Smiles worth sharing.</h1>
         <p className={styles.heroSub}>
@@ -36,27 +40,11 @@ export function Comfort() {
         <h2 className={styles.serifTitle}>
           Experience <span className={styles.accent}>personalized</span> comfort
         </h2>
-        <p className={styles.small}>(and learn why our patients love to come back)</p>
+        <p className={styles.small}>Explore our services and find the care that fits your smile.</p>
       </Reveal>
-      <div className={styles.rows}>
-        {SERVICES.map((name, i) => (
-          <Reveal key={name} delay={i * 90}>
-            <div className={styles.row}>
-              <span>{name}</span>
-              <BookButton className={styles.rowBook}>Book</BookButton>
-            </div>
-          </Reveal>
-        ))}
-        <Reveal delay={400}>
-          <a href="#reviews" className={styles.watch}>
-            <span className={styles.watchText}>
-              What you can expect at your exam &amp; cleaning
-              <small>Watch now.</small>
-            </span>
-            <Person skin="#f0c8a8" hair="#17120f" scrubs="#6f7a86" className={styles.watchThumb} />
-          </a>
-        </Reveal>
-      </div>
+      <Reveal delay={120}>
+        <ServicesMenu />
+      </Reveal>
     </section>
   );
 }
@@ -67,7 +55,7 @@ export function Portraits() {
       {PORTRAIT_CARDS.map((card, i) => (
         <Reveal key={card.label} delay={i * 110}>
           <div className={styles.portrait} style={{ background: card.tone }}>
-            <Person skin={card.skin} hair={card.hair} scrubs="#6f7a86" className={styles.portraitPerson} />
+            <img src={card.photo} alt={card.alt} width={1448} height={1086} loading="lazy" className={styles.portraitPerson} style={{ objectPosition: card.pos }} />
             <a href="#team" className={styles.labelPill}>
               {card.label}
             </a>
@@ -99,6 +87,33 @@ export function Redefining() {
   );
 }
 
+export function Reviews() {
+  return (
+    <section className={styles.section}>
+      <Reveal>
+        <h2 className={styles.serifTitle}>
+          What our <span className={styles.accent}>patients</span> say
+        </h2>
+      </Reveal>
+      <div className={styles.reviewGrid}>
+        {REVIEWS.map((r, i) => (
+          <Reveal key={r.name} delay={i * 110}>
+            <figure className={styles.review}>
+              <div className={styles.reviewStars} aria-label="Five star rating">
+                ★★★★★
+              </div>
+              <blockquote>“{r.quote}”</blockquote>
+              <figcaption>
+                {r.name} <span>· Sample patient</span>
+              </figcaption>
+            </figure>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export function Team() {
   return (
     <section id="team" className={styles.section}>
@@ -110,7 +125,7 @@ export function Team() {
           <Reveal key={m.name} delay={i * 110}>
             <article className={styles.member}>
               <div className={styles.memberArt}>
-                <Person skin={m.skin} hair={m.hair} scrubs="#6f7a86" className={styles.memberPerson} />
+                <img src={m.photo} alt={`${m.name}, ${m.role}`} width={1165} height={1350} loading="lazy" className={styles.memberPerson} />
                 <BookButton className={styles.bookTag}>BOOK</BookButton>
               </div>
               <h3>{m.name}</h3>
@@ -131,6 +146,7 @@ export function Footer() {
           Dental visits you want to tell everyone about?
         </h2>
         <p>We’re up for that challenge.</p>
+        <BookButton className={styles.footerBook}>Book your visit</BookButton>
       </Reveal>
       <div className={styles.footerCols}>
         <div>

@@ -39,30 +39,58 @@ export default function Page() {
     localStorage.setItem("eb-lang", lang);
   }, [lang]);
 
-  // Announcement bar: the nav sits right below it, and the hero compensates when it is closed
+  // Announcement bar: it slides in 3 seconds after the page loads (unless it was closed) and the nav sits below it
   const [showAnnouncement, setShowAnnouncement] = useState(true);
+  const [annArrived, setAnnArrived] = useState(false);
   const annRef = useRef<HTMLDivElement>(null);
   const [annHeight, setAnnHeight] = useState(0);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setAnnArrived(true), 3000);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Bar height (it wraps to more lines on small screens)
   useEffect(() => {
     function measure() {
-      if (annRef.current) setAnnHeight(annRef.current.offsetHeight);
+      if (annRef.current) setAnnHeight(annRef.current.getBoundingClientRect().height);
     }
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
-  }, [showAnnouncement]);
+  }, []);
 
-  const heroOffset = showAnnouncement ? 0 : annHeight;
+  const annVisible = showAnnouncement && annArrived;
+  // The bar floats over the hero, so the hero always keeps a gap at the top for it (34 is the usual bar
+  // height, used until the real one is measured)
+  const heroOffset = annHeight || 34;
 
   return (
     <>
     <div className={`eb-root ${styles.root}`}>
-      {showAnnouncement && (
-        <AnnouncementBar t={t} barRef={annRef} onClose={() => setShowAnnouncement(false)} />
-      )}
-      <NavBar t={t} lang={lang} setLang={setLang} showAnnouncement={showAnnouncement} annHeight={annHeight} />
+      {/* The bar always exists and sits over the top of the page (nothing is pushed down, so no gap can
+          open up): it just slides in from above the screen and slides out again if it is closed. */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1100,
+          visibility: annVisible ? "visible" : "hidden",
+          transition: annVisible ? "visibility 0s" : "visibility 0s linear 900ms",
+        }}
+      >
+        <div
+          style={{
+            transform: annVisible ? "translateY(0)" : "translateY(-100%)",
+            transition: "transform 900ms cubic-bezier(0.22, 1, 0.36, 1)",
+          }}
+        >
+          <AnnouncementBar t={t} barRef={annRef} onClose={() => setShowAnnouncement(false)} />
+        </div>
+      </div>
+      <NavBar t={t} lang={lang} setLang={setLang} showAnnouncement={annVisible} annHeight={annHeight} />
       <Hero t={t} heroOffset={heroOffset} />
       <LogoMarquee t={t} />
       <StatsBand lang={lang} />

@@ -1,37 +1,81 @@
+/* Same navy as the "See it in action" section, with the same subtle grain */
 .section {
-  background: #f3f6f3;
-  padding: 100px 80px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #1e3a5f;
+  padding: 110px 80px;
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 .inner {
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
+  max-width: 860px;
   display: flex;
-  gap: 40px;
+  flex-direction: column;
   align-items: center;
-  max-width: 760px;
+  text-align: center;
+  gap: 36px;
+}
+
+/* Large teal quote mark above the text */
+.quote {
+  position: relative;
+  margin: 0;
+  padding-top: 56px;
+  font-family: Fraunces, serif;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+}
+
+.quote::before {
+  content: "\201C";
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 110px;
+  line-height: 1;
+  color: #01c3cc;
+}
+
+.person {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
 .avatar {
-  width: 72px;
-  height: 72px;
+  width: 52px;
+  height: 52px;
   border-radius: 999px;
-  background: #01c3cc33;
+  background: rgba(1, 195, 204, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-.quote {
-  margin: 0 0 16px 0;
-  font-family: Fraunces, serif;
-  font-size: 22px;
-  font-style: italic;
-  line-height: 1.5;
-  color: #142720;
+.avatar svg {
+  stroke: #8ff0f5;
 }
 
 .name {
-  margin: 0;
-  font-size: 15px;
-  color: #5e6d64;
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.82);
 }

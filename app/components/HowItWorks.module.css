@@ -1,19 +1,22 @@
+/* Compact on purpose: this section is secondary, so it takes little vertical space */
 .section {
   background: #f3f6f3;
-  padding: 100px 80px;
+  padding: 44px 80px;
 }
 
 .title {
   font-family: Fraunces, serif;
   font-weight: 600;
-  font-size: 34px;
-  margin: 0 0 48px 0;
+  font-size: 32px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 26px 0;
   color: #142720;
 }
 
 .steps {
   display: flex;
-  gap: 56px;
+  gap: 40px;
   flex-wrap: wrap;
 }
 
@@ -21,6 +24,11 @@
 .step {
   flex: 1;
   min-width: 260px;
+  /* icon on the left, text on the right: this keeps each step short */
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 16px;
+  align-items: start;
   opacity: 0;
   transform: translateX(70px);
   transition:
@@ -34,34 +42,48 @@
 }
 
 .icon {
-  width: 56px;
-  height: 56px;
+  grid-row: 1 / span 3;
+  width: 44px;
+  height: 44px;
   border-radius: 999px;
-  background: #01c3cc33;
+  position: relative;
+  background: #cff1f2;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+}
+
+.icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.label,
+.stepTitle,
+.desc {
+  grid-column: 2;
 }
 
 .label {
-  margin: 0 0 6px 0;
+  margin: 0 0 2px 0;
   font-size: 13px;
-  color: #5e6d64;
+  font-weight: 600;
+  color: #007a73;
 }
 
 .stepTitle {
   font-family: Fraunces, serif;
   font-weight: 600;
-  font-size: 20px;
-  margin: 0 0 10px 0;
+  font-size: 19px;
+  line-height: 1.2;
+  margin: 0 0 6px 0;
   color: #142720;
 }
 
 .desc {
   margin: 0;
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: 15px;
+  line-height: 1.5;
   color: #5e6d64;
   max-width: 320px;
 }

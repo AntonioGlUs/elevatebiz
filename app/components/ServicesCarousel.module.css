@@ -1,115 +1,243 @@
 .section {
   padding: 100px 80px;
+  overflow: hidden;
 }
 
 .title {
   font-family: Fraunces, serif;
   font-weight: 600;
-  font-size: 34px;
-  margin: 0 0 56px 0;
+  font-size: 44px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 40px 0;
   color: #142720;
 }
 
-.carousel {
+/* Curved 3D stage: --step is the horizontal distance between neighbouring cards */
+.stage {
+  --step: 270px; /* narrow cards sit closer together... */
   position: relative;
-  overflow: hidden;
-}
-
-/* transform is set inline: it follows the hover zones / arrow buttons */
-.track {
-  display: flex;
-  gap: 64px;
-  transition: transform 120ms linear;
-}
-
-/* Cards rise in when the carousel scrolls into view (delay set per card) */
-.card {
-  flex: 0 0 460px;
+  height: 470px;
+  perspective: 1500px;
+  touch-action: pan-y;
+  cursor: grab;
+  outline: none;
   opacity: 0;
-  transform: translateY(48px);
-  transition:
-    opacity 2200ms cubic-bezier(0.16, 0.8, 0.4, 1),
-    transform 2200ms cubic-bezier(0.16, 0.8, 0.4, 1);
+  transform: translateY(30px);
+  transition: opacity 900ms ease, transform 900ms ease;
 }
 
-.cardVisible {
+/* ...and move apart a little while the card in the middle is widened by the mouse */
+.stageWide {
+  --step: 372px;
+}
+
+.stage:active {
+  cursor: grabbing;
+}
+
+.stage:focus-visible {
+  outline: 3px solid #01c3cc;
+  outline-offset: 6px;
+  border-radius: 24px;
+}
+
+.stageVisible {
   opacity: 1;
   transform: translateY(0);
 }
 
-.image {
-  position: relative;
+.slide {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  width: 250px; /* narrow, vertical */
+  height: 410px;
+  padding: 0;
+  border: 0;
+  border-radius: 22px;
   overflow: hidden;
-  border-radius: 16px;
-  height: 340px;
-  box-shadow: 0 10px 28px rgba(20, 39, 32, 0.16);
+  background: #cfd8d5;
+  box-shadow: 0 20px 44px rgba(20, 39, 32, 0.22);
+  cursor: pointer;
+  transition:
+    transform 1200ms cubic-bezier(0.45, 0, 0.2, 1),
+    width 700ms cubic-bezier(0.45, 0, 0.2, 1),
+    scale 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 700ms ease,
+    opacity 800ms ease,
+    filter 800ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* The card in the middle widens (taking more horizontal space) while the mouse is over it */
+.slideWide {
+  width: 480px;
+}
+
+.slideActive {
+  cursor: default;
+  box-shadow: 0 28px 60px rgba(20, 39, 32, 0.3);
 }
 
 .img {
-  position: absolute;
-  top: 0;
-  left: 0;
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
+  pointer-events: none;
+  user-select: none;
 }
 
-/* Darkens the photo while the description is showing */
-.shade {
+/* Apple-style lift: the card in the middle grows just a little and its shadow deepens, as if it rose off the page.
+   (`scale` is separate from the inline `transform` that places the card, so the two don't fight.) */
+.slideLifted {
+  scale: 1.035;
+  box-shadow: 0 44px 90px rgba(20, 39, 32, 0.4), 0 14px 28px rgba(20, 39, 32, 0.22);
+}
+
+/* "See more" sits at the bottom-left of the photo in the middle, on a soft dark gradient that only covers the bottom.
+   It appears after the card has been hovered and has widened; on leaving it disappears at once. */
+.overlay {
   position: absolute;
   inset: 0;
-  background: rgba(20, 39, 32, 0);
-  transition: background 450ms ease;
-  pointer-events: none;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 18px 20px;
+  background: linear-gradient(to top, rgba(8, 28, 26, 0.7), rgba(8, 28, 26, 0) 55%);
+  color: #ffffff;
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 450ms ease 0s;
 }
 
-.shadeDark {
-  background: rgba(20, 39, 32, 0.48);
+.slideLifted .overlay,
+.overlay:focus-visible {
+  opacity: 1;
+  transition-delay: 650ms;
 }
 
-/* Frosted title bar; grows to show the description on hover */
-.panel {
+/* :hover too, so the global a:hover color doesn't turn the text teal */
+.overlay,
+.overlay:hover,
+.overlay:focus-visible {
+  color: #ffffff;
+}
+
+.overlayText {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+  transform: translateY(10px);
+  transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1) 0s;
+}
+
+.slideLifted .overlayText,
+.overlay:focus-visible .overlayText {
+  transform: translateY(0);
+  transition-delay: 650ms;
+}
+
+/* Touch screens have no hover: the invitation is simply always there */
+@media (hover: none) {
+  .overlay {
+    opacity: 1;
+  }
+  .overlayText {
+    transform: none;
+  }
+}
+
+.srOnly {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.55);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
-  padding: 8px 24px 16px;
-  height: 46px;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
   overflow: hidden;
-  transition:
-    height 450ms cubic-bezier(0.16, 0.8, 0.4, 1),
-    background 450ms ease;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-.panelHover {
-  height: 170px;
-  background: rgba(255, 255, 255, 0.88);
+.info {
+  max-width: 620px;
+  min-height: 112px;
+  margin: 8px auto 0;
+  text-align: center;
+}
+
+/* The whole text block is a link */
+.infoLink,
+.infoLink:hover {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.titleArrow {
+  display: inline-block;
+  margin-left: 8px;
+  vertical-align: -2px;
+  color: #01858e;
+  transition: transform 300ms ease;
+}
+
+.infoLink:hover .titleArrow {
+  transform: translate(3px, -3px);
+}
+
+.infoLink:hover .cardTitle {
+  text-decoration: underline;
+  text-decoration-color: rgba(1, 195, 204, 0.7);
+  text-underline-offset: 6px;
+  text-decoration-thickness: 2px;
+}
+
+/* Replaced text fades in (the key on each element restarts this) */
+.cardTitle,
+.desc {
+  animation: infoIn 800ms ease both;
 }
 
 .cardTitle {
-  font-family: Fraunces, serif;
+  font-family: "Karla", sans-serif;
   font-weight: 600;
-  font-size: 21px;
-  margin: 0;
+  letter-spacing: -0.01em;
+  font-size: 24px;
+  margin: 0 0 8px 0;
   color: #142720;
 }
 
 .desc {
-  margin: 12px 0 0 0;
-  font-size: 15.5px;
-  line-height: 1.55;
-  color: #142720;
+  margin: 0;
+  font-size: 16.5px;
+  line-height: 1.6;
+  color: #3a4a42;
+}
+
+@keyframes infoIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .nav {
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 14px;
-  margin-top: 32px;
+  gap: 18px;
+  margin-top: 22px;
 }
 
 .navButton {
@@ -123,4 +251,55 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: opacity 200ms ease;
+}
+
+.navButton:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.dots {
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(20, 39, 32, 0.18);
+  transition: width 600ms ease, background 600ms ease;
+}
+
+.dotActive {
+  width: 24px;
+  background: #01c3cc;
+}
+
+@media (max-width: 768px) {
+  .stage {
+    --step: 190px;
+    height: 400px;
+  }
+  .stageWide {
+    --step: 240px;
+  }
+  .slide {
+    width: 190px;
+    height: 340px;
+  }
+  .slideWide {
+    width: 290px;
+  }
+  .cardTitle {
+    font-size: 21px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide,
+  .stage {
+    transition: none;
+  }
 }

@@ -81,7 +81,7 @@ export default function LeadRoutingDiagram({ t, lang }: { t: Texts; lang: Lang }
     de < 2600 ? 0 : de < 3500 ? 1 : de < 3800 ? Math.max(0, 1 - (de - 3500) / 300) : 0;
   const assignedActive = de >= 3500 && de < 5500;
   const routerPulse = routerActiveWindow ? 16 + Math.sin(de / 130) * 9 : 6;
-  const routerShadow = `0 0 ${Math.round(routerPulse)}px ${Math.round(routerPulse / 2)}px rgba(63,169,245,.55)`;
+  const routerShadow = `0 0 ${Math.round(routerPulse)}px ${Math.round(routerPulse / 2)}px rgba(1, 195, 204,.55)`;
   const routerClass = `${styles.router} ${routerActiveWindow ? styles.routerActive : ""}`;
   const pillClass = `${styles.pill} ${de >= 1350 ? styles.pillVisible : ""} ${assignedActive ? styles.pillAssigned : ""}`;
   const routePillText =
@@ -120,10 +120,10 @@ export default function LeadRoutingDiagram({ t, lang }: { t: Texts; lang: Lang }
           <div className={styles.stage} style={{ transform: `scale(${diagScale})` }}>
             <svg viewBox="0 0 1000 390" width="1000" height="390" className={styles.lines} preserveAspectRatio="xMidYMid meet">
               <path d="M238,190 L435,190" stroke="rgba(255,255,255,.08)" strokeWidth="2" fill="none" />
-              <path d="M238,190 L435,190" stroke="#3fa9f5" strokeWidth="8" fill="none" strokeLinecap="round" strokeDasharray="200" strokeDashoffset={line1Offset} opacity={line1GlowOpacity} className={styles.glow} />
-              <path d="M238,190 L435,190" stroke="#3fa9f5" strokeWidth="3" fill="none" strokeLinecap="round" strokeDasharray="200" strokeDashoffset={line1Offset} />
-              <path d={line2Path} stroke="#3fa9f5" strokeWidth="8" fill="none" strokeLinecap="round" strokeDasharray={line2Length} strokeDashoffset={line2Offset} opacity={line2GlowOpacity} className={styles.glow} />
-              <path d={line2Path} stroke="#3fa9f5" strokeWidth="3" fill="none" strokeLinecap="round" strokeDasharray={line2Length} strokeDashoffset={line2Offset} />
+              <path d="M238,190 L435,190" stroke="#01c3cc" strokeWidth="8" fill="none" strokeLinecap="round" strokeDasharray="200" strokeDashoffset={line1Offset} opacity={line1GlowOpacity} className={styles.glow} />
+              <path d="M238,190 L435,190" stroke="#01c3cc" strokeWidth="3" fill="none" strokeLinecap="round" strokeDasharray="200" strokeDashoffset={line1Offset} />
+              <path d={line2Path} stroke="#01c3cc" strokeWidth="8" fill="none" strokeLinecap="round" strokeDasharray={line2Length} strokeDashoffset={line2Offset} opacity={line2GlowOpacity} className={styles.glow} />
+              <path d={line2Path} stroke="#01c3cc" strokeWidth="3" fill="none" strokeLinecap="round" strokeDasharray={line2Length} strokeDashoffset={line2Offset} />
             </svg>
 
             <div className={`${styles.label} ${styles.leadLabel}`}>{t.diagLeadLabel}</div>
@@ -203,7 +203,7 @@ function DiagMobileLine({ progress, glow }: { progress: number; glow: number }) 
         className={styles.mobileLineFill}
         style={{
           height: `${Math.round(progress * 100)}%`,
-          boxShadow: `0 0 10px 2px rgba(63,169,245,${(0.8 * glow).toFixed(2)})`,
+          boxShadow: `0 0 10px 2px rgba(1, 195, 204,${(0.8 * glow).toFixed(2)})`,
         }}
       />
     </div>

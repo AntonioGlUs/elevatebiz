@@ -91,7 +91,7 @@
   transform: rotate(-6deg) scale(1.06);
 }
 .logoBig {
-  font-size: 12px;
+  font-size: 18px;
   font-weight: 700;
   letter-spacing: 0.02em;
   color: #7fd4de;
@@ -106,6 +106,33 @@
   font-size: 13px;
   font-weight: 600;
   color: #7fd4de;
+}
+/* Section links in the header, from wide screens up; white over the photo, dark once the header turns white */
+.headerNav {
+  display: none;
+}
+@media (min-width: 1000px) {
+  .headerNav {
+    display: flex;
+    gap: 34px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .headerNav a {
+    color: #fff;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+    transition: color 0.2s ease;
+  }
+  .headerNav a:hover {
+    color: var(--cyan);
+  }
+  .headerScrolled .headerNav a {
+    color: var(--ink);
+    text-shadow: none;
+  }
+  .headerScrolled .headerNav a:hover {
+    color: #2f8f9d;
+  }
 }
 .headerActions {
   display: flex;
@@ -202,34 +229,27 @@
 .hero {
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   min-height: 100vh;
-  padding: 120px 8% 80px;
-  background: linear-gradient(110deg, #8f989d 0%, #b4bbbe 45%, #cdd2d4 100%);
+  padding: 120px 8% 72px;
+  background: #1b2b3a;
   overflow: hidden;
 }
-.heroPeople {
+/* The team photo is a full-width banner; a shade from the bottom keeps the white text readable */
+.heroBanner {
   position: absolute;
-  right: 3%;
-  bottom: 0;
-  width: min(60%, 820px);
-  height: 92%;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 25%;
 }
-.heroPersonA,
-.heroPersonB {
+.heroShade {
   position: absolute;
-  bottom: -3%;
-  height: auto;
-  animation: rise 1s ease both;
-}
-.heroPersonA {
-  left: 0;
-  width: 50%;
-}
-.heroPersonB {
-  right: 0;
-  width: 56%;
-  animation-delay: 0.2s;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(10, 24, 38, 0.62) 0%, rgba(10, 24, 38, 0) 22%),
+    linear-gradient(to top, rgba(10, 24, 38, 0.9) 0%, rgba(10, 24, 38, 0.6) 34%, rgba(10, 24, 38, 0) 64%);
 }
 .heroText {
   position: relative;
@@ -249,6 +269,7 @@
 .heroSub {
   margin: 0 0 28px;
   font-size: 20px;
+  color: #fff;
   font-weight: 600;
   line-height: 1.3;
 }
@@ -291,44 +312,170 @@
 }
 .small {
   margin: 0 0 32px;
-  font-size: 14px;
+  font-size: 15px;
+  color: #55574f;
 }
 
-.rows {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  max-width: 640px;
+/* Services menu: list on the left, photo on the right */
+.menuLayout {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 44px;
+  align-items: start;
 }
-.row {
-  display: flex;
-  align-items: stretch;
-  gap: 8px;
+.menuList {
+  margin: 0 0 26px;
+  padding: 0;
+  list-style: none;
 }
-.row > span {
-  flex: 1;
-  padding: 22px 24px;
-  background: #cfd3d3;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  transition: background 0.2s ease, transform 0.2s ease;
+.menuList li + li {
+  border-top: 1px solid rgba(47, 46, 41, 0.12);
 }
-.row:hover > span {
-  background: #c1c6c6;
-  transform: translateX(6px);
+.menuRow {
+  display: grid;
+  grid-template-columns: 40px 38px 1fr 40px;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 18px 16px;
+  border-radius: 18px;
+  background: transparent;
+  text-align: left;
+  color: var(--ink);
+  transition: background 0.25s ease;
 }
-.rowBook {
+.menuRowActive {
+  background: #e9fafc;
+}
+.menuNum {
   display: grid;
   place-items: center;
-  padding: 0 22px;
-  background: var(--cyan);
-  font-weight: 600;
-  font-size: 14px;
-  transition: background 0.2s ease;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #dcdedf;
+  font-size: 13px;
+  color: #55574f;
+  transition: background 0.25s ease;
 }
-.rowBook:hover {
-  background: #a8f3fc;
+.menuRowActive .menuNum {
+  background: var(--cyan);
+  color: var(--ink);
+}
+.menuIcon {
+  display: grid;
+  place-items: center;
+  color: #4a7a88;
+}
+.menuText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.menuText strong {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 23px;
+  font-weight: 700;
+}
+.menuText span {
+  font-size: 15px;
+  line-height: 1.4;
+  color: #55574f;
+}
+.menuArrow {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #dcdedf;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+.menuRowActive .menuArrow {
+  background: var(--cyan);
+  transform: translateX(3px);
+}
+.menuBook {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 30px;
+  border-radius: 100px;
+  background: #6dbbcc;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.menuBook:hover {
+  transform: translateY(-3px);
+  background: #5aaabb;
+}
+/* The photos are 3:2 and already carry a "number + name" label, so the frame keeps that ratio (no cropping) */
+.menuPhoto {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #cfd8dc;
+  container-type: inline-size;
+}
+.menuSlide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.menuSlideShown {
+  opacity: 1;
+}
+.menuImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* Same look as the label baked into the other photos (sizes follow the frame width) */
+.menuLabel {
+  position: absolute;
+  left: 3.1%;
+  bottom: 6.3%;
+  display: flex;
+  align-items: center;
+  gap: 3.2cqw;
+  height: 14.8%;
+  padding: 0 5cqw 0 1.6cqw;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.94);
+}
+/* Wider, solid version that hides a label baked into the photo */
+.menuLabelCover {
+  left: 2.8%;
+  bottom: 5.8%;
+  width: 52.5%;
+  height: 15.4%;
+  background: #fff;
+}
+.menuLabelNum {
+  display: grid;
+  place-items: center;
+  width: 7.6cqw;
+  height: 7.6cqw;
+  border-radius: 50%;
+  background: #8fdde6;
+  font-size: 3.4cqw;
+  font-weight: 600;
+  color: #12304a;
+}
+.menuLabelText {
+  white-space: nowrap;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 3.7cqw;
+  font-weight: 700;
+  color: #12304a;
+}
+.menuWatch {
+  margin-top: 18px;
 }
 .watch {
   display: flex;
@@ -356,8 +503,9 @@
   flex: none;
   width: 64px;
   height: 64px;
-  padding-top: 8px;
   border-radius: 50%;
+  object-fit: cover;
+  object-position: center 20%;
   background: #cdd5da;
 }
 
@@ -374,14 +522,15 @@
 }
 .portraitPerson {
   position: absolute;
-  left: 50%;
-  bottom: 0;
-  height: 86%;
-  transform: translateX(-50%);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
   transition: transform 0.4s ease;
 }
 .portrait:hover .portraitPerson {
-  transform: translateX(-50%) scale(1.06);
+  transform: scale(1.06);
 }
 .labelPill {
   position: absolute;
@@ -422,17 +571,22 @@
 }
 .carouselPerson {
   position: absolute;
-  left: 50%;
-  bottom: 0;
-  height: 80%;
-  transform: translateX(-50%);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
 }
+/* On a photo the caption needs its own background to stay readable */
 .carouselCaption {
   position: absolute;
   top: 18px;
   left: 18px;
-  right: 18px;
   margin: 0;
+  max-width: calc(100% - 36px);
+  padding: 10px 16px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.88);
   font-weight: 600;
   font-size: 18px;
 }
@@ -521,14 +675,15 @@
 }
 .memberPerson {
   position: absolute;
-  left: 50%;
-  bottom: 0;
-  height: 88%;
-  transform: translateX(-50%);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
   transition: transform 0.4s ease;
 }
 .member:hover .memberPerson {
-  transform: translateX(-50%) translateY(-6px);
+  transform: scale(1.04);
 }
 .bookTag {
   position: absolute;
@@ -546,9 +701,75 @@
   background: #fff;
 }
 
+/* ---------- Reviews ---------- */
+.reviewGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+  margin-top: 28px;
+}
+.review {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+  padding: 26px 26px 22px;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 6px 22px rgba(47, 46, 41, 0.08);
+}
+.reviewStars {
+  margin-bottom: 12px;
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  color: #e8a817;
+}
+.review blockquote {
+  margin: 0 0 18px;
+  flex: 1;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 20px;
+  line-height: 1.4;
+}
+.review figcaption {
+  font-size: 15px;
+  font-weight: 600;
+}
+.review figcaption span {
+  font-weight: 400;
+  color: #55574f;
+}
+
+/* ---------- Back to the main site ---------- */
+.backToSite {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 25;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 22px 13px 18px;
+  border-radius: 100px;
+  background: #fff; /* white so it stands out over the photo, the light sections and the dark footer */
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: 0 8px 22px rgba(20, 24, 28, 0.3);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.backToSite:hover {
+  transform: translateY(-3px);
+  background: var(--cyan);
+}
+.backToSite:focus-visible {
+  outline: 3px solid var(--cyan);
+  outline-offset: 3px;
+}
+
 /* ---------- Footer ---------- */
 .footer {
-  padding: 90px 8% 36px;
+  padding: 90px 8% 96px; /* extra room at the bottom for the fixed back button */
   background: var(--slate);
   color: #fff;
 }
@@ -557,9 +778,24 @@
   max-width: 760px;
 }
 .footerHead p {
-  margin: 0 0 40px;
+  margin: 0 0 28px;
   font-size: 20px;
   color: var(--cyan);
+}
+.footerBook {
+  display: inline-block;
+  margin-bottom: 44px;
+  padding: 16px 38px;
+  border-radius: 100px;
+  background: var(--cyan);
+  color: var(--ink);
+  font-size: 18px;
+  font-weight: 600;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.footerBook:hover {
+  transform: translateY(-3px);
+  background: #a8f3fc;
 }
 .footerCols {
   display: grid;
@@ -570,13 +806,14 @@
 }
 .footerCols h3 {
   margin: 0 0 12px;
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--cyan);
 }
 .footerCols p {
   margin: 0 0 8px;
+  font-size: 18px;
   line-height: 1.5;
 }
 .copy {
@@ -908,6 +1145,21 @@
   .header {
     padding: 12px 18px;
   }
+  .menuLayout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .menuRow {
+    grid-template-columns: 34px 1fr 36px;
+    gap: 12px;
+    padding: 14px 10px;
+  }
+  .menuIcon {
+    display: none;
+  }
+  .menuText strong {
+    font-size: 21px;
+  }
   .headerActions .pill {
     padding: 8px 18px;
     font-size: 14px;
@@ -928,15 +1180,11 @@
   .arrow {
     right: 12px;
   }
-  .heroPeople {
-    width: 90%;
-    height: 55%;
-    right: 5%;
-    opacity: 0.9;
+  .hero {
+    min-height: 92vh;
   }
-  .heroText {
-    align-self: flex-start;
-    margin-top: 10vh;
+  .heroBanner {
+    object-position: 50% 10%;
   }
 }
 
@@ -949,5 +1197,33 @@
   .star {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* Small phones: smaller logo circles and tighter header so the logos don't touch the Call pill */
+@media (max-width: 480px) {
+  .header {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .logos {
+    gap: 8px;
+  }
+  .logoCircle {
+    width: 50px;
+    height: 50px;
+  }
+  .logoBig {
+    font-size: 15px;
+  }
+  .headerActions {
+    gap: 8px;
+  }
+  .headerActions .pill {
+    padding: 8px 14px;
+  }
+  .burger {
+    margin-left: 0;
+    width: 36px;
   }
 }

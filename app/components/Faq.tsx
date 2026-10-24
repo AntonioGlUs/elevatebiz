@@ -35,8 +35,18 @@ export default function Faq({ t, lang }: { t: Texts; lang: Lang }) {
 
       <div className={styles.grid}>
         {faqItems.map((item, i) => (
-          <div key={i} className={`${styles.card} ${item.open ? styles.cardOpen : ""}`}>
-            <button type="button" onClick={item.toggle} aria-expanded={item.open} className={styles.toggle}>
+          // The whole card toggles (the button inside keeps keyboard and screen reader support; its click bubbles up here).
+          // Links inside the answer and text selection don't toggle.
+          <div
+            key={i}
+            onClick={(e) => {
+              if ((e.target as HTMLElement).closest("a")) return;
+              if (window.getSelection()?.toString()) return;
+              item.toggle();
+            }}
+            className={`${styles.card} ${item.open ? styles.cardOpen : ""}`}
+          >
+            <button type="button" aria-expanded={item.open} className={styles.toggle}>
               <div className={styles.top}>
                 <div className={`${styles.icon} ${item.teal ? styles.iconTeal : styles.iconNavy}`}>
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={item.iconColor} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
@@ -47,6 +57,11 @@ export default function Faq({ t, lang }: { t: Texts; lang: Lang }) {
               </div>
               <h3 className={styles.cardTitle}>{item.title}</h3>
               <p className={styles.cardSubtitle}>{item.subtitle}</p>
+              <span className={styles.arrow} aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </span>
             </button>
 
             <div className={`${styles.answer} ${item.open ? styles.answerOpen : ""}`}>

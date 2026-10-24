@@ -31,6 +31,10 @@ export default function NavBar({ t, lang, setLang, showAnnouncement, annHeight }
 
   const navWrapperTop = scrolled ? "0" : `${showAnnouncement ? Math.max(42, annHeight + 3) : 42}px`;
 
+  // "More" shares openMenu with the other menus, so only one dropdown is open at a time
+  const MORE = -1;
+  const moreOpen = openMenu === MORE;
+
   const openMenuIndex = openMenu;
   const navMenus = NAV_DATA.map((menu, i) => ({
     label: menu.label[lang],
@@ -47,15 +51,15 @@ export default function NavBar({ t, lang, setLang, showAnnouncement, annHeight }
       className={`eb-nav-wrap${scrolled ? "" : " eb-nav-float"} ${styles.wrap} ${scrolled ? styles.wrapScrolled : ""}`}
       style={{ top: navWrapperTop }}
     >
-      <div className={`eb-nav-bar${scrolled ? " is-scrolled" : ""} ${styles.bar} ${scrolled ? styles.barScrolled : ""}`}>
+      <div className={`eb-nav-bar${scrolled ? " is-scrolled" : ""} ${styles.bar} ${scrolled ? styles.barScrolled : styles.barTop}`}>
         <div className={styles.brand}>
-          <img src="/images/logo-icon.webp" alt="" width={93} height={80} className={styles.logo} />
+          <img src="/images/logo-icon-v2.webp" alt="" width={128} height={128} className={styles.logo} />
           <span className={styles.brandName}>{BRAND_NAME}</span>
         </div>
 
         <div className={`eb-nav-menus ${styles.menus}`}>
           {navMenus.map((menu, i) => (
-            <div key={i} className={styles.menu}>
+            <div key={i} className={`eb-nav-m${i} ${styles.menu}`}>
               <button type="button" onClick={menu.toggle} aria-expanded={menu.open} className={styles.menuButton}>
                 <span>{menu.label}</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5e6d64" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={chevronClass(menu.open)}>
@@ -73,6 +77,30 @@ export default function NavBar({ t, lang, setLang, showAnnouncement, annHeight }
               )}
             </div>
           ))}
+
+          {/* Menus that don't fit are collapsed here, in order (see globals.css) */}
+          <div className={`eb-nav-more ${styles.menu}`}>
+            <button type="button" onClick={() => setOpenMenu(moreOpen ? null : MORE)} aria-expanded={moreOpen} className={styles.menuButton}>
+              <span>{lang === "es" ? "Más" : "More"}</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5e6d64" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={chevronClass(moreOpen)}>
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+            {moreOpen && (
+              <div className={`${styles.dropdown} ${styles.moreDropdown}`}>
+                {navMenus.map((menu, i) => (
+                  <div key={i} className={`eb-more-g${i}`}>
+                    <p className={styles.moreLabel}>{menu.label}</p>
+                    {menu.items.map((item, j) => (
+                      <a key={j} href={item.href} onClick={() => setOpenMenu(null)} className={styles.dropdownLink}>
+                        {item.text}
+                      </a>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         <div className={styles.actions}>

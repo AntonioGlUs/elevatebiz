@@ -34,13 +34,19 @@ img {
    this file. These rules override them on smaller screens, which is why they
    need !important. */
 
+.eb-nav-more,
+.eb-more-g0,
+.eb-more-g1,
+.eb-more-g2,
+.eb-more-g3,
+.eb-more-g4,
 .eb-nav-burger,
 .eb-mobile-panel,
 .eb-diag-mobile {
   display: none;
 }
 
-/* ---------- Nav: dropdowns and phone move into the ☰ panel ---------- */
+/* ---------- Narrow desktop ---------- */
 @media (max-width: 1270px) {
   /* Not enough room beside the WhatsApp card: small robot on its bottom-left corner */
   .eb-seeit-robot {
@@ -52,8 +58,32 @@ img {
     z-index: 2 !important;
   }
 
-  .eb-nav-menus,
+  /* Nav: the last menus move into "More" */
+  .eb-nav-m3,
+  .eb-nav-m4 {
+    display: none !important;
+  }
+  .eb-nav-more,
+  .eb-more-g3,
+  .eb-more-g4 {
+    display: block;
+  }
+}
+
+/* Nav: phone and Demos move into "More" too */
+@media (max-width: 1100px) {
+  .eb-nav-m2,
   .eb-nav-phone {
+    display: none !important;
+  }
+  .eb-more-g2 {
+    display: block;
+  }
+}
+
+/* Nav: everything moves into the ☰ panel */
+@media (max-width: 900px) {
+  .eb-nav-menus {
     display: none !important;
   }
   .eb-nav-burger {
@@ -73,12 +103,16 @@ img {
   .eb-section {
     padding: 80px 32px !important;
   }
+  /* "It's that simple" stays compact */
+  #how-it-works.eb-section {
+    padding: 40px 32px !important;
+  }
   .eb-pain-inner {
     padding: 80px 32px !important;
     gap: 40px !important;
   }
   .eb-stats {
-    padding: 56px 32px !important;
+    padding: 32px 32px !important;
   }
   .eb-footer {
     padding: 56px 32px 40px !important;
@@ -100,25 +134,6 @@ img {
     margin-left: 32px !important;
   }
 
-  /* Services: swipe instead of hover zones + arrows */
-  .eb-carousel {
-    overflow-x: auto !important;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-  .eb-carousel::-webkit-scrollbar {
-    display: none;
-  }
-  .eb-carousel-track {
-    transform: none !important;
-    gap: 20px !important;
-  }
-  .eb-svc-card {
-    flex: 0 0 min(460px, 85%) !important;
-    scroll-snap-align: start;
-  }
-
   .eb-diag-box {
     padding: 32px !important;
   }
@@ -129,12 +144,14 @@ img {
   .eb-section {
     padding: 64px 20px !important;
   }
+  #how-it-works.eb-section {
+    padding: 36px 20px !important;
+  }
   .eb-pain-inner {
     padding: 64px 20px !important;
   }
   .eb-stats {
-    padding: 48px 20px !important;
-    gap: 32px !important;
+    padding: 26px 16px !important;
   }
   .eb-footer {
     padding: 48px 20px 36px !important;
@@ -175,10 +192,7 @@ img {
     margin: 0 !important;
     max-width: none !important;
     min-height: 0 !important;
-    padding: 28px 24px !important;
-  }
-  .eb-hero-title {
-    font-size: 27px !important;
+    padding: 0 8px !important;
   }
 
   /* Two-column sections become one column */
@@ -200,10 +214,6 @@ img {
     gap: 40px !important;
   }
 
-  .eb-svc-img {
-    height: 300px !important;
-  }
-
   /* Lead routing diagram: vertical version */
   .eb-diag-box {
     padding: 24px 20px !important;
@@ -216,13 +226,8 @@ img {
     display: block;
   }
 
-  .eb-testimonial {
-    flex-direction: column;
-    align-items: flex-start !important;
-    gap: 20px !important;
-  }
   .eb-testimonial-quote {
-    font-size: 19px !important;
+    font-size: 23px !important;
   }
 }
 
@@ -358,36 +363,6 @@ img {
 @media (min-width: 1271px) {
   .eb-seeit-stage {
     left: -60px;
-  }
-}
-
-/* "See more" toggle on the service cards: touch screens only */
-.eb-svc-more {
-  display: none;
-  margin-top: 6px;
-  padding: 0;
-  border: none;
-  background: none;
-  font: inherit;
-  font-size: 13px;
-  font-weight: 700;
-  color: #01858e;
-  cursor: pointer;
-}
-
-/* No hover on touch screens (any size): title + "See more", tap to open the description */
-@media (hover: none) {
-  .eb-svc-panel {
-    height: auto !important;
-    cursor: pointer;
-    padding-top: 12px !important;
-    background: rgba(255, 255, 255, 0.9) !important;
-  }
-  .eb-svc-panel:not(.is-open) .eb-svc-desc {
-    display: none;
-  }
-  .eb-svc-panel .eb-svc-more {
-    display: inline-block;
   }
 }
 
