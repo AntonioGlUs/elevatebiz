@@ -6,7 +6,7 @@ import type { Texts } from "./types";
 import styles from "./ServicesCarousel.module.css";
 
 const SERVICE_PHOTOS = [
-  { src: "/images/svc-marketing.webp", pos: "50% 50%" },
+  { src: "/images/svc-marketing.webp", pos: "56% 50%" },
   { src: "/images/svc-customer-service.webp", pos: "62% 40%" },
   { src: "/images/svc-custom-automation.webp", pos: "50% 50%" },
   { src: "/images/svc-ai-ready.webp", pos: "50% 50%" },

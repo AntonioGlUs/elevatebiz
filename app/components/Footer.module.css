@@ -75,6 +75,12 @@
   color: rgba(255, 255, 255, 0.65);
 }
 
+.privacy,
+.privacy:hover {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: underline;
+}
+
 .contact {
   display: flex;
   align-items: center;

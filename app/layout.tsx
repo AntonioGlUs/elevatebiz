@@ -22,6 +22,9 @@ export const metadata: Metadata = {
   },
 };
 
+const FONTS_URL =
+  "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Karla:wght@400;500;600;700&display=swap";
+
 export default function RootLayout({
   children,
 }: {
@@ -32,10 +35,17 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap"
+        {/* Fonts load without blocking the first paint: media=print until the sheet arrives, then all */}
+        <link id="google-fonts" rel="stylesheet" href={FONTS_URL} media="print" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){var l=document.getElementById('google-fonts');if(!l)return;function on(){l.media='all'}if(l.sheet){on()}else{l.addEventListener('load',on)}})()",
+          }}
         />
+        <noscript>
+          <link rel="stylesheet" href={FONTS_URL} />
+        </noscript>
         <link rel="icon" href="/favicon.png" type="image/png" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>

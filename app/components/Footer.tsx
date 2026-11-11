@@ -20,7 +20,13 @@ export default function Footer({ t }: { t: Texts }) {
         </a>
       </div>
       <div className={styles.bottom}>
-        <span className={styles.copyright}>{t.footerCopyright}</span>
+        <span className={styles.copyright}>
+          {t.footerCopyright}
+          {" · "}
+          <a href="/privacy/" className={styles.privacy}>
+            {t.footerPrivacy}
+          </a>
+        </span>
         <div className={styles.contact}>
           <div className={styles.social}>
             <a href="https://www.instagram.com/elevatebiz.ai/" aria-label="Instagram" className={styles.socialLink}>

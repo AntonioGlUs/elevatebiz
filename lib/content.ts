@@ -7,7 +7,7 @@ export const TEXT = {
     annClose: "Close",
     navBookCall: "Book a call",
     heroTitle:
-      "Let AI handle the repetitive work. You focus on growing your business.",
+      "Do what you love. Let AI handle the rest.",
     heroSubtitle:
       "We answer your customers instantly, automate your daily tasks, and help you reach more people. No technical knowledge required.",
     heroBtnPrimary: "Book a free call",
@@ -108,6 +108,7 @@ export const TEXT = {
     footerBookCall: "Book a call",
     footerCopyright: "© 2026 ElevateBiz. All rights reserved.",
     footerDemoNotice: "This is a demo site, still a work in progress.",
+    footerPrivacy: "Privacy Policy",
     previewNotice:
       "Preview mode: some features are fully built but intentionally switched off until our official launch.",
     // Extra note under the preview notice (bold part + rest of the sentence)
@@ -117,6 +118,9 @@ export const TEXT = {
     previewNoteMoreBold: "Need more info?",
     previewNoteMore: "Fill out the contact form.",
     previewNoticeButton: "Got it",
+    cookieText: "We use cookies to measure how the site is used and improve it. You can accept or decline.",
+    cookieAccept: "Accept",
+    cookieDecline: "Decline",
   },
   es: {
     annBold: "Programas especiales",
@@ -124,7 +128,7 @@ export const TEXT = {
     annClose: "Cerrar",
     navBookCall: "Agenda una llamada",
     heroTitle:
-      "Deja que la IA se encargue de lo repetitivo. Tú encárgate de crecer tu negocio.",
+      "Haz lo que amas. Deja que la IA se encargue del resto.",
     heroSubtitle:
       "Respondemos a tus clientes al instante, automatizamos tus tareas diarias y te ayudamos a llegar a más personas. Sin conocimientos técnicos.",
     heroBtnPrimary: "Agenda una llamada gratis",
@@ -219,6 +223,7 @@ export const TEXT = {
     footerBookCall: "Agenda una llamada",
     footerCopyright: "© 2026 ElevateBiz. Todos los derechos reservados.",
     footerDemoNotice: "Este es un sitio de demostración, sigue en desarrollo.",
+    footerPrivacy: "Política de privacidad",
     previewNotice:
       "Modo vista previa: algunas funciones ya están desarrolladas, pero las mantenemos desactivadas a propósito hasta nuestro lanzamiento oficial.",
     previewNoteTitle: "Mientras tanto:",
@@ -227,6 +232,9 @@ export const TEXT = {
     previewNoteMoreBold: "¿Necesitas más información?",
     previewNoteMore: "Llena el formulario de contacto.",
     previewNoticeButton: "Entendido",
+    cookieText: "Usamos cookies para medir cómo se usa el sitio y mejorarlo. Puedes aceptar o rechazar.",
+    cookieAccept: "Aceptar",
+    cookieDecline: "Rechazar",
   },
 } as const;
 
