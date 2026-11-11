@@ -300,6 +300,16 @@ export default function Site() {
 
   // Hero banner: the background photos fade into each other
   const [heroIdx, setHeroIdx] = useState(0)
+  // The photo is fixed to the screen while the page scrolls over it; once the hero has left the screen it is hidden
+  const heroRef = useRef(null)
+  const [heroInView, setHeroInView] = useState(true)
+  useEffect(() => {
+    const el = heroRef.current
+    if (!el || typeof IntersectionObserver === 'undefined') return
+    const io = new IntersectionObserver(([entry]) => setHeroInView(entry.isIntersecting))
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
   // The timer restarts whenever the photo changes, so a manual click gets the full 7 seconds too
   useEffect(() => {
     if (HERO_SLIDES.length < 2) return
@@ -500,7 +510,8 @@ export default function Site() {
 
       <div className="canvas" ref={canvasRef} data-env="white">
       <main id="top">
-        <section className="hero" data-env="white" style={{ paddingTop: heroOffset }}>
+        <section className="hero" data-env="white" ref={heroRef} style={{ paddingTop: heroOffset }}>
+          <div className="hero-fixed" aria-hidden="true" style={heroInView ? undefined : { visibility: 'hidden' }}>
           {HERO_SLIDES.map((slide, i) => (
             <div
               key={slide.src}
@@ -509,6 +520,7 @@ export default function Site() {
               style={{ '--photo': `url(${slide.src})`, '--photo-pos': slide.pos, ...(slide.zoom ? { '--zoom-from': slide.zoom[0], '--zoom-to': slide.zoom[1] } : {}) }}
             />
           ))}
+          </div>
           {HERO_SLIDES.length > 1 && (
           <div className="hero-controls">
             <div className="hero-dots">
@@ -562,6 +574,8 @@ export default function Site() {
           </div>
         </section>
 
+        {/* Everything below the hero slides up over it: the hero stays pinned and is covered gradually */}
+        <div className="after-hero">
         <section className="logos" data-env="white" aria-label={t.trustedBy}>
           <p className="eyebrow">{t.trustedBy}</p>
           <div className="marquee">
@@ -819,6 +833,7 @@ export default function Site() {
             </svg>
           </a>
         </section>
+        </div>
       </main>
 
       <footer className="ft" data-env="white">
