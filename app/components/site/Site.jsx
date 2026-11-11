@@ -300,6 +300,12 @@ export default function Site() {
 
   // Hero banner: the background photos fade into each other
   const [heroIdx, setHeroIdx] = useState(0)
+  // Only the first photo is downloaded at load; the others are added a moment after the page has settled
+  const [heroMore, setHeroMore] = useState(false)
+  useEffect(() => {
+    const t = setTimeout(() => setHeroMore(true), 2500)
+    return () => clearTimeout(t)
+  }, [])
   // The photo is fixed to the screen while the page scrolls over it; once the hero has left the screen it is hidden
   const heroRef = useRef(null)
   const [heroInView, setHeroInView] = useState(true)
@@ -512,7 +518,7 @@ export default function Site() {
       <main id="top">
         <section className="hero" data-env="white" ref={heroRef} style={{ paddingTop: heroOffset }}>
           <div className="hero-fixed" aria-hidden="true" style={heroInView ? undefined : { visibility: 'hidden' }}>
-          {HERO_SLIDES.map((slide, i) => (
+          {HERO_SLIDES.map((slide, i) => (i === 0 || heroMore || i === heroIdx) && (
             <div
               key={slide.src}
               className={`hero-bg${i === heroIdx ? ' is-on' : ''}${slide.zoom && slide.zoom[1] < 1 ? ' is-pulled' : ''}`}

@@ -33,6 +33,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* First hero photo: start downloading it right away (it is the largest thing on screen) */}
+        <link rel="preload" as="image" href="/images/hero-building.webp" fetchPriority="high" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* Fonts load without blocking the first paint: media=print until the sheet arrives, then all */}

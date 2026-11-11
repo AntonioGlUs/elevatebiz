@@ -1,13 +1,10 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 // Floating images with scroll-linked parallax (GSAP + ScrollTrigger, scrub: the motion follows the scroll position
 // directly, it is not a timed animation). Every item drifts upward a little faster than the page (depth) and fades in
 // as it enters the viewport. Only transform / opacity are animated. Layout slots (size, offset) are in globals.css (.sf-1 … .sf-4).
-gsap.registerPlugin(ScrollTrigger)
 
 // Parallax depth of each item (how much faster than the page it travels). Items lower in a column are never faster
 // than the ones above them, so neighbours in the same column cannot run into each other.
@@ -21,7 +18,16 @@ export default function ServicesFloat({ items }) {
   const root = useRef(null)
 
   useEffect(() => {
-    const mm = gsap.matchMedia()
+    // GSAP is loaded only when this section is about to come into view (it is not needed for the first screen)
+    let cancelled = false
+    let mm
+    let io
+
+    const init = async () => {
+      const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([import('gsap'), import('gsap/ScrollTrigger')])
+      if (cancelled) return
+      gsap.registerPlugin(ScrollTrigger)
+      mm = gsap.matchMedia()
 
     // Reduced motion: no movement and no fade, the images simply sit in place
     mm.add(
@@ -125,8 +131,29 @@ export default function ServicesFloat({ items }) {
       root,
     )
 
+    }
+
+    if (typeof IntersectionObserver === 'undefined') {
+      init()
+    } else {
+      io = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            io.disconnect()
+            init()
+          }
+        },
+        { rootMargin: '900px 0px' },
+      )
+      io.observe(root.current)
+    }
+
     // Everything created above is killed here (ScrollTriggers, tweens, inline styles)
-    return () => mm.revert()
+    return () => {
+      cancelled = true
+      io?.disconnect()
+      mm?.revert()
+    }
   }, [])
 
   return (
@@ -135,7 +162,7 @@ export default function ServicesFloat({ items }) {
         <div key={item.key} className={`sf-item sf-${i + 1}`}>
           <a href={item.href} target="_blank" rel="noopener" className="sf-link">
             <span className="sf-photo">
-              <img src={item.src} alt="" loading="lazy" style={{ objectPosition: item.pos }} />
+              <img src={item.src} alt="" loading="lazy" decoding="async" style={{ objectPosition: item.pos }} />
               <span className="sf-desc">{item.desc}</span>
             </span>
             <b className="sf-title">
