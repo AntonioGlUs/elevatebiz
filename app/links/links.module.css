@@ -84,6 +84,8 @@
   margin: 0;
   padding: 0;
   list-style: none;
+  max-width: 440px;
+  margin: 0 auto;
 }
 
 .page .link,
@@ -91,12 +93,14 @@
   display: flex;
   align-items: center;
   gap: 0;
-  padding: 0 24px 0 0;
-  min-height: 92px;
-  border: 1px solid rgba(11, 27, 45, 0.12);
-  border-radius: 28px;
-  background: #fff;
-  box-shadow: 0 8px 22px rgba(30, 60, 110, 0.12);
+  padding: 0 64px 0 0;
+  min-height: 68px;
+  border: 1px solid rgba(11, 27, 45, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 14px rgba(30, 60, 110, 0.1);
   color: #0b1b2d;
   text-align: left;
   text-decoration: none;
@@ -105,15 +109,15 @@
 
 .page .link:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(30, 60, 110, 0.2);
+  box-shadow: 0 8px 20px rgba(30, 60, 110, 0.16);
 }
 
 .page .primary,
 .page .primary:hover {
-  min-height: 104px;
+  min-height: 76px;
   border-color: transparent;
   background: linear-gradient(100deg, #17cfc0 0%, #08a6d6 55%, #0a8cf0 100%);
-  box-shadow: 0 12px 30px rgba(8, 150, 220, 0.3);
+  box-shadow: 0 8px 20px rgba(8, 150, 220, 0.28);
   color: #fff;
 }
 
@@ -121,24 +125,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 96px;
+  flex: 0 0 64px;
   align-self: stretch;
-  margin: 22px 0;
-  border-right: 1px solid rgba(11, 27, 45, 0.2);
+  margin: 0;
   color: #1673e6;
 }
 
 .primary .icon {
   color: #fff;
-  border-right-color: rgba(255, 255, 255, 0.5);
 }
 
 .text {
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 3px;
-  padding-left: 24px;
+  gap: 2px;
+  padding-left: 0;
+  text-align: center;
 }
 
 .label {
@@ -153,20 +156,71 @@
 }
 
 .chevron {
-  flex: none;
+  display: none;
 }
 
+/* Phones: compact sizes so the whole hub fits on one screen (no scrolling) */
 @media (max-width: 480px) {
+  .page {
+    gap: 10px;
+    padding: 14px 16px 24px;
+  }
+  .lang {
+    font-size: 12px;
+    padding: 5px 11px;
+  }
+  .card {
+    margin-top: 0;
+  }
+  .logo {
+    width: 68px;
+    height: 68px;
+  }
+  .name {
+    margin: 2px 0 6px;
+    font-size: 2rem;
+  }
+  .tagline {
+    margin-bottom: 18px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+  .list {
+    gap: 10px;
+    max-width: 310px;
+    margin: 0 auto;
+  }
+  .page .link,
+  .page .link:hover {
+    min-height: 56px;
+    padding-right: 48px;
+    border-radius: 999px;
+  }
+  .page .primary,
+  .page .primary:hover {
+    min-height: 64px;
+  }
   .icon {
-    flex-basis: 68px;
+    flex-basis: 48px;
+    margin: 0;
+  }
+  .icon svg {
+    width: 24px;
+    height: 24px;
   }
   .text {
-    padding-left: 16px;
+    gap: 1px;
+    padding-left: 0;
   }
   .label {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
   .hint {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+  }
+  .chevron {
+    width: 18px;
+    height: 18px;
   }
 }
+

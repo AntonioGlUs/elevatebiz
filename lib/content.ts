@@ -266,7 +266,7 @@ export const TEAM_MEMBERS = [
 
 export const NAV_DATA = [
   {
-    label: { en: "Services", es: "Servicios" },
+    label: { en: "Solutions", es: "Soluciones" },
     items: [
       { en: "AI Auto-Replies", es: "Respuestas automáticas con IA" },
       { en: "Task Automation", es: "Automatización de tareas" },
@@ -275,11 +275,11 @@ export const NAV_DATA = [
     ],
   },
   {
-    label: { en: "How It Works", es: "Cómo funciona" },
+    label: { en: "Resources", es: "Recursos" },
     items: [
-      { en: "Our Process", es: "Nuestro proceso" },
-      { en: "Timeline", es: "Cronograma" },
-      { en: "FAQ", es: "Preguntas frecuentes" },
+      { en: "Case Studies", es: "Casos de éxito" },
+      { en: "Blog", es: "Blog" },
+      { en: "Free Guide", es: "Guía gratuita" },
     ],
   },
   {
@@ -295,15 +295,11 @@ export const NAV_DATA = [
     ],
   },
   {
-    label: { en: "Resources", es: "Recursos" },
-    items: [
-      { en: "Case Studies", es: "Casos de éxito" },
-      { en: "Blog", es: "Blog" },
-      { en: "Free Guide", es: "Guía gratuita" },
-    ],
+    // Direct link (no dropdown): `items` is omitted. Without `href` it leads to coming-soon until the page exists.
+    label: { en: "Customers Directory", es: "Directorio de clientes" },
   },
   {
-    label: { en: "Company", es: "Empresa" },
+    label: { en: "About Us", es: "Nosotros" },
     items: [
       { en: "About Us", es: "Sobre nosotros" },
       { en: "Contact", es: "Contacto" },

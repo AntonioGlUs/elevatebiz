@@ -45,7 +45,9 @@ export default function NavBar({ t, lang, setLang, annVisible, annHeight }) {
   const menus = NAV_DATA.map((menu, i) => ({
     label: menu.label[lang],
     open: openMenu === i,
-    items: menu.items.map((it) => ({ text: it[lang], href: it.href ?? COMING_SOON_HREF })),
+    // Menus without `items` are direct links (no dropdown)
+    href: menu.items ? null : (menu.href ?? COMING_SOON_HREF),
+    items: (menu.items ?? []).map((it) => ({ text: it[lang], href: it.href ?? COMING_SOON_HREF })),
     toggle: () => setOpenMenu(openMenu === i ? null : i),
   }))
 
@@ -62,10 +64,16 @@ export default function NavBar({ t, lang, setLang, annVisible, annHeight }) {
         <div className="eb-nav-menus nb-menus">
           {menus.map((menu, i) => (
             <div key={i} className={`eb-nav-m${i} nb-menu`}>
-              <button type="button" onClick={menu.toggle} aria-expanded={menu.open} className="nb-menu-button">
-                <span>{menu.label}</span>
-                <Chevron open={menu.open} />
-              </button>
+              {menu.href ? (
+                <a href={menu.href} className="nb-menu-button" style={{ textDecoration: 'none' }}>
+                  <span>{menu.label}</span>
+                </a>
+              ) : (
+                <button type="button" onClick={menu.toggle} aria-expanded={menu.open} className="nb-menu-button">
+                  <span>{menu.label}</span>
+                  <Chevron open={menu.open} />
+                </button>
+              )}
               {menu.open && (
                 <div className="nb-dropdown">
                   {menu.items.map((item, j) => (
@@ -88,7 +96,13 @@ export default function NavBar({ t, lang, setLang, annVisible, annHeight }) {
               <div className="nb-dropdown nb-more-dropdown">
                 {menus.map((menu, i) => (
                   <div key={i} className={`eb-more-g${i}`}>
-                    <p className="nb-more-label">{menu.label}</p>
+                    {menu.href ? (
+                      <a href={menu.href} onClick={() => setOpenMenu(null)} className="nb-dropdown-link">
+                        {menu.label}
+                      </a>
+                    ) : (
+                      <p className="nb-more-label">{menu.label}</p>
+                    )}
                     {menu.items.map((item, j) => (
                       <a key={j} href={item.href} onClick={() => setOpenMenu(null)} className="nb-dropdown-link">
                         {item.text}
@@ -130,10 +144,16 @@ export default function NavBar({ t, lang, setLang, annVisible, annHeight }) {
         <div className="eb-mobile-panel nb-mobile-panel">
           {menus.map((menu, i) => (
             <div key={i} className="nb-mobile-menu">
-              <button type="button" onClick={menu.toggle} aria-expanded={menu.open} className="nb-mobile-menu-button">
-                <span>{menu.label}</span>
-                <Chevron open={menu.open} />
-              </button>
+              {menu.href ? (
+                <a href={menu.href} onClick={() => setMobileNavOpen(false)} className="nb-mobile-menu-button" style={{ textDecoration: 'none' }}>
+                  <span>{menu.label}</span>
+                </a>
+              ) : (
+                <button type="button" onClick={menu.toggle} aria-expanded={menu.open} className="nb-mobile-menu-button">
+                  <span>{menu.label}</span>
+                  <Chevron open={menu.open} />
+                </button>
+              )}
               {menu.open && (
                 <div className="nb-mobile-items">
                   {menu.items.map((item, j) => (

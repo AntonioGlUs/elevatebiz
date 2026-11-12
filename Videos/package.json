@@ -1,0 +1,21 @@
+{
+  "name": "videos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "studio": "remotion studio src/index.jsx",
+    "render": "remotion render src/index.jsx Main out/elevatebiz-intro.mp4 --gl=angle",
+    "render:en": "remotion render src/index.jsx Main out/elevatebiz-intro-en.mp4 --gl=angle --props='{\"lang\":\"en\"}'"
+  },
+  "keywords": [],
+  "dependencies": {
+    "@react-three/fiber": "^9.8.2",
+    "@remotion/cli": "^4.0.542",
+    "@remotion/three": "^4.0.542",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "remotion": "^4.0.542",
+    "three": "^0.187.0"
+  }
+}

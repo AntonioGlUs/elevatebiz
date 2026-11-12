@@ -39,7 +39,7 @@ export default function NavBar({ t, lang, setLang, showAnnouncement, annHeight }
   const navMenus = NAV_DATA.map((menu, i) => ({
     label: menu.label[lang],
     open: openMenuIndex === i,
-    items: menu.items.map((it) => ({ text: it[lang], href: it.href ?? COMING_SOON_HREF })),
+    items: (menu.items ?? []).map((it) => ({ text: it[lang], href: it.href ?? COMING_SOON_HREF })),
     toggle: () => setOpenMenu(openMenuIndex === i ? null : i),
   }));
 

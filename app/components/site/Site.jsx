@@ -10,6 +10,7 @@ import NavBar from './SiteNav'
 import LeadRouting from './LeadRouting'
 import Newsletter from './Newsletter'
 import CookieNotice from '../CookieNotice'
+import IntroVideoModal from '../IntroVideoModal'
 import Chatbot from '../Chatbot'
 
 // "saved every week" -> "Saved every week."
@@ -300,6 +301,7 @@ export default function Site() {
 
   // Hero banner: the background photos fade into each other
   const [heroIdx, setHeroIdx] = useState(0)
+  const [videoOpen, setVideoOpen] = useState(false)
   // Only the first photo is downloaded at load; the others are added a moment after the page has settled
   const [heroMore, setHeroMore] = useState(false)
   useEffect(() => {
@@ -569,6 +571,14 @@ export default function Site() {
               {h1a}. <em>{h1rest.join('. ')}</em>
             </h1>
             <p className="lead">{t.heroSubtitle}</p>
+            <button type="button" className="hero-video" data-fx="breathe" onClick={() => setVideoOpen(true)}>
+              {lang === 'es' ? 'Mira la IA en acción' : 'See AI in action'}
+              <span aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                  <path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86A1 1 0 0 0 8 5.14z" />
+                </svg>
+              </span>
+            </button>
             <div className="actions">
               <a href={BOOK_CALL_HREF} className="btn">
                 {t.heroBtnPrimary}
@@ -877,8 +887,9 @@ export default function Site() {
 
       </div>
       <CookieNotice t={t} />
+      <IntroVideoModal lang={lang} open={videoOpen} onClose={() => setVideoOpen(false)} />
       {/* The chatbot lives here (not in the root layout) so demo sites can have their own bot */}
-      <Chatbot />
+      <Chatbot lang={lang} />
     </>
   )
 }

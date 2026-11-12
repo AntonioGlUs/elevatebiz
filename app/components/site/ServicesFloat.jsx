@@ -22,6 +22,8 @@ export default function ServicesFloat({ items }) {
     let cancelled = false
     let mm
     let io
+    let ro
+    let refreshTimer
 
     const init = async () => {
       const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([import('gsap'), import('gsap/ScrollTrigger')])
@@ -65,7 +67,7 @@ export default function ServicesFloat({ items }) {
               scrollTrigger: {
                 trigger: wrap,
                 start: 'top bottom',
-                end: 'top 55%',
+                end: small ? 'top 80%' : 'top 55%',
                 scrub: true,
                 invalidateOnRefresh: true,
               },
@@ -75,22 +77,36 @@ export default function ServicesFloat({ items }) {
           // 2) Parallax (faster than the scroll). The top row keeps drifting upward until it leaves the screen. The
           //    bottom row starts lower and rises into its resting place, so once it arrives it scrolls normally and
           //    the space before the next section stays as designed instead of growing.
+          //    On small screens the items are short rows stacked in one column, so the two-row logic does not apply
+          //    (its scroll range would be empty for the last two): all four get the same gentle drift instead.
           const lastRow = i >= 2
-          gsap.fromTo(
-            link,
-            { y: () => (lastRow ? shift() * 0.55 : 0) },
-            {
-              y: () => (lastRow ? 0 : -shift() * 1.6),
-              ease: 'none',
-              scrollTrigger: {
-                trigger: wrap,
-                start: 'top 55%',
-                end: lastRow ? 'bottom 75%' : 'bottom top',
-                scrub: true,
-                invalidateOnRefresh: true,
+          if (small) {
+            gsap.fromTo(
+              link,
+              { y: 28 },
+              {
+                y: -28,
+                ease: 'none',
+                scrollTrigger: { trigger: wrap, start: 'top bottom', end: 'bottom top', scrub: true },
               },
-            },
-          )
+            )
+          } else {
+            gsap.fromTo(
+              link,
+              { y: () => (lastRow ? shift() * 0.55 : 0) },
+              {
+                y: () => (lastRow ? 0 : -shift() * 1.6),
+                ease: 'none',
+                scrollTrigger: {
+                  trigger: wrap,
+                  start: 'top 55%',
+                  end: lastRow ? 'bottom 75%' : 'bottom top',
+                  scrub: true,
+                  invalidateOnRefresh: true,
+                },
+              },
+            )
+          }
 
           // 3) 3D tilt through the whole pass (forward-to-back and side to side)
           gsap.set(link, { transformPerspective: 1100, transformOrigin: '50% 50%' })
@@ -121,7 +137,7 @@ export default function ServicesFloat({ items }) {
               scrollTrigger: {
                 trigger: wrap,
                 start: 'top bottom',
-                end: 'top 65%',
+                end: small ? 'top 80%' : 'top 65%',
                 scrub: true,
               },
             },
@@ -131,6 +147,19 @@ export default function ServicesFloat({ items }) {
       root,
     )
 
+      // The scroll positions are measured once. If the page above changes height afterwards (photos or fonts that
+      // finish loading, sections that resize), they are measured again, so the items never come in late.
+      if (typeof ResizeObserver !== 'undefined') {
+        let lastHeight = document.body.offsetHeight
+        ro = new ResizeObserver(() => {
+          const height = document.body.offsetHeight
+          if (height === lastHeight) return
+          lastHeight = height
+          clearTimeout(refreshTimer)
+          refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 200)
+        })
+        ro.observe(document.body)
+      }
     }
 
     if (typeof IntersectionObserver === 'undefined') {
@@ -152,6 +181,8 @@ export default function ServicesFloat({ items }) {
     return () => {
       cancelled = true
       io?.disconnect()
+      ro?.disconnect()
+      clearTimeout(refreshTimer)
       mm?.revert()
     }
   }, [])

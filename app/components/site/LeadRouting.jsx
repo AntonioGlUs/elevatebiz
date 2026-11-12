@@ -12,12 +12,11 @@ function PersonIcon({ size }) {
   )
 }
 
-function MobileLine({ progress, glow }) {
-  return (
-    <div className="lr-mobile-line">
-      <div className="lr-mobile-line-fill" style={{ height: `${Math.round(progress * 100)}%`, boxShadow: `0 0 10px 2px rgba(1, 195, 204,${(0.8 * glow).toFixed(2)})` }} />
-    </div>
-  )
+// Mixes a #rrggbb colour with white (amount 0..1)
+function lighten(hex, amount) {
+  const n = parseInt(hex.slice(1), 16)
+  const mix = (c) => Math.round(c + (255 - c) * amount)
+  return `rgb(${mix(n >> 16)}, ${mix((n >> 8) & 255)}, ${mix(n & 255)})`
 }
 
 // A new lead travels to the AI router and then to a team member; the whole sequence loops every 6 s
@@ -28,10 +27,22 @@ export default function LeadRouting({ t, lang }) {
   const started = useRef(false)
   const stageRef = useRef(null)
   const [diagScale, setDiagScale] = useState(1)
+  const compactRef = useRef(null)
+  const [compactScale, setCompactScale] = useState(1)
+  const [compactLeft, setCompactLeft] = useState(0)
 
-  // Scale the fixed-size (1000x390) diagram down to fit narrower screens
+  // Scale the fixed-size diagrams to fit: 1000x390 on wide screens, a roomier 360x224 one on phones
   useEffect(() => {
-    const measure = () => stageRef.current && setDiagScale(Math.min(1, stageRef.current.clientWidth / 1000))
+    const measure = () => {
+      if (stageRef.current) setDiagScale(Math.min(1, stageRef.current.clientWidth / 1000))
+      if (compactRef.current) {
+        // Never larger than 1.25x; when the box is wider than that, the diagram is centred in it
+        const width = compactRef.current.clientWidth
+        const scale = Math.min(1.25, width / 360)
+        setCompactScale(scale)
+        setCompactLeft(Math.max(0, (width - 360 * scale) / 2))
+      }
+    }
     measure()
     window.addEventListener('resize', measure)
     return () => window.removeEventListener('resize', measure)
@@ -92,6 +103,15 @@ export default function LeadRouting({ t, lang }) {
   const routerClass = `lr-router ${routerActiveWindow ? 'lr-router-active' : ''}`
   const pillClass = `lr-pill ${de >= 1350 ? 'lr-pill-visible' : ''} ${assignedActive ? 'lr-pill-assigned' : ''}`
   const routePillText = (lang === 'es' ? 'RUTA · ' : 'ROUTE · ') + TEAM_MEMBERS[targetIndex].specialty[lang].toUpperCase()
+  // Same routing on the compact (phone) stage: the lead and the router sit at y = 121
+  const compactY = [43, 95, 147, 199][targetIndex]
+  const compactLen = Math.round(Math.sqrt(52 * 52 + (compactY - 121) * (compactY - 121)) * 1.15)
+  const compactPath = `M162,121 Q192,121 214,${compactY}`
+  const compactOffset1 = Math.round(48 * (1 - line1Progress))
+  const compactOffset2 = Math.round(compactLen * (1 - line2Progress))
+  // The line from the router to the team takes the colour of the member it is heading to (lightened so it glows
+  // on the dark background)
+  const routeColor = lighten(TEAM_MEMBERS[targetIndex].bg, 0.35)
   const diagTeam = TEAM_MEMBERS.map((m, i) => ({
     initial: m.initial[lang],
     name: m.name[lang],
@@ -122,8 +142,8 @@ export default function LeadRouting({ t, lang }) {
               <path d="M238,190 L435,190" stroke="rgba(255,255,255,.08)" strokeWidth="2" fill="none" />
               <path d="M238,190 L435,190" stroke="#01c3cc" strokeWidth="8" fill="none" strokeLinecap="round" strokeDasharray="200" strokeDashoffset={line1Offset} opacity={line1GlowOpacity} className="lr-glow" />
               <path d="M238,190 L435,190" stroke="#01c3cc" strokeWidth="3" fill="none" strokeLinecap="round" strokeDasharray="200" strokeDashoffset={line1Offset} />
-              <path d={line2Path} stroke="#01c3cc" strokeWidth="8" fill="none" strokeLinecap="round" strokeDasharray={line2Length} strokeDashoffset={line2Offset} opacity={line2GlowOpacity} className="lr-glow" />
-              <path d={line2Path} stroke="#01c3cc" strokeWidth="3" fill="none" strokeLinecap="round" strokeDasharray={line2Length} strokeDashoffset={line2Offset} />
+              <path d={line2Path} stroke={routeColor} strokeWidth="8" fill="none" strokeLinecap="round" strokeDasharray={line2Length} strokeDashoffset={line2Offset} opacity={line2GlowOpacity} className="lr-glow" />
+              <path d={line2Path} stroke={routeColor} strokeWidth="3" fill="none" strokeLinecap="round" strokeDasharray={line2Length} strokeDashoffset={line2Offset} />
             </svg>
 
             <div className="lr-label lr-lead-label">{t.diagLeadLabel}</div>
@@ -150,37 +170,36 @@ export default function LeadRouting({ t, lang }) {
           </div>
         </div>
 
-        {/* Mobile version: same animation, stacked vertically */}
-        <div className="eb-diag-mobile">
-          <div className="lr-label lr-mobile-label">{t.diagLeadLabel}</div>
-          <div className="lr-mobile-row">
-            <div className="lr-mobile-lead-avatar">
-              <PersonIcon size={30} />
+        {/* Phone version: the same horizontal diagram, redrawn on a 360x224 stage so the text stays readable */}
+        <div ref={compactRef} className="eb-diag-mobile" style={{ height: 224 * compactScale }}>
+          <div className="lr-stage lr-compact" style={{ transform: `translateX(${compactLeft}px) scale(${compactScale})` }}>
+            <svg viewBox="0 0 360 224" width="360" height="224" className="lr-lines">
+              <path d="M60,121 L108,121" stroke="rgba(255,255,255,.08)" strokeWidth="1.5" fill="none" />
+              <path d="M60,121 L108,121" stroke="#01c3cc" strokeWidth="5" fill="none" strokeLinecap="round" strokeDasharray="48" strokeDashoffset={compactOffset1} opacity={line1GlowOpacity} className="lr-glow" />
+              <path d="M60,121 L108,121" stroke="#01c3cc" strokeWidth="2" fill="none" strokeLinecap="round" strokeDasharray="48" strokeDashoffset={compactOffset1} opacity={line1Progress > 0 ? 1 : 0} />
+              <path d={compactPath} stroke={routeColor} strokeWidth="5" fill="none" strokeLinecap="round" strokeDasharray={compactLen} strokeDashoffset={compactOffset2} opacity={line2GlowOpacity} className="lr-glow" />
+              <path d={compactPath} stroke={routeColor} strokeWidth="2" fill="none" strokeLinecap="round" strokeDasharray={compactLen} strokeDashoffset={compactOffset2} opacity={line2Progress > 0 ? 1 : 0} />
+            </svg>
+
+            <div className="lr-label lr-c-lead-label">{t.diagLeadLabel}</div>
+            <div className="lr-c-lead-avatar">
+              <PersonIcon size={22} />
             </div>
-            <div>
-              <div className="lr-mobile-lead-phone">{t.diagLeadPhone}</div>
-              <div className="lr-mobile-lead-via">{t.diagLeadVia}</div>
+            <div className="lr-c-lead-phone">{t.diagLeadPhone}</div>
+            <div className="lr-c-lead-via">{t.diagLeadVia}</div>
+
+            <div className={`${routerClass} lr-c-router`} style={{ boxShadow: routerShadow }}>
+              <img src="/images/logo-icon-v2.webp" alt="" width="128" height="128" loading="lazy" className="lr-c-router-logo" />
+              <div className="lr-router-label">{t.diagRouterLabel}</div>
             </div>
+
+            <div className={`${pillClass} lr-c-pill`}>
+              <span className="lr-pill-text">{routePillText}</span>
+            </div>
+
+            <div className="lr-label lr-c-team-label">{t.diagTeamLabel}</div>
+            <div className="lr-c-team">{diagTeam.map(renderCard)}</div>
           </div>
-
-          <MobileLine progress={line1Progress} glow={line1GlowOpacity} />
-
-          <div className="lr-mobile-row">
-            <div className={`${routerClass} lr-router-mobile`} style={{ boxShadow: routerShadow }}>
-              <img src="/images/logo-icon-v2.webp" alt="" width="128" height="128" loading="lazy" className="lr-router-logo-mobile" />
-            </div>
-            <div className="lr-mobile-router-info">
-              <div className="lr-router-label lr-mobile-router-label">{t.diagRouterLabel}</div>
-              <div className={`${pillClass} lr-pill-mobile`}>
-                <span className="lr-pill-text">{routePillText}</span>
-              </div>
-            </div>
-          </div>
-
-          <MobileLine progress={line2Progress} glow={line2GlowOpacity} />
-
-          <div className="lr-label lr-mobile-team-label">{t.diagTeamLabel}</div>
-          <div className="lr-team-mobile">{diagTeam.map(renderCard)}</div>
         </div>
       </div>
     </div>

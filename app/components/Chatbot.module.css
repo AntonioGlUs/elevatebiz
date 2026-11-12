@@ -1,0 +1,205 @@
+/* Pre-chat form. Sits exactly where the n8n chat window and its round button appear, and matches their look
+   (see the #n8n-chat block in globals.css). */
+.wrapper {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  max-width: calc(100% - 2rem);
+  max-height: calc(100% - 2rem);
+  font-family: "Karla", sans-serif;
+}
+
+.toggle {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 62px;
+  height: 62px;
+  margin-left: auto;
+  border: none;
+  border-radius: 50%;
+  background: #01a9b4;
+  color: #ffffff;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.toggle:hover {
+  background: #0197a1;
+  transform: scale(1.05);
+}
+
+.toggle:focus-visible,
+.close:focus-visible,
+.submit:focus-visible {
+  outline: 3px solid rgba(1, 169, 180, 0.45);
+  outline-offset: 2px;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  width: 380px;
+  max-width: 100%;
+  min-height: 0;
+  margin-bottom: 1rem;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 16px 48px rgba(20, 39, 32, 0.18);
+  overflow: hidden;
+  transform-origin: 100% 100%;
+  animation: grow 0.15s ease;
+}
+
+@keyframes grow {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+.header {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #01c3cc, #01a9b4 55%, #01858e);
+  color: #ffffff;
+}
+
+.avatar {
+  flex: none;
+  width: 34px;
+  height: 48px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 6px rgba(0, 60, 64, 0.35));
+}
+
+.title {
+  margin: 0 auto 0 0;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #ffffff;
+}
+
+.close {
+  flex: none;
+  border: none;
+  background: none;
+  color: #ffffff;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #d9fbfd;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.intro {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.45;
+  color: #1f2d27;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #142720;
+}
+
+.input {
+  padding: 11px 14px;
+  border: 1px solid #d5dbe0;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #142720;
+  font: inherit;
+  font-size: 16px; /* 16px keeps iOS from zooming in on focus */
+  font-weight: 400;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #01a9b4;
+  box-shadow: 0 0 0 3px rgba(1, 169, 180, 0.18);
+}
+
+.consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #1f2d27;
+  cursor: pointer;
+}
+
+.consent input {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin: 1px 0 0;
+  accent-color: #01a9b4;
+}
+
+.consent a {
+  color: #01858e;
+  text-decoration: underline;
+}
+
+.error {
+  margin: 0;
+  font-size: 13px;
+  color: #c0392b;
+}
+
+.submit {
+  padding: 13px 18px;
+  border: none;
+  border-radius: 999px;
+  background: #01a9b4;
+  color: #ffffff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.submit:hover:not(:disabled) {
+  background: #01858e;
+}
+
+.submit:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel {
+    animation: none;
+  }
+
+  .toggle {
+    transition: none;
+  }
+}
