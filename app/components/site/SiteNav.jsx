@@ -7,6 +7,31 @@ import { BOOK_CALL_HREF, COMING_SOON_HREF } from '../constants'
 const PHONE = '+1 650 800 5771'
 const BRAND_NAME = 'ElevateBiz'
 
+// Hand-drawn neon note that points at the Demos menu when the page loads, then fades away
+const DEMOS_INDEX = NAV_DATA.findIndex((menu) => menu.label.en === 'Demos')
+const CALLOUT_DELAY = 1400 // ms after load, once the hero has finished its entrance
+const CALLOUT_TIME = 7000 // ms it stays on screen
+const CALLOUT_FADE = 600 // ms, matches the fade-out in the CSS
+const CALLOUT_TEXT = {
+  en: 'Check out our demos for hands-on examples of AI in your business',
+  es: 'Revisa nuestros demos para ejemplos prácticos de la IA en tu negocio',
+}
+
+function DemosCallout({ lang, leaving }) {
+  return (
+    <span className={`nb-callout${leaving ? ' nb-callout-leaving' : ''}`} aria-hidden="true">
+      <svg className="nb-callout-ring" width="130" height="64" viewBox="0 0 130 64" fill="none">
+        <path pathLength="1" d="M30 12C60 2 112 6 122 28C130 50 90 60 58 59C26 58 4 48 8 30C11 14 44 6 84 9" />
+      </svg>
+      <svg className="nb-callout-arrow" width="90" height="84" viewBox="0 0 90 84" fill="none">
+        <path pathLength="1" d="M72 78C68 48 48 23 14 12" />
+        <path pathLength="1" className="nb-callout-head" d="M23.7 23.4L14 12L28.5 8.3" />
+      </svg>
+      <span className="nb-callout-text">{CALLOUT_TEXT[lang] ?? CALLOUT_TEXT.en}</span>
+    </span>
+  )
+}
+
 function Chevron({ open }) {
   return (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5e6d64" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={open ? 'nb-chevron nb-chevron-open' : 'nb-chevron'}>
@@ -28,6 +53,19 @@ export default function NavBar({ t, lang, setLang, annVisible, annHeight }) {
   const [scrolled, setScrolled] = useState(false)
   const [openMenu, setOpenMenu] = useState(null)
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
+  const [callout, setCallout] = useState('off') // 'off' | 'on' | 'leaving'
+
+  useEffect(() => {
+    const timers = [
+      setTimeout(() => setCallout('on'), CALLOUT_DELAY),
+      setTimeout(() => setCallout('leaving'), CALLOUT_DELAY + CALLOUT_TIME),
+      setTimeout(() => setCallout('off'), CALLOUT_DELAY + CALLOUT_TIME + CALLOUT_FADE),
+    ]
+    return () => timers.forEach(clearTimeout)
+  }, [])
+
+  // Gone at once if the visitor scrolls or opens a menu
+  const showCallout = callout !== 'off' && !scrolled && openMenu === null
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -74,6 +112,7 @@ export default function NavBar({ t, lang, setLang, annVisible, annHeight }) {
                   <Chevron open={menu.open} />
                 </button>
               )}
+              {i === DEMOS_INDEX && showCallout && <DemosCallout lang={lang} leaving={callout === 'leaving'} />}
               {menu.open && (
                 <div className="nb-dropdown">
                   {menu.items.map((item, j) => (

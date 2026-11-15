@@ -15,6 +15,10 @@ const COPY = {
     open: 'Open chat',
     close: 'Close chat',
     title: 'ElevateBiz AI Assistant',
+    welcome:
+      'Welcome to ElevateBiz! 👋 I can answer your questions about our AI automation and marketing services. How can I help you today?',
+    getStarted: 'Start a conversation',
+    placeholder: 'Write your message...',
     intro: 'Before we start, tell us who you are so we can follow up with you.',
     name: 'Name',
     email: 'Email',
@@ -35,6 +39,10 @@ const COPY = {
     open: 'Abrir chat',
     close: 'Cerrar chat',
     title: 'Asistente IA de ElevateBiz',
+    welcome:
+      '¡Bienvenido a ElevateBiz! 👋 Puedo responder tus preguntas sobre nuestros servicios de automatización con IA y marketing. ¿Cómo puedo ayudarte hoy?',
+    getStarted: 'Iniciar una conversación',
+    placeholder: 'Escribe tu mensaje...',
     intro: 'Antes de empezar, dinos quién eres para poder darte seguimiento.',
     name: 'Nombre',
     email: 'Email',
@@ -55,6 +63,10 @@ const COPY = {
 
 type ErrorKey = keyof (typeof COPY)['en']['errors'];
 
+// Pre-chat form (name, email, phone, privacy consent). Off for now: the chat opens straight into the conversation.
+// Set to true to ask for the visitor's details again before the chat starts.
+const ASK_DETAILS = false;
+
 // The chat library is large (about 1.3 MB of JavaScript), so it is only downloaded once the visitor opens the form.
 const loadChat = () => import('@n8n/chat');
 
@@ -64,6 +76,8 @@ export default function Chatbot({ lang = 'en' }: { lang?: Lang }) {
   // The visitor's details. The n8n chat is only created once these exist, so every conversation starts with them.
   const [lead, setLead] = useState<Lead | null>(null);
   const [ready, setReady] = useState(false);
+  // Form off: set when the visitor presses the chat button, which starts the chat right away
+  const [started, setStarted] = useState(false);
   const [form, setForm] = useState<Lead>({ name: '', email: '', phone: '' });
   const [consent, setConsent] = useState(false);
   const [error, setError] = useState<ErrorKey | null>(null);
@@ -86,7 +100,7 @@ export default function Chatbot({ lang = 'en' }: { lang?: Lang }) {
   // Once the form is sent: create the n8n chat with the visitor's details as metadata (sent to the webhook with
   // every message) and open its window in place of the form.
   useEffect(() => {
-    if (!lead) return;
+    if (ASK_DETAILS ? !lead : !started) return;
     let cancelled = false;
     let cleanup: (() => void) | undefined;
 
@@ -96,27 +110,29 @@ export default function Chatbot({ lang = 'en' }: { lang?: Lang }) {
       const chat = createChat({
         webhookUrl: WEBHOOK_URL,
         mode: 'window',
-        metadata: {
-          name: lead.name,
-          email: lead.email,
-          phone: lead.phone,
-          privacyAccepted: true,
-          privacyAcceptedAt: new Date().toISOString(),
-          lang: langRef.current,
-        },
-        initialMessages: [
-          'Welcome to ElevateBiz! 👋 I can answer your questions about our AI automation and marketing services. How can I help you today?',
-        ],
+        metadata: lead
+          ? {
+              name: lead.name,
+              email: lead.email,
+              phone: lead.phone,
+              privacyAccepted: true,
+              privacyAcceptedAt: new Date().toISOString(),
+              lang: langRef.current,
+            }
+          : { lang: langRef.current },
+        // Greeting in the page's language (the chat is created once, with the language active at that moment)
+        initialMessages: [COPY[langRef.current].welcome],
 
+        // The widget's default language key is "en"; its texts are filled in the page's language
         i18n: {
-            en: {
-                title: 'ElevateBiz AI Assistant',
-                subtitle: '',
-                footer: '',
-                getStarted: 'Start a conversation',
-                inputPlaceholder: 'Write your message...',
-                closeButtonTooltip: 'Close chat',
-            },
+          en: {
+            title: COPY[langRef.current].title,
+            subtitle: '',
+            footer: '',
+            getStarted: COPY[langRef.current].getStarted,
+            inputPlaceholder: COPY[langRef.current].placeholder,
+            closeButtonTooltip: COPY[langRef.current].close,
+          },
         },
       });
       cleanup = () => chat.unmount();
@@ -142,7 +158,7 @@ export default function Chatbot({ lang = 'en' }: { lang?: Lang }) {
       cancelled = true;
       cleanup?.();
     };
-  }, [lead]);
+  }, [lead, started]);
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
@@ -227,7 +243,11 @@ export default function Chatbot({ lang = 'en' }: { lang?: Lang }) {
           <button
             type="button"
             className={styles.toggle}
-            onClick={() => setOpen((value) => !value)}
+            onClick={() => (ASK_DETAILS ? setOpen((value) => !value) : setStarted(true))}
+            onPointerEnter={() => {
+              if (!ASK_DETAILS) loadChat(); // start downloading the chat early so it opens faster on click
+            }}
+            style={started ? { opacity: 0.6 } : undefined}
             aria-label={open ? t.close : t.open}
             aria-expanded={open}
           >

@@ -11,7 +11,9 @@ import LeadRouting from './LeadRouting'
 import Newsletter from './Newsletter'
 import CookieNotice from '../CookieNotice'
 import IntroVideoModal from '../IntroVideoModal'
-import Chatbot from '../Chatbot'
+import DemosSheet from './DemosSheet'
+// Chat: GoHighLevel widget (agent Bizzy). The previous n8n chat is still in ../Chatbot; to go back, import it here and render <Chatbot lang={lang} /> instead.
+import GhlChat from '../GhlChat'
 
 // "saved every week" -> "Saved every week."
 const sentence = (s) => {
@@ -302,6 +304,7 @@ export default function Site() {
   // Hero banner: the background photos fade into each other
   const [heroIdx, setHeroIdx] = useState(0)
   const [videoOpen, setVideoOpen] = useState(false)
+  const [demosOpen, setDemosOpen] = useState(false)
   // Only the first photo is downloaded at load; the others are added a moment after the page has settled
   const [heroMore, setHeroMore] = useState(false)
   useEffect(() => {
@@ -583,9 +586,10 @@ export default function Site() {
               <a href={BOOK_CALL_HREF} className="btn">
                 {t.heroBtnPrimary}
               </a>
-              <a href="#como-funciona" className="btn btn-ghost">
-                {t.heroBtnSecondary}
-              </a>
+              {/* Shortcut to the Demos list, on every screen size (on desktop it repeats the Demos menu of the nav bar) */}
+              <button type="button" className="btn btn-ghost hero-demos-m" onClick={() => setDemosOpen(true)}>
+                Demos
+              </button>
             </div>
           </div>
         </section>
@@ -888,8 +892,9 @@ export default function Site() {
       </div>
       <CookieNotice t={t} />
       <IntroVideoModal lang={lang} open={videoOpen} onClose={() => setVideoOpen(false)} />
+      <DemosSheet lang={lang} open={demosOpen} onClose={() => setDemosOpen(false)} />
       {/* The chatbot lives here (not in the root layout) so demo sites can have their own bot */}
-      <Chatbot lang={lang} />
+      <GhlChat lang={lang} />
     </>
   )
 }

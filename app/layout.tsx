@@ -12,18 +12,18 @@ export const metadata: Metadata = {
     url: "/",
     siteName: "ElevateBiz",
     type: "website",
-    images: [{ url: "/images/hero-bg.webp", width: 1672, height: 941 }],
+    images: [{ url: "/images/og-card.jpg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "ElevateBiz — AI Automation & Marketing",
     description: "AI automation and marketing for small and medium businesses.",
-    images: ["/images/hero-bg.webp"],
+    images: ["/images/og-card.jpg"],
   },
 };
 
 const FONTS_URL =
-  "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Karla:wght@400;500;600;700&display=swap";
+  "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Karla:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap";
 
 export default function RootLayout({
   children,

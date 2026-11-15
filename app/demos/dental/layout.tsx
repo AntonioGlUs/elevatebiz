@@ -9,3 +9,4 @@ const workSans = Work_Sans({
 export default function DentalLayout({ children }: { children: React.ReactNode }) {
   return <div className={workSans.variable}>{children}</div>;
 }
+
