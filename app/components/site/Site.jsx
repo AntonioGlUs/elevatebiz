@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Lenis from 'lenis'
-import { TEXT, STATS, CLIENTS, TEAM_MEMBERS, FAQ_DATA, CHAT_SCRIPT } from '@/lib/content'
+import { TEXT, STATS, TOOLS, TEAM_MEMBERS, FAQ_DATA, CHAT_SCRIPT } from '@/lib/content'
 import { EXTRA, SERVICE_PHOTOS } from '@/lib/extra'
 import { BOOK_CALL_HREF, COMING_SOON_HREF } from '../constants'
 import ServicesFloat from './ServicesFloat'
@@ -21,6 +21,16 @@ const sentence = (s) => {
   return /[.!?]$/.test(t) ? t : `${t}.`
 }
 
+// Generic line icon for tools that have no brand icon file (see TOOLS in lib/content)
+const TOOL_ICONS = {
+  funnel: 'M3 5h18l-7 8v6l-4-2v-4L3 5z',
+  nodes: 'M6 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM18 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM12 16a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM7 8l4 8M17 8l-4 8M8 6h8',
+}
+
+// Testimonials section. Off while its quotes are samples: set to true once real client testimonials are in
+// lib/extra.js (quotes), and remove the "sample" note there (clientsNote).
+const SHOW_TESTIMONIALS = false
+
 const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 // Last `n` words of a heading in the accent italic
@@ -34,11 +44,14 @@ function Title({ text, n = 2 }) {
   )
 }
 
+// Counts from 0 up to `to` once `run` is true. It starts at the final value, so the exported HTML (what search
+// engines and AI crawlers read) carries the real figure instead of 0.
 function CountUp({ to, run }) {
-  const [v, setV] = useState(0)
+  const [v, setV] = useState(to)
   useEffect(() => {
     if (!run) return
     if (reduceMotion()) return setV(to)
+    setV(0)
     let raf
     const t0 = performance.now()
     const tick = (now) => {
@@ -63,6 +76,24 @@ const MISSION_ICONS = [
   // arrow up-right
   <svg key="a" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M8 7h9v9" /></svg>,
 ]
+
+// Icons of the "problems" cards: moon (after hours), clock (follow-up), copy (manual data), broken link (systems)
+const PROBLEM_ICONS = [
+  <svg key="m" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z" /></svg>,
+  <svg key="c" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>,
+  <svg key="p" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="11" height="11" rx="2" /><path d="M5 15V6a2 2 0 0 1 2-2h9" /></svg>,
+  <svg key="l" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 17H7a5 5 0 0 1 0-10h2M15 7h2a5 5 0 0 1 0 10h-2M3 3l18 18" /></svg>,
+]
+
+// Icons of the "for enterprises" cards: gear (processes), code (software), link (integrations)
+const ENTERPRISE_ICONS = [
+  <svg key="g" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 6h10M18 6h2M4 12h2M10 12h10M4 18h8M16 18h4" /><circle cx="16" cy="6" r="2" /><circle cx="8" cy="12" r="2" /><circle cx="14" cy="18" r="2" /></svg>,
+  <svg key="c" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16" /></svg>,
+  <svg key="l" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 17H7a5 5 0 0 1 0-10h2M15 7h2a5 5 0 0 1 0 10h-2M8 12h8" /></svg>,
+]
+
+// Technologies listed in the "for enterprises" section
+const ENTERPRISE_STACK = ['n8n', 'Python', 'LangGraph', 'LlamaIndex', 'Supabase', 'OpenAI', 'Anthropic', 'Gemini']
 
 function MissionCard({ icon, title, text }) {
   const inner = useRef(null)
@@ -268,14 +299,8 @@ function WhatsAppDemo({ t, lang }) {
   )
 }
 
-export default function Site() {
-  const [lang, setLang] = useState('en')
-  // Initial language: saved choice, else the browser's language
-  useEffect(() => {
-    const saved = localStorage.getItem('eb-lang')
-    if (saved === 'en' || saved === 'es') setLang(saved)
-    else if (navigator.language.toLowerCase().startsWith('es')) setLang('es')
-  }, [])
+// The language comes from the URL: "/" renders English and "/es/" renders Spanish (see app/components/HomePage.tsx)
+export default function Site({ lang = 'en' }) {
   const t = TEXT[lang]
   const x = EXTRA[lang]
 
@@ -494,7 +519,8 @@ export default function Site() {
   // Testimonials auto-advance with the progress bar's animation end
   const quotes = x.quotes
 
-  const [h1a, ...h1rest] = t.heroTitle.split('. ')
+  // Headline: the text before the comma is plain, the rest goes on its own line in the accent italic
+  const [h1a, ...h1rest] = t.heroTitle.split(', ')
 
   return (
     <>
@@ -517,7 +543,7 @@ export default function Site() {
         </div>
       </div>
 
-      <NavBar t={t} lang={lang} setLang={setLang} annVisible={annVisible} annHeight={annHeight} />
+      <NavBar t={t} lang={lang} annVisible={annVisible} annHeight={annHeight} />
 
       <div className="canvas" ref={canvasRef} data-env="white">
       <main id="top">
@@ -571,9 +597,10 @@ export default function Site() {
           <div className="hero-glow" aria-hidden="true" />
           <div className="container">
             <h1>
-              {h1a}. <em>{h1rest.join('. ')}</em>
+              {h1a}, <em>{h1rest.join(', ')}</em>
             </h1>
             <p className="lead">{t.heroSubtitle}</p>
+            <p className="hero-kicker">{t.heroTagline}</p>
             <button type="button" className="hero-video" data-fx="breathe" onClick={() => setVideoOpen(true)}>
               {lang === 'es' ? 'Mira la IA en acción' : 'See AI in action'}
               <span aria-hidden="true">
@@ -591,19 +618,30 @@ export default function Site() {
                 Demos
               </button>
             </div>
+            <p className="hero-assure">{t.heroAssure}</p>
           </div>
         </section>
 
         {/* Everything below the hero slides up over it: the hero stays pinned and is covered gradually */}
         <div className="after-hero">
-        <section className="logos" data-env="white" aria-label={t.trustedBy}>
-          <p className="eyebrow">{t.trustedBy}</p>
+        {/* Tools we connect. Sample client names were here before: real client logos go back in this strip later. */}
+        <section className="logos" data-env="white" aria-label={t.worksWith}>
+          <p className="eyebrow">{t.worksWith}</p>
           <div className="marquee">
+            {/* The list is repeated twice so the strip loops without a gap */}
             <div className="track">
-              {[...CLIENTS, ...CLIENTS].map((c, i) => (
-                <span key={i}>
-                  <i style={{ background: c.bg, color: c.fg }}>{c.initial}</i>
-                  {c.name}
+              {[...TOOLS, ...TOOLS].map((tool, i) => (
+                <span key={i} aria-hidden={i >= TOOLS.length ? 'true' : undefined}>
+                  {tool.logo ? (
+                    <img src={`/images/tools/${tool.logo.includes('.') ? tool.logo : `${tool.logo}.svg`}`} alt="" width="26" height="26" loading="lazy" />
+                  ) : (
+                    <i>
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d={TOOL_ICONS[tool.icon]} />
+                      </svg>
+                    </i>
+                  )}
+                  {tool.name}
                 </span>
               ))}
             </div>
@@ -615,33 +653,54 @@ export default function Site() {
           <h2>
             <Title text={x.stats.title} n={x.stats.accentWords} />
           </h2>
+          <p className="impact-note">{x.stats.note}</p>
           <div className="impact-grid">
-            {STATS.map((s, i) => (
+            {STATS.map((s, i) => {
+              // The unit can differ by language ("sec" / "seg")
+              const suffix = typeof s.suffix === 'string' ? s.suffix : s.suffix[lang]
+              return (
               <div key={s.target} className="impact-col" style={{ '--i': i }}>
                 <strong className="impact-num">
                   {s.prefix}
                   <CountUp to={s.target} run={statsIn} />
-                  <span className={s.suffix.trim().startsWith('/') ? 'impact-suf full' : 'impact-suf'}>{s.suffix}</span>
+                  <span className={suffix.trim().startsWith('/') ? 'impact-suf full' : 'impact-suf'}>{suffix}</span>
                 </strong>
                 <span className="impact-dash" aria-hidden="true" />
                 <h3>{s.eyebrow[lang]}</h3>
                 <p>{sentence(s.label[lang])}</p>
               </div>
-            ))}
+              )
+            })}
           </div>
         </section>
 
+        {/* The everyday problems, before the solution */}
         <section className="container sec" data-env="white">
-          <div className="mission-head">
-            <p className="mission-eyebrow">{x.mission.eyebrow}</p>
-            <h2 className="mission-title">
-              <b>{x.mission.bold}</b> <em>{x.mission.italic}</em>
-            </h2>
-            <p className="mission-sub">{x.mission.subtitle}</p>
+          <p className="eyebrow">{x.problems.eyebrow}</p>
+          <h2>
+            <Title text={x.problems.title} n={x.problems.accentWords} />
+          </h2>
+          <div className="mission-cards cards-top">
+            {x.problems.cards.map((c, i) => (
+              <MissionCard key={c.title} icon={PROBLEM_ICONS[i]} title={c.title} text={c.text} />
+            ))}
           </div>
-          <div className="mission-cards">
-            {x.mission.cards.map((c, i) => (
-              <MissionCard key={c.title} icon={MISSION_ICONS[i]} title={c.title} text={c.text} />
+          {/* Before / after: the same four problems, without and with the service */}
+          <div className="contrast">
+            {['without', 'with'].map((side) => (
+              <div key={side} className={`contrast-col ${side}`}>
+                <h3>{x.contrast[side].title}</h3>
+                <ul>
+                  {x.contrast[side].items.map((item) => (
+                    <li key={item}>
+                      <span className="contrast-mark" aria-hidden="true">
+                        {side === 'with' ? '✓' : '✕'}
+                      </span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
           </div>
         </section>
@@ -677,6 +736,7 @@ export default function Site() {
             <h2>
               <Title text={t.servicesTitle} />
             </h2>
+            <p className="price-note">{x.priceNote}</p>
           </div>
           <ServicesFloat
             items={[0, 1, 2, 3].map((i) => ({
@@ -710,6 +770,26 @@ export default function Site() {
               </li>
             ))}
           </ol>
+        </section>
+
+        {/* For larger companies: internal processes, custom software, integrations and the stack */}
+        <section id="empresas" className="container sec" data-env="dark">
+          <p className="eyebrow">{x.enterprise.eyebrow}</p>
+          <h2>
+            <Title text={x.enterprise.title} n={x.enterprise.accentWords} />
+          </h2>
+          <p className="intro">{x.enterprise.intro}</p>
+          <div className="mission-cards three cards-top">
+            {x.enterprise.cards.map((c, i) => (
+              <MissionCard key={c.title} icon={ENTERPRISE_ICONS[i]} title={c.title} text={c.text} />
+            ))}
+          </div>
+          <p className="ent-stack">
+            <b>{x.enterprise.stackLabel}:</b> {ENTERPRISE_STACK.join(' · ')}
+          </p>
+          <a href={BOOK_CALL_HREF} className="btn">
+            {x.enterprise.button}
+          </a>
         </section>
 
         <section className="container sec" data-env="dark">
@@ -771,6 +851,7 @@ export default function Site() {
           </div>
         </section>
 
+        {SHOW_TESTIMONIALS && (
         <section id="clientes" className="container sec" data-env="dark">
           <p className="eyebrow">{x.eyebrows.clients}</p>
           <h2>
@@ -795,6 +876,7 @@ export default function Site() {
           </div>
           <p className="note">{x.clientsNote}</p>
         </section>
+        )}
 
         <section id="faq" className="container sec" data-env="white">
           <p className="eyebrow">{x.eyebrows.faq}</p>
@@ -831,6 +913,22 @@ export default function Site() {
                 </div>
               )
             })}
+          </div>
+        </section>
+
+        {/* Mission: after the visitor has seen what we do */}
+        <section className="container sec" data-env="white">
+          <div className="mission-head">
+            <p className="mission-eyebrow">{x.mission.eyebrow}</p>
+            <h2 className="mission-title">
+              <b>{x.mission.bold}</b> <em>{x.mission.italic}</em>
+            </h2>
+            <p className="mission-sub">{x.mission.subtitle}</p>
+          </div>
+          <div className="mission-cards">
+            {x.mission.cards.map((c, i) => (
+              <MissionCard key={c.title} icon={MISSION_ICONS[i]} title={c.title} text={c.text} />
+            ))}
           </div>
         </section>
 
@@ -885,7 +983,6 @@ export default function Site() {
             {x.closing.privacy}
           </a>
         </div>
-        <p className="ft-demo">{x.closing.demo}</p>
       </footer>
       </div>
 

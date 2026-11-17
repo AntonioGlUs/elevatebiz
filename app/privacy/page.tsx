@@ -10,7 +10,7 @@ const COPY: Record<Lang, { back: string; title: string; updated: string; intro: 
   en: {
     back: "← Back to ElevateBiz",
     title: "Privacy Policy",
-    updated: "Last updated: October 25, 2026",
+    updated: "Last updated: November 15, 2026",
     intro:
       "ElevateBiz respects your privacy. This page explains what information we collect on elevatebiz.ai, why we collect it, and the choices you have.",
     sections: [
@@ -33,9 +33,13 @@ const COPY: Record<Lang, { back: string; title: string; updated: string; intro: 
         ],
       },
       {
-        title: "Cookies and Google Analytics",
+        title: "Cookies, Google Analytics and the chat",
         body: [
           "We use Google Analytics, a service from Google LLC, to measure visits. It uses cookies and similar technologies to tell visits apart and collect usage statistics.",
+          "Google Analytics is loaded only if you press Accept in the cookie notice. If you press Decline, it is not loaded. We save your answer in your browser so we do not ask again.",
+          "The chat assistant is provided by GoHighLevel (HighLevel Inc.). It is part of the site and loads on every visit, whether or not you accept analytics cookies. It may store information in your browser to keep your conversation, and it receives the messages you send.",
+          "By using the chat, you agree that we store your messages and the information you share in it to answer you and follow up on your request.",
+          "If you do not agree to us storing your personal data or statistics about your conversation, please do not use the chat. You can reach us at hello@elevatebiz.ai instead.",
           "You can block or delete cookies in your browser settings, or install the Google Analytics opt-out browser add-on at tools.google.com/dlpage/gaoptout.",
           "You can learn how Google uses information from sites that use its services at policies.google.com/technologies/partner-sites.",
         ],
@@ -83,7 +87,7 @@ const COPY: Record<Lang, { back: string; title: string; updated: string; intro: 
   es: {
     back: "← Volver a ElevateBiz",
     title: "Política de privacidad",
-    updated: "Última actualización: 25 de octubre de 2026",
+    updated: "Última actualización: 15 de noviembre de 2026",
     intro:
       "En ElevateBiz respetamos tu privacidad. Esta página explica qué información recopilamos en elevatebiz.ai, para qué la usamos y qué opciones tienes.",
     sections: [
@@ -106,9 +110,13 @@ const COPY: Record<Lang, { back: string; title: string; updated: string; intro: 
         ],
       },
       {
-        title: "Cookies y Google Analytics",
+        title: "Cookies, Google Analytics y el chat",
         body: [
           "Usamos Google Analytics, un servicio de Google LLC, para medir las visitas. Usa cookies y tecnologías similares para distinguir las visitas y reunir estadísticas de uso.",
+          "Google Analytics solo se carga si pulsas Aceptar en el aviso de cookies. Si pulsas Rechazar, no se carga. Guardamos tu respuesta en tu navegador para no volver a preguntarte.",
+          "El asistente de chat lo provee GoHighLevel (HighLevel Inc.). Es parte del sitio y se carga en cada visita, aceptes o no las cookies de analítica. Puede guardar información en tu navegador para mantener tu conversación, y recibe los mensajes que envías.",
+          "Al usar el chat, aceptas que guardemos tus mensajes y los datos que compartas en él para responderte y dar seguimiento a tu solicitud.",
+          "Si no estás de acuerdo con que guardemos tus datos personales o estadísticas de tu conversación, te pedimos no usar el chat. Puedes escribirnos a hello@elevatebiz.ai.",
           "Puedes bloquear o borrar las cookies en la configuración de tu navegador, o instalar el complemento de inhabilitación de Google Analytics en tools.google.com/dlpage/gaoptout.",
           "Puedes saber cómo usa Google la información de los sitios que utilizan sus servicios en policies.google.com/technologies/partner-sites.",
         ],

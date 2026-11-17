@@ -1,0 +1,24 @@
+# Search engines and AI assistants are welcome to read the whole site.
+User-agent: *
+Allow: /
+
+# AI crawlers, named explicitly so there is no doubt they are allowed
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://elevatebiz.ai/sitemap.xml

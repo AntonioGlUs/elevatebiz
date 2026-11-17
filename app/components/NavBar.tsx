@@ -112,9 +112,9 @@ export default function NavBar({ t, lang, setLang, showAnnouncement, annHeight }
               ES
             </button>
           </div>
-          <a href="tel:+16508005771" className={`eb-nav-phone ${styles.phone}`}>
+          <a href="tel:+16506908587" className={`eb-nav-phone ${styles.phone}`}>
             <PhoneIcon />
-            +1 650 800 5771
+            +1 650 690 8587
           </a>
           <a href={BOOK_CALL_HREF} className={`eb-nav-book ${styles.book}`}>
             {t.navBookCall}
@@ -155,9 +155,9 @@ export default function NavBar({ t, lang, setLang, showAnnouncement, annHeight }
               )}
             </div>
           ))}
-          <a href="tel:+16508005771" className={styles.mobilePhone}>
+          <a href="tel:+16506908587" className={styles.mobilePhone}>
             <PhoneIcon />
-            +1 650 800 5771
+            +1 650 690 8587
           </a>
           <a href={BOOK_CALL_HREF} className={styles.mobileBook}>
             {t.navBookCall}

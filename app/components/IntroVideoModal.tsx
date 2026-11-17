@@ -2,11 +2,14 @@
 
 import { useCallback, useEffect, useRef, useState, type SyntheticEvent } from "react";
 import styles from "./IntroVideoModal.module.css";
+import { track } from "./analytics";
 
-// One video per language: each has its own voice-over and on-screen text
+// One video per language: each has its own voice-over and on-screen text. Both are the cinematic cut (v2),
+// rendered from the Videos project (composition MainV2; English with --props='{"lang":"en"}').
+// The first videos are still in /videos (elevatebiz-intro.mp4 and elevatebiz-intro-en.mp4) in case they are needed.
 const VIDEO_SRC = {
-  es: "/videos/elevatebiz-intro.mp4",
-  en: "/videos/elevatebiz-intro-en.mp4",
+  es: "/videos/elevatebiz-intro-v2.mp4",
+  en: "/videos/elevatebiz-intro-v2-en.mp4",
 };
 const PREVIEW_TIME = 3; // second of the video shown as the still picture before it is played
 const CLOSE_TIME = 320; // ms, matches the exit animation in the CSS
@@ -46,6 +49,7 @@ export default function IntroVideoModal({ lang, open, onClose }: Props) {
   // Opened from the hero button: the video starts right away, with sound (allowed because it follows a click)
   useEffect(() => {
     if (!open) return;
+    track("video_play", { language: lang });
     setEnded(false);
     setStarted(true);
     setStage("open");

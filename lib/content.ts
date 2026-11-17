@@ -6,13 +6,20 @@ export const TEXT = {
     annRest: " for veterans, seniors, and other communities",
     annClose: "Close",
     navBookCall: "Book a call",
+    // Brand phrase, shown small under the subtitle
+    heroTagline: "Do what you love. Let AI handle the rest.",
+    // Headline: the text before the comma is plain, the rest is set in the accent italic on its own line
     heroTitle:
-      "Do what you love. Let AI handle the rest.",
+      "Your business, running on autopilot.",
     heroSubtitle:
-      "We answer your customers instantly, automate your daily tasks, and help you reach more people. No technical knowledge required.",
-    heroBtnPrimary: "Take the free assessment",
+      "Stop losing customers to slow replies and hours to manual work. We build the AI agents, automations and custom software that do it for you.",
+    heroBtnPrimary: "Book my free call",
+    // Launch offer under the hero buttons. It is for the first clients only: remove it (and the same sentence in
+    // the closing text in lib/extra.js) when the offer ends.
+    heroAssure: "Launch offer: no contract, cancel anytime.",
     heroBtnSecondary: "See how it works",
     trustedBy: "Trusted by business owners across industries",
+    worksWith: "Built with technology you can trust",
     seeItTitle: "See it in action",
     seeItSubtitle:
       "This is what your customers experience: a reply that feels human, in seconds, any time of day.",
@@ -36,18 +43,18 @@ export const TEXT = {
     pain4Bold: "Your own tech advisor",
     pain4: ", recommending what's best for your business, like having an engineer on your team.",
     servicesTitle: "What we build for you",
-    svc1Title: "AI-powered digital marketing",
+    svc1Title: "AI customer agents",
     svc1Desc:
-      "We put your business in front of everyone, across the whole country and beyond, right where they spend the most time: their phone. Bringing new customers to your business, right away.",
-    svc2Title: "Customer service automation",
+      "AI agents that answer every channel like a real person, book appointments and follow up, 24/7. No customer is left without a reply, even when your team is busy or closed.",
+    svc2Title: "Process automation",
     svc2Desc:
-      "On top of bringing you more clients, our AI answers every channel like a real person and guides each customer from first message to closed sale. Your business stays open 24/7, without taking more of your time.",
-    svc3Title: "Custom automation",
+      "We automate the repetitive work inside your company: reports, invoicing, data entry and the handoffs between your systems. Your team stops copying information and focuses on what matters.",
+    svc3Title: "Custom software",
     svc3Desc:
-      "We don't stop at customer service. We automate your most repetitive, time-consuming tasks and build software tailored to your business. All without you ever needing technical knowledge.",
-    svc4Title: "Make your business AI-ready",
+      "Web and mobile apps, internal software and AI agents built around how your company operates, integrated with the systems you already use. For larger teams and enterprises that need more than an off-the-shelf tool.",
+    svc4Title: "AI-powered digital marketing",
     svc4Desc:
-      "Get suggestions on how to implement AI in your business, plus access to a resource library you can use on your own to bring AI into your everyday tasks.",
+      "We put your business in front of new customers where they spend the most time: their phone. And every lead that comes in is answered and followed up automatically.",
     svc5Title: "Live while it grows",
     svc5Desc:
       "Let AI take care of growing your business, from booking to follow-up. You enjoy your free time.",
@@ -56,7 +63,7 @@ export const TEXT = {
     step1Label: "Step 1",
     step1Title: "We talk about your business",
     step1Desc:
-      "A 20-minute call to understand what's taking up most of your time.",
+      "A 45-minute call to understand what's taking up most of your time.",
     step2Label: "Step 2",
     step2Title: "We build it for you",
     step2Desc:
@@ -127,13 +134,16 @@ export const TEXT = {
     annRest: " para veteranos, personas de la tercera edad y otras comunidades",
     annClose: "Cerrar",
     navBookCall: "Agenda una llamada",
+    heroTagline: "Haz lo que amas. Deja que la IA se encargue del resto.",
     heroTitle:
-      "Haz lo que amas. Deja que la IA se encargue del resto.",
+      "Tu negocio, en piloto automático.",
     heroSubtitle:
-      "Respondemos a tus clientes al instante, automatizamos tus tareas diarias y te ayudamos a llegar a más personas. Sin conocimientos técnicos.",
-    heroBtnPrimary: "Haz el diagnóstico gratis",
+      "Deja de perder clientes por responder tarde y horas en trabajo manual. Construimos los agentes de IA, las automatizaciones y el software a la medida que lo hacen por ti.",
+    heroBtnPrimary: "Agendar mi llamada gratis",
+    heroAssure: "Oferta de lanzamiento: sin contrato, cancelas cuando quieras.",
     heroBtnSecondary: "Ver cómo funciona",
     trustedBy: "La confianza de dueños de negocio en distintas industrias",
+    worksWith: "Construido con tecnología de confianza",
     seeItTitle: "Míralo en acción",
     seeItSubtitle:
       "Esto es lo que experimentan tus clientes: una respuesta que se siente humana, en segundos, a cualquier hora.",
@@ -156,18 +166,18 @@ export const TEXT = {
     pain4Bold: "Tu propio asesor tecnológico",
     pain4: ", que te recomienda lo mejor para tu negocio, como tener un ingeniero en tu equipo.",
     servicesTitle: "Lo que construimos para ti",
-    svc1Title: "Marketing digital con IA",
+    svc1Title: "Agentes de IA para tus clientes",
     svc1Desc:
-      "Ponemos a tu empresa a la vista de todos, en todo el país y más allá, justo donde pasan más tiempo: en su teléfono. Atrayendo más clientes a tu negocio de forma inmediata.",
-    svc2Title: "Automatización del servicio al cliente",
+      "Agentes de IA que responden en todos tus canales como una persona real, agendan citas y dan seguimiento, 24/7. Ningún cliente se queda sin respuesta, aunque tu equipo esté ocupado o hayas cerrado.",
+    svc2Title: "Automatización de procesos",
     svc2Desc:
-      "Además de conseguirte más clientes, nuestra IA responde todos tus canales como una persona real y lleva a cada cliente del primer mensaje al cierre de la venta. Tu negocio abierto 24/7, sin quitarte más tiempo.",
-    svc3Title: "Automatización a tu medida",
+      "Automatizamos el trabajo repetitivo dentro de tu empresa: reportes, facturación, captura de datos y el paso de información entre tus sistemas. Tu equipo deja de copiar datos y se enfoca en lo importante.",
+    svc3Title: "Software a la medida",
     svc3Desc:
-      "No nos quedamos solo en el servicio al cliente. Automatizamos tus tareas más repetitivas y que más tiempo te quitan, además de construir software hecho a la medida de tu negocio. Todo sin que necesites conocimientos técnicos.",
-    svc4Title: "Haz que tu negocio esté listo para la IA",
+      "Aplicaciones web y móviles, software interno y agentes de IA construidos según la forma en que opera tu empresa, integrados con los sistemas que ya usas. Para equipos grandes y empresas que necesitan más que una herramienta genérica.",
+    svc4Title: "Marketing digital con IA",
     svc4Desc:
-      "Recibe sugerencias sobre cómo implementar IA en tu negocio, además de acceso a una biblioteca de recursos que puedes usar por tu cuenta para aprovechar la IA en las tareas diarias de tu negocio.",
+      "Ponemos tu negocio frente a nuevos clientes donde pasan más tiempo: su celular. Y cada prospecto que llega recibe respuesta y seguimiento automático.",
     svc5Title: "Vive mientras tu negocio crece",
     svc5Desc:
       "Deja que la IA se encargue de hacer crecer tu negocio, de las reservas al seguimiento. Tú disfruta tu tiempo libre.",
@@ -175,7 +185,7 @@ export const TEXT = {
     howTitle: "Así de simple",
     step1Label: "Paso 1",
     step1Title: "Hablamos de tu negocio",
-    step1Desc: "Una llamada de 20 minutos para entender qué te quita más tiempo.",
+    step1Desc: "Una llamada de 45 minutos para entender qué te quita más tiempo.",
     step2Label: "Paso 2",
     step2Title: "Lo construimos por ti",
     step2Desc: "Diseñamos y configuramos todo. Tú no tocas nada técnico.",
@@ -238,10 +248,11 @@ export const TEXT = {
   },
 } as const;
 
-export const STATS = [
-  { icon: "clock", eyebrow: { en: "Time back", es: "Tiempo ganado" }, target: 18, prefix: "", suffix: " hrs", label: { en: "saved every week", es: "ahorradas cada semana" } },
+// `suffix` is a text, or one text per language when the unit is written differently (sec / seg)
+export const STATS: { icon: string; eyebrow: { en: string; es: string }; target: number; prefix: string; suffix: string | { en: string; es: string }; label: { en: string; es: string } }[] = [
+  { icon: "bolt", eyebrow: { en: "Fast response", es: "Respuesta rápida" }, target: 10, prefix: "<", suffix: { en: " sec", es: " seg" }, label: { en: "to answer a new customer", es: "para responder a un cliente nuevo" } },
   { icon: "moon", eyebrow: { en: "Always on", es: "Siempre activo" }, target: 24, prefix: "", suffix: "/7", label: { en: "always on, even while you sleep", es: "siempre activo, incluso mientras duermes" } },
-  { icon: "bolt", eyebrow: { en: "Fast response", es: "Respuesta rápida" }, target: 5, prefix: "<", suffix: " min", label: { en: "average time to respond to a lead", es: "tiempo promedio de respuesta a un cliente potencial" } },
+  { icon: "check", eyebrow: { en: "Nothing missed", es: "Nada se pierde" }, target: 100, prefix: "", suffix: "%", label: { en: "of inquiries answered and followed up", es: "de las consultas respondidas y con seguimiento" } },
 ];
 
 export const CLIENTS = [
@@ -256,6 +267,28 @@ export const CLIENTS = [
   { initial: "W", name: "Willow & Co. Boutique" },
   { initial: "A", name: "Apex Consulting Partners" },
 ].map((c) => ({ ...c, bg: "#c2c8c5", fg: "#ffffff" }));
+
+// Tools and technologies we work with, shown in the strip under the hero until there are real client logos to show.
+// When there are, put CLIENTS back in that strip (with the "trustedBy" title) and move this list further down.
+// `logo` is the brand's icon in /public/images/tools (from Simple Icons). A `logo` without an extension is an
+// .svg file. OpenAI has no logo file yet, so it uses a generic line icon (`icon`).
+export const TOOLS: { name: string; logo?: string; icon?: string }[] = [
+  { name: "WhatsApp", logo: "whatsapp" },
+  { name: "Instagram", logo: "instagram" },
+  { name: "Messenger", logo: "messenger" },
+  { name: "Google Calendar", logo: "googlecalendar" },
+  { name: "Gmail", logo: "gmail" },
+  { name: "GoHighLevel", logo: "gohighlevel.png" },
+  { name: "n8n", logo: "n8n" },
+  { name: "Supabase", logo: "supabase" },
+  { name: "Python", logo: "python" },
+  { name: "LangGraph", logo: "langgraph" },
+  { name: "LlamaIndex", logo: "llamaindex.png" },
+  { name: "OpenAI", icon: "nodes" },
+  { name: "Anthropic", logo: "anthropic" },
+  { name: "Gemini", logo: "googlegemini" },
+  { name: "Higgsfield", logo: "higgsfield.png" },
+];
 
 export const TEAM_MEMBERS = [
   { name: { en: "Emily", es: "Ana" }, initial: { en: "E", es: "A" }, bg: "#9c2d5e", specialty: { en: "Sales advisor", es: "Asesor de ventas" } },
@@ -315,8 +348,8 @@ export const FAQ_DATA = [
     title: { en: "How fast can we get started?", es: "¿Qué tan rápido podemos empezar?" },
     subtitle: { en: "Most clients go live faster than you'd expect.", es: "La mayoría de los clientes está listo antes de lo que esperan." },
     steps: {
-      en: ["Book a free 20-minute call", "We map your current process", "You approve the plan before we build anything"],
-      es: ["Agenda una llamada gratis de 20 minutos", "Mapeamos tu proceso actual", "Apruebas el plan antes de construir nada"],
+      en: ["Book a free 45-minute call", "We map your current process", "You approve the plan before we build anything"],
+      es: ["Agenda una llamada gratis de 45 minutos", "Mapeamos tu proceso actual", "Apruebas el plan antes de construir nada"],
     },
     actionLabel: { en: "Most clients go live within 1–2 weeks.", es: "La mayoría de los clientes está en funcionamiento en 1–2 semanas." },
     actionText: { en: "Book your free call", es: "Agenda tu llamada gratis" },
@@ -354,7 +387,7 @@ export const FAQ_DATA = [
       en: ["Pricing depends on what you need automated", "Most projects start with a fixed setup fee", "Ongoing support is a simple monthly plan"],
       es: ["El precio depende de lo que necesites automatizar", "La mayoría de los proyectos inician con una cuota fija de instalación", "El soporte continuo es un plan mensual simple"],
     },
-    actionLabel: { en: "We'll give you a clear number on the call, no surprises.", es: "Te daremos un número claro en la llamada, sin sorpresas." },
+    actionLabel: { en: "Plans start at $300 USD. We'll give you a clear number on the call, no surprises.", es: "Planes desde $300 USD. Te daremos un número claro en la llamada, sin sorpresas." },
     actionText: { en: "Get a free quote", es: "Obtén una cotización gratis" },
   },
   {

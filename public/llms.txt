@@ -1,0 +1,24 @@
+# ElevateBiz
+
+> ElevateBiz builds AI agents that answer your customers 24/7, automates internal processes and develops custom software and AI-powered marketing for small businesses and enterprises. Plans from $300 USD. The website is available in English and Spanish, and the AI agent answers customers in both languages.
+
+## Services
+
+- AI customer agents: agents that answer every channel (including WhatsApp) like a real person, book appointments and follow up, 24/7.
+- Process automation: reports, invoicing, data entry and the handoffs between your systems, so your team stops copying information.
+- Custom software: web and mobile apps, internal software and AI agents built around how a company operates, integrated with the systems it already uses.
+- AI-powered digital marketing: puts the business in front of new customers, and every lead that comes in is answered and followed up automatically.
+
+## Pages
+
+- [Home (English)](https://elevatebiz.ai/): services, how it works, pricing and FAQ.
+- [Home (Spanish)](https://elevatebiz.ai/es/): the same content in Spanish.
+- [Dental clinic demo](https://elevatebiz.ai/demos/dental/): example of an AI agent and online booking for a dental clinic.
+- [Links](https://elevatebiz.ai/links/): quick contacts (book a call, website, Instagram, save contact).
+- [Privacy policy](https://elevatebiz.ai/privacy/)
+
+## Contact
+
+- Phone: +1 650 690 8587 (one number, both languages)
+- Email: hello@elevatebiz.ai
+- Instagram: https://www.instagram.com/elevatebiz.ai/

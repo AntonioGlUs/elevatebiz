@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+// What the company does, for search engines and AI assistants (also used in the social cards)
+const SITE_DESCRIPTION =
+  "ElevateBiz builds AI agents that answer your customers 24/7, automates internal processes and develops custom software for small businesses and enterprises. Plans from $300 USD.";
+
 export const metadata: Metadata = {
   title: "ElevateBiz — AI Automation & Marketing",
-  description:
-    "AI automation and marketing for small and medium businesses.",
+  description: SITE_DESCRIPTION,
   metadataBase: new URL("https://elevatebiz.ai"),
   openGraph: {
     title: "ElevateBiz — AI Automation & Marketing",
-    description: "AI automation and marketing for small and medium businesses.",
+    description: SITE_DESCRIPTION,
     url: "/",
     siteName: "ElevateBiz",
     type: "website",
@@ -17,7 +20,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "ElevateBiz — AI Automation & Marketing",
-    description: "AI automation and marketing for small and medium businesses.",
+    description: SITE_DESCRIPTION,
     images: ["/images/og-card.jpg"],
   },
 };
@@ -33,6 +36,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Home page only: visitors who chose Spanish before, or whose browser is in Spanish and have not chosen
+            yet, are sent to /es/ before the page paints. Search engines have no saved choice and browse in
+            English, so they still read "/" in English. The address keeps its ?query and #section. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{if(location.pathname!=='/')return;var s=localStorage.getItem('eb-lang');if(s==='es'||(s!=='en'&&(navigator.language||'').toLowerCase().indexOf('es')===0)){location.replace('/es/'+location.search+location.hash)}}catch(e){}})()",
+          }}
+        />
         {/* First hero photo: start downloading it right away (it is the largest thing on screen) */}
         <link rel="preload" as="image" href="/images/hero-building.webp" fetchPriority="high" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />

@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react'
 import { NAV_DATA } from '@/lib/content'
 import { BOOK_CALL_HREF, COMING_SOON_HREF } from '../constants'
 
-const PHONE = '+1 650 800 5771'
+const PHONE = '+1 650 690 8587'
+const CALL_TEXT = { en: 'Give us a call', es: 'Llámanos' }
 const BRAND_NAME = 'ElevateBiz'
 
 // Hand-drawn neon note that points at the Demos menu when the page loads, then fades away
@@ -48,8 +49,17 @@ function PhoneIcon() {
   )
 }
 
+// Saves the visitor's language choice before the link opens the other version (read by the script in app/layout.tsx)
+function rememberLang(code) {
+  try {
+    localStorage.setItem('eb-lang', code)
+  } catch {
+    /* private mode: the choice just won't be remembered */
+  }
+}
+
 // Floating nav: a transparent bar over the photo at the top; a full-width white bar once the page scrolls
-export default function NavBar({ t, lang, setLang, annVisible, annHeight }) {
+export default function NavBar({ t, lang, annVisible, annHeight }) {
   const [scrolled, setScrolled] = useState(false)
   const [openMenu, setOpenMenu] = useState(null)
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
@@ -156,16 +166,17 @@ export default function NavBar({ t, lang, setLang, annVisible, annHeight }) {
 
         <div className="nb-actions">
           <div className="nb-lang-toggle">
-            <button type="button" onClick={() => setLang('en')} className={langClass('en')}>
+            {/* Each language has its own URL, so search engines can index both */}
+            <a href="/" hrefLang="en" onClick={() => rememberLang('en')} className={langClass('en')}>
               EN
-            </button>
-            <button type="button" onClick={() => setLang('es')} className={langClass('es')}>
+            </a>
+            <a href="/es/" hrefLang="es" onClick={() => rememberLang('es')} className={langClass('es')}>
               ES
-            </button>
+            </a>
           </div>
-          <a href="tel:+16508005771" className="eb-nav-phone nb-phone">
+          <a href="tel:+16506908587" className="eb-nav-phone nb-phone" aria-label={`${CALL_TEXT[lang] ?? CALL_TEXT.en}: ${PHONE}`}>
             <PhoneIcon />
-            {PHONE}
+            {CALL_TEXT[lang] ?? CALL_TEXT.en}
           </a>
           <a href={BOOK_CALL_HREF} className="eb-nav-book nb-book">
             {t.navBookCall}
@@ -204,9 +215,9 @@ export default function NavBar({ t, lang, setLang, annVisible, annHeight }) {
               )}
             </div>
           ))}
-          <a href="tel:+16508005771" className="nb-mobile-phone">
+          <a href="tel:+16506908587" className="nb-mobile-phone" aria-label={`${CALL_TEXT[lang] ?? CALL_TEXT.en}: ${PHONE}`}>
             <PhoneIcon />
-            {PHONE}
+            {CALL_TEXT[lang] ?? CALL_TEXT.en}
           </a>
           <a href={BOOK_CALL_HREF} onClick={() => setMobileNavOpen(false)} className="nb-mobile-book">
             {t.navBookCall}

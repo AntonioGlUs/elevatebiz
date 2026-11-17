@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { track } from './analytics';
 
 type Lang = 'en' | 'es';
 
@@ -208,6 +209,7 @@ export default function GhlChat({ lang = 'en' }: { lang?: Lang }) {
     let locked = false;
     let repliesAtLock = 0;
     let lockTimer = 0;
+    let messaged = false; // the visitor already sent a message during this visit
 
     // Adds the stylesheet to a shadow root and to every shadow root nested inside it
     const skin = (root: ShadowRoot) => {
@@ -334,7 +336,14 @@ export default function GhlChat({ lang = 'en' }: { lang?: Lang }) {
         const id = window.setTimeout(() => {
           timers.delete(id);
           if (!active) return;
-          if (index === 0) lock();
+          if (index === 0) {
+            lock();
+            // Only the first message of the visit: it tells how many visitors actually start a conversation
+            if (!messaged) {
+              messaged = true;
+              track('chat_first_message');
+            }
+          }
           clearSent(sent);
         }, ms);
         timers.add(id);
@@ -368,6 +377,7 @@ export default function GhlChat({ lang = 'en' }: { lang?: Lang }) {
         else if (el.tagName === 'A' || el.tagName === 'BUTTON') return;
       }
       if (!inWidget) return;
+      if (opening) track('chat_open');
       if (!opening && String(window.getSelection() ?? '')) return;
       // The input appears a moment after the window opens, so retry for about two seconds
       let tries = 0;

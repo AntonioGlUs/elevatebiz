@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Pages of the site. Add a <url> here when a new page is published. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://elevatebiz.ai/</loc>
+    <lastmod>2026-11-14</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://elevatebiz.ai/es/</loc>
+    <lastmod>2026-11-14</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://elevatebiz.ai/demos/dental/</loc>
+    <lastmod>2026-11-14</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://elevatebiz.ai/links/</loc>
+    <lastmod>2026-11-14</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://elevatebiz.ai/privacy/</loc>
+    <lastmod>2026-11-14</lastmod>
+    <priority>0.2</priority>
+  </url>
+</urlset>

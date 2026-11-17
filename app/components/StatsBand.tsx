@@ -45,7 +45,7 @@ export default function StatsBand({ lang }: { lang: Lang }) {
   const statsDisplay = STATS.map((s, i) => ({
     icon: s.icon,
     eyebrow: s.eyebrow[lang],
-    value: s.prefix + statValues[i] + s.suffix,
+    value: s.prefix + statValues[i] + (typeof s.suffix === 'string' ? s.suffix : s.suffix.en),
     label: s.label[lang],
   }));
 
