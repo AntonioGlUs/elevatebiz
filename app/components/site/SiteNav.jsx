@@ -178,7 +178,7 @@ export default function NavBar({ t, lang, annVisible, annHeight }) {
             <PhoneIcon />
             {CALL_TEXT[lang] ?? CALL_TEXT.en}
           </a>
-          <a href={BOOK_CALL_HREF} className="eb-nav-book nb-book">
+          <a href={BOOK_CALL_HREF} data-book className="eb-nav-book nb-book">
             {t.navBookCall}
           </a>
           <button type="button" className="eb-nav-burger nb-burger" onClick={() => setMobileNavOpen((o) => !o)} aria-label={mobileNavOpen ? 'Close menu' : 'Open menu'} aria-expanded={mobileNavOpen}>
@@ -219,7 +219,7 @@ export default function NavBar({ t, lang, annVisible, annHeight }) {
             <PhoneIcon />
             {CALL_TEXT[lang] ?? CALL_TEXT.en}
           </a>
-          <a href={BOOK_CALL_HREF} onClick={() => setMobileNavOpen(false)} className="nb-mobile-book">
+          <a href={BOOK_CALL_HREF} data-book onClick={() => setMobileNavOpen(false)} className="nb-mobile-book">
             {t.navBookCall}
           </a>
         </div>

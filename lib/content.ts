@@ -88,7 +88,7 @@ export const TEXT = {
     testimonialName: "[Client name], [Business name]",
     newsletterTitle: "Not ready to talk yet?",
     newsletterSubtitle:
-      "Get one practical automation idea for your business in your inbox, every couple of weeks.",
+      "Get one practical automation idea for your business in your inbox, every couple of weeks. Or leave us a message and we'll get back to you.",
     newsletterLabel: "Email address",
     newsletterNameLabel: "Full name",
     newsletterNamePlaceholder: "Jane Smith",
@@ -208,7 +208,7 @@ export const TEXT = {
     testimonialName: "[Nombre del cliente], [Nombre del negocio]",
     newsletterTitle: "¿Aún no estás listo para hablar?",
     newsletterSubtitle:
-      "Recibe una idea práctica de automatización para tu negocio en tu correo, cada par de semanas.",
+      "Recibe una idea práctica de automatización para tu negocio en tu correo, cada par de semanas. O déjanos un mensaje y te respondemos.",
     newsletterLabel: "Correo electrónico",
     newsletterNameLabel: "Nombre completo",
     newsletterNamePlaceholder: "Ana Pérez",

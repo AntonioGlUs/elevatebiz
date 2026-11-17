@@ -11,5 +11,8 @@ export const BOOK_CALL_HREF = ACTIONS_ENABLED
   ? "mailto:hello@elevatebiz.ai?subject=I%27d%20like%20to%20book%20a%20call"
   : COMING_SOON_HREF;
 
+// GoHighLevel booking calendar "Screening Calls" (45-minute call), shown in the booking pop-up.
+export const BOOKING_URL = "https://api.leadconnectorhq.com/widget/booking/Ybs2PwSoCq1Tl2VOw4fR";
+
 // URL of the ElevateBiz API (use "http://localhost:8000" when testing the API locally)
 export const API_URL = "https://api.elevatebiz.ai";

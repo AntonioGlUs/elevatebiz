@@ -31,7 +31,7 @@ const SKIN_CSS = `
     box-shadow: 0 16px 48px rgba(20, 39, 32, 0.18) !important;
   }
 
-  /* ---- Header: aqua bar with the robot + title on the left, no close arrow ---- */
+  /* ---- Header: aqua bar with the robot + title on the left and the close X on the right ---- */
   .lc_text-widget--header-wrapper,
   .lc_text-widget--header-wrapper > div,
   .lc_text-widget_heading--root {
@@ -76,7 +76,26 @@ const SKIN_CSS = `
     font-weight: 700 !important;
     line-height: 1.3 !important;
   }
+  /* ---- Close (minimize) button: a white X on the right of the header, on every screen size.
+     On phones the chat covers the whole screen and hides the floating button, so it is the only way to close it. ---- */
   .lc_text-widget_heading_close--btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    width: 40px !important;
+    height: 40px !important;
+    margin: 0 -8px 0 auto !important;
+    --padding-start: 0 !important;
+    --padding-end: 0 !important;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E") center / 20px 20px no-repeat !important;
+    border-radius: 999px !important;
+    cursor: pointer !important;
+  }
+  .lc_text-widget_heading_close--btn:hover {
+    background-color: rgba(255, 255, 255, 0.18) !important;
+  }
+  .lc_text-widget_heading_close--btn svg {
     display: none !important;
   }
 

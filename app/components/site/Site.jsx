@@ -11,6 +11,7 @@ import LeadRouting from './LeadRouting'
 import Newsletter from './Newsletter'
 import CookieNotice from '../CookieNotice'
 import IntroVideoModal from '../IntroVideoModal'
+import BookingModal from '../BookingModal'
 import DemosSheet from './DemosSheet'
 // Chat: GoHighLevel widget (agent Bizzy). The previous n8n chat is still in ../Chatbot; to go back, import it here and render <Chatbot lang={lang} /> instead.
 import GhlChat from '../GhlChat'
@@ -329,7 +330,19 @@ export default function Site({ lang = 'en' }) {
   // Hero banner: the background photos fade into each other
   const [heroIdx, setHeroIdx] = useState(0)
   const [videoOpen, setVideoOpen] = useState(false)
+  const [bookOpen, setBookOpen] = useState(false)
   const [demosOpen, setDemosOpen] = useState(false)
+  // Every "Book a call" link (marked with data-book) opens the calendar pop-up instead of leaving the page
+  useEffect(() => {
+    const onClick = (e) => {
+      const link = e.target.closest?.('a[data-book]')
+      if (!link || e.metaKey || e.ctrlKey || e.shiftKey) return
+      e.preventDefault()
+      setBookOpen(true)
+    }
+    document.addEventListener('click', onClick)
+    return () => document.removeEventListener('click', onClick)
+  }, [])
   // Only the first photo is downloaded at load; the others are added a moment after the page has settled
   const [heroMore, setHeroMore] = useState(false)
   useEffect(() => {
@@ -610,7 +623,7 @@ export default function Site({ lang = 'en' }) {
               </span>
             </button>
             <div className="actions">
-              <a href={BOOK_CALL_HREF} className="btn">
+              <a href={BOOK_CALL_HREF} data-book className="btn">
                 {t.heroBtnPrimary}
               </a>
               {/* Shortcut to the Demos list, on every screen size (on desktop it repeats the Demos menu of the nav bar) */}
@@ -787,7 +800,7 @@ export default function Site({ lang = 'en' }) {
           <p className="ent-stack">
             <b>{x.enterprise.stackLabel}:</b> {ENTERPRISE_STACK.join(' · ')}
           </p>
-          <a href={BOOK_CALL_HREF} className="btn">
+          <a href={BOOK_CALL_HREF} data-book className="btn">
             {x.enterprise.button}
           </a>
         </section>
@@ -904,7 +917,7 @@ export default function Site({ lang = 'en' }) {
                           ))}
                         </ul>
                         <p>{f.actionLabel[lang]}</p>
-                        <a href={BOOK_CALL_HREF} className="faq-link">
+                        <a href={BOOK_CALL_HREF} data-book className="faq-link">
                           {f.actionText[lang]} →
                         </a>
                       </div>
@@ -944,7 +957,7 @@ export default function Site({ lang = 'en' }) {
             </h2>
             <p className="cta-sub">{x.closing.sub}</p>
           </div>
-          <a href={BOOK_CALL_HREF} className="cta-button">
+          <a href={BOOK_CALL_HREF} data-book className="cta-button">
             {x.closing.button}
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M7 17 17 7M8 7h9v9" />
@@ -989,6 +1002,7 @@ export default function Site({ lang = 'en' }) {
       </div>
       <CookieNotice t={t} />
       <IntroVideoModal lang={lang} open={videoOpen} onClose={() => setVideoOpen(false)} />
+      <BookingModal lang={lang} open={bookOpen} onClose={() => setBookOpen(false)} />
       <DemosSheet lang={lang} open={demosOpen} onClose={() => setDemosOpen(false)} />
       {/* The chatbot lives here (not in the root layout) so demo sites can have their own bot */}
       <GhlChat lang={lang} />
