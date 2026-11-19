@@ -12,7 +12,7 @@ export const TEXT = {
     heroTitle:
       "Your business, running on autopilot.",
     heroSubtitle:
-      "Stop losing customers to slow replies and hours to manual work. We build the AI agents, automations and custom software that do it for you.",
+      "Stop losing customers to slow replies and spending hours on manual work. We build the AI agents, automations and custom software that do it for you.",
     heroBtnPrimary: "Book free consultation",
     // Launch offer under the hero buttons. It is for the first clients only: remove it (and the same sentence in
     // the closing text in lib/extra.js) when the offer ends.
@@ -152,7 +152,7 @@ export const TEXT = {
     heroTitle:
       "Tu negocio, en piloto automático.",
     heroSubtitle:
-      "Deja de perder clientes por responder tarde y horas en trabajo manual. Construimos los agentes de IA, las automatizaciones y el software a la medida que lo hacen por ti.",
+      "Deja de perder clientes por responder tarde y de invertir horas en trabajo manual. Construimos los agentes de IA, las automatizaciones y el software a la medida que lo hacen por ti.",
     heroBtnPrimary: "Agendar consulta gratis",
     heroAssure: "Oferta de lanzamiento: sin contrato, cancelas cuando quieras.",
     heroBtnSecondary: "Ver cómo funciona",

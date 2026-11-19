@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { track } from './analytics';
+import styles from './GhlChat.module.css';
 
 type Lang = 'en' | 'es';
 
@@ -114,6 +115,18 @@ const SKIN_CSS = `
     height: 32px !important;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 3c5.5 0 10 3.58 10 8s-4.5 8-10 8c-1.24 0-2.43-.18-3.53-.5C5.55 21 2 21 2 21c2.33-2.33 2.7-3.9 2.75-4.5C3.05 15.07 2 13.13 2 11c0-4.42 4.5-8 10-8'/%3E%3C/svg%3E") center / contain no-repeat !important;
   }
+  /* Phones: a smaller floating button, so it covers less of the page */
+  @media (max-width: 640px) {
+    .lc_text-widget--bubble {
+      width: 49px !important;
+      height: 49px !important;
+      box-shadow: 0 0 14px 4px rgba(120, 220, 230, 0.5) !important;
+    }
+    .lc_text-widget--bubble .widget-open-icon {
+      width: 25px !important;
+      height: 25px !important;
+    }
+  }
 
   /* ---- Messages: no avatar, no timestamp, rounded bubbles with a small tail ---- */
   .thumbnail-img,
@@ -165,6 +178,21 @@ const SKIN_CSS = `
   }
 `;
 
+// WhatsApp: tapping the chat button (while the chat is closed) shows two choices instead of opening the chat right away:
+// chat now, or continue on WhatsApp.
+const WA_NUMBER = '16506908587';
+const WA_TEXT: Record<Lang, string> = {
+  en: "Hi! I'd like to know more about ElevateBiz.",
+  es: '¡Hola! Quisiera saber más sobre ElevateBiz.',
+};
+const MENU: Record<Lang, { chat: string; whatsapp: string; label: string }> = {
+  en: { chat: 'Chat now', whatsapp: 'WhatsApp', label: 'Contact options' },
+  es: { chat: 'Conversar ahora', whatsapp: 'WhatsApp', label: 'Opciones de contacto' },
+};
+const waUrl = (lang: Lang) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_TEXT[lang] ?? WA_TEXT.en)}`;
+const WA_PATH =
+  'M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z';
+
 // Shown in the input while it is locked, waiting for the agent's reply
 const WAITING: Record<Lang, string> = {
   en: 'Bizzy is typing...',
@@ -204,6 +232,12 @@ export default function GhlChat({ lang = 'en' }: { lang?: Lang }) {
   langRef.current = lang;
   // Lets the language effect below re-apply the input placeholder
   const runRef = useRef<() => void>(() => {});
+  // Menu shown above the chat button: "Chat now" / "WhatsApp"
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuOpenRef = useRef(false);
+  menuOpenRef.current = menuOpen;
+  // Lets the menu's "Chat now" button open the real chat
+  const openChatRef = useRef<() => void>(() => {});
 
   useEffect(() => {
     // Load the widget once; it adds a <chat-widget> element to the page
@@ -301,9 +335,21 @@ export default function GhlChat({ lang = 'en' }: { lang?: Lang }) {
         focusSoon();
         return;
       }
-      if (widget.shadowRoot) skin(widget.shadowRoot);
+      if (widget.shadowRoot) {
+        skin(widget.shadowRoot);
+        // The widget stays hidden (see globals.css) until our skin is on its button, so the visitor never sees
+        // GoHighLevel's default button for a moment before ours
+        if (!widget.hasAttribute('data-eb-ready') && widget.shadowRoot.querySelector('.lc_text-widget--bubble')) {
+          widget.setAttribute('data-eb-ready', '');
+        }
+      }
     };
     runRef.current = run;
+    // Safety net: if the button never shows up as expected, show the widget anyway after a few seconds
+    const readyTimer = window.setTimeout(() => {
+      document.querySelector('chat-widget')?.setAttribute('data-eb-ready', '');
+    }, 4000);
+    timers.add(readyTimer);
 
     const later = (ms: number) => {
       const id = window.setTimeout(() => {
@@ -414,7 +460,42 @@ export default function GhlChat({ lang = 'en' }: { lang?: Lang }) {
     };
     document.addEventListener('click', onClick);
 
+    // Tapping the chat button while the chat is closed shows the menu instead of opening the chat. "Chat now" opens it
+    // for real by clicking the button again (bypass). With the chat open, the button behaves as usual (it closes it).
+    const getBubble = () => widgetRoot()?.querySelector<HTMLElement>('.lc_text-widget--bubble') ?? null;
+    let bypass = false;
+    openChatRef.current = () => {
+      const bubble = getBubble();
+      if (!bubble) return;
+      bypass = true;
+      bubble.click();
+      bypass = false;
+    };
+    const onLauncherClick = (event: MouseEvent) => {
+      if (bypass) return;
+      const path = event.composedPath() as HTMLElement[];
+      if (path.some((el) => el.id === 'lc_text-widget--btn')) {
+        if (getBubble()?.classList.contains('active')) {
+          setMenuOpen(false);
+          return;
+        }
+        event.stopImmediatePropagation();
+        event.preventDefault();
+        setMenuOpen((open) => !open);
+        return;
+      }
+      // A click anywhere outside the menu closes it
+      if (menuOpenRef.current && !path.some((el) => el.hasAttribute?.('data-eb-menu'))) setMenuOpen(false);
+    };
+    const onEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMenuOpen(false);
+    };
+    document.addEventListener('click', onLauncherClick, true);
+    document.addEventListener('keydown', onEscape);
+
     return () => {
+      document.removeEventListener('click', onLauncherClick, true);
+      document.removeEventListener('keydown', onEscape);
       active = false;
       cancelAnimationFrame(frame);
       timers.forEach((id) => window.clearTimeout(id));
@@ -434,5 +515,37 @@ export default function GhlChat({ lang = 'en' }: { lang?: Lang }) {
     runRef.current();
   }, [lang]);
 
-  return null;
+  if (!menuOpen) return null;
+  const copy = MENU[lang] ?? MENU.en;
+  return (
+    <div className={styles.menu} data-eb-menu="" role="menu" aria-label={copy.label}>
+      <a
+        href={waUrl(lang)}
+        target="_blank"
+        rel="noopener noreferrer"
+        role="menuitem"
+        className={`${styles.item} ${styles.whatsapp}`}
+        onClick={() => setMenuOpen(false)}
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d={WA_PATH} />
+        </svg>
+        <span>{copy.whatsapp}</span>
+      </a>
+      <button
+        type="button"
+        role="menuitem"
+        className={`${styles.item} ${styles.chat}`}
+        onClick={() => {
+          setMenuOpen(false);
+          openChatRef.current();
+        }}
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 3c5.5 0 10 3.58 10 8s-4.5 8-10 8c-1.24 0-2.43-.18-3.53-.5C5.55 21 2 21 2 21c2.33-2.33 2.7-3.9 2.75-4.5C3.05 15.07 2 13.13 2 11c0-4.42 4.5-8 10-8" />
+        </svg>
+        <span>{copy.chat}</span>
+      </button>
+    </div>
+  );
 }

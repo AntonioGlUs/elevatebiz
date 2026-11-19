@@ -4548,3 +4548,9 @@ main#top > .hero {
     animation: none;
   }
 }
+
+/* GoHighLevel chat widget: hidden until GhlChat.tsx has skinned its button (it sets data-eb-ready), so the default
+   GoHighLevel button never flashes before ours */
+chat-widget:not([data-eb-ready]) {
+  visibility: hidden !important;
+}

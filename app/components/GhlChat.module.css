@@ -1,0 +1,89 @@
+/* Menu shown above the chat button when it is tapped: "Chat now" (closest to the button) and "Continue on WhatsApp"
+   above it (see GhlChat.tsx). Above the cookie bar (2100); the chat window itself sits above this (9999). */
+.menu {
+  position: fixed;
+  right: 20px;
+  bottom: 96px;
+  z-index: 5000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px 12px 14px;
+  border: none;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(20, 39, 32, 0.25);
+  transform-origin: bottom right;
+  animation: rise 0.22s ease both;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.item svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  fill: currentColor;
+}
+
+.chat {
+  background: #01a9b4;
+}
+
+.whatsapp {
+  background: #25d366;
+  animation-delay: 0.05s;
+}
+
+.item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(20, 39, 32, 0.32);
+}
+
+.item:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px #01a9b4;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Phones: the chat button is 49px, so the menu sits closer to it */
+@media (max-width: 640px) {
+  .menu {
+    bottom: 81px;
+  }
+  .item {
+    font-size: 14px;
+    padding: 11px 16px 11px 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item {
+    animation: none;
+    transition: none;
+  }
+}

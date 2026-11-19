@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { Lang } from "@/lib/content";
+import { BOOKING_URL } from "@/app/components/constants";
 import styles from "./links.module.css";
 
 type IconName = "calendar" | "laptop" | "instagram" | "user";
@@ -48,7 +49,7 @@ const COPY: Record<Lang, { tagline: string; links: { label: string; hint: string
   en: {
     tagline: "AI automation and marketing for small and medium businesses.",
     links: [
-      { label: "Book a free call", icon: "calendar", hint: "Let's talk about your business", href: "mailto:hello@elevatebiz.ai?subject=I%27d%20like%20to%20book%20a%20call", primary: true },
+      { label: "Book a free call", icon: "calendar", hint: "Let's talk about your business", href: BOOKING_URL, primary: true },
       { label: "Visit our website", icon: "laptop", hint: "elevatebiz.ai", href: "https://elevatebiz.ai" },
       { label: "Instagram", icon: "instagram", hint: "@elevatebiz.ai", href: "https://www.instagram.com/elevatebiz.ai/" },
       { label: "Save contact", icon: "user", hint: "Add ElevateBiz to your phone", href: "/elevatebiz.vcf", download: true },
@@ -57,7 +58,7 @@ const COPY: Record<Lang, { tagline: string; links: { label: string; hint: string
   es: {
     tagline: "Automatización con IA y marketing para pequeñas y medianas empresas.",
     links: [
-      { label: "Agenda una llamada gratis", icon: "calendar", hint: "Hablemos de tu negocio", href: "mailto:hello@elevatebiz.ai?subject=Quiero%20agendar%20una%20llamada", primary: true },
+      { label: "Agenda una llamada gratis", icon: "calendar", hint: "Hablemos de tu negocio", href: BOOKING_URL, primary: true },
       { label: "Visita nuestro sitio", icon: "laptop", hint: "elevatebiz.ai", href: "https://elevatebiz.ai" },
       { label: "Instagram", icon: "instagram", hint: "@elevatebiz.ai", href: "https://www.instagram.com/elevatebiz.ai/" },
       { label: "Guardar contacto", icon: "user", hint: "Agrega ElevateBiz a tu teléfono", href: "/elevatebiz.vcf", download: true },
