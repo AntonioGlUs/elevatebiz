@@ -13,7 +13,6 @@
 
 - [Home (English)](https://elevatebiz.ai/): services, how it works, pricing and FAQ.
 - [Home (Spanish)](https://elevatebiz.ai/es/): the same content in Spanish.
-- [Dental clinic demo](https://elevatebiz.ai/demos/dental/): example of an AI agent and online booking for a dental clinic.
 - [Links](https://elevatebiz.ai/links/): quick contacts (book a call, website, Instagram, save contact).
 - [Privacy policy](https://elevatebiz.ai/privacy/)
 

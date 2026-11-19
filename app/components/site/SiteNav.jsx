@@ -5,7 +5,10 @@ import { NAV_DATA } from '@/lib/content'
 import { BOOK_CALL_HREF, COMING_SOON_HREF } from '../constants'
 
 const PHONE = '+1 650 690 8587'
-const CALL_TEXT = { en: 'Give us a call', es: 'Llámanos' }
+const PHONE_SHOWN = '+1 (650) 690 8587' // how the number is written on the button
+// The call button is one more contact channel: it shows the number, and on hover a robot says a virtual assistant answers 24/7
+const CALL_TEXT = { en: 'Call us', es: 'Llámanos' } // only for screen readers
+const CALL_HOVER = { en: 'Virtual assistant 24/7', es: 'Asistente virtual 24/7' } // shown in place of the number on hover
 const BRAND_NAME = 'ElevateBiz'
 
 // Hand-drawn neon note that points at the Demos menu when the page loads, then fades away
@@ -49,6 +52,22 @@ function PhoneIcon() {
   )
 }
 
+function CallLabel({ lang }) {
+  return (
+    // Both versions share one grid cell, so the button keeps its size; hovering swaps which one is visible
+    <span className="nb-call-swap">
+      <span className="nb-call-a">
+        <PhoneIcon />
+        {PHONE_SHOWN}
+      </span>
+      <span className="nb-call-b" aria-hidden="true">
+        <PhoneIcon />
+        {CALL_HOVER[lang] ?? CALL_HOVER.en}
+      </span>
+    </span>
+  )
+}
+
 // Saves the visitor's language choice before the link opens the other version (read by the script in app/layout.tsx)
 function rememberLang(code) {
   try {
@@ -83,6 +102,23 @@ export default function NavBar({ t, lang, annVisible, annHeight }) {
     onScroll()
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  // An open dropdown closes when the visitor clicks outside of it, or presses Escape
+  useEffect(() => {
+    if (openMenu === null) return
+    const onPointerDown = (e) => {
+      if (!e.target.closest('.nb-menu, .nb-mobile-menu')) setOpenMenu(null)
+    }
+    const onKey = (e) => {
+      if (e.key === 'Escape') setOpenMenu(null)
+    }
+    document.addEventListener('pointerdown', onPointerDown)
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown)
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [openMenu])
 
   const top = scrolled ? '0' : `${annVisible ? Math.max(42, annHeight + 3) : 42}px`
 
@@ -165,18 +201,19 @@ export default function NavBar({ t, lang, annVisible, annHeight }) {
         </div>
 
         <div className="nb-actions">
-          <div className="nb-lang-toggle">
-            {/* Each language has its own URL, so search engines can index both */}
-            <a href="/" hrefLang="en" onClick={() => rememberLang('en')} className={langClass('en')}>
-              EN
-            </a>
-            <a href="/es/" hrefLang="es" onClick={() => rememberLang('es')} className={langClass('es')}>
-              ES
-            </a>
-          </div>
+          {/* One toggle: a press anywhere on it switches to the other language. Each language has its own URL, so search engines can index both */}
+          <a
+            href={lang === 'en' ? '/es/' : '/'}
+            hrefLang={lang === 'en' ? 'es' : 'en'}
+            onClick={() => rememberLang(lang === 'en' ? 'es' : 'en')}
+            className="nb-lang-toggle"
+            aria-label={lang === 'en' ? 'Cambiar a español' : 'Switch to English'}
+          >
+            <span className={langClass('en')}>EN</span>
+            <span className={langClass('es')}>ES</span>
+          </a>
           <a href="tel:+16506908587" className="eb-nav-phone nb-phone" aria-label={`${CALL_TEXT[lang] ?? CALL_TEXT.en}: ${PHONE}`}>
-            <PhoneIcon />
-            {CALL_TEXT[lang] ?? CALL_TEXT.en}
+            <CallLabel lang={lang} />
           </a>
           <a href={BOOK_CALL_HREF} data-book className="eb-nav-book nb-book">
             {t.navBookCall}
@@ -216,8 +253,7 @@ export default function NavBar({ t, lang, annVisible, annHeight }) {
             </div>
           ))}
           <a href="tel:+16506908587" className="nb-mobile-phone" aria-label={`${CALL_TEXT[lang] ?? CALL_TEXT.en}: ${PHONE}`}>
-            <PhoneIcon />
-            {CALL_TEXT[lang] ?? CALL_TEXT.en}
+            <CallLabel lang={lang} />
           </a>
           <a href={BOOK_CALL_HREF} data-book onClick={() => setMobileNavOpen(false)} className="nb-mobile-book">
             {t.navBookCall}

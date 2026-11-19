@@ -29,7 +29,7 @@ export default function NavBar({ t, lang, setLang, showAnnouncement, annHeight }
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const navWrapperTop = scrolled ? "0" : `${showAnnouncement ? Math.max(42, annHeight + 3) : 42}px`;
+  const navWrapperTop =scrolled ? "0" : `${showAnnouncement ? Math.max(42, annHeight + 3) : 42}px`;
 
   // "More" shares openMenu with the other menus, so only one dropdown is open at a time
   const MORE = -1;

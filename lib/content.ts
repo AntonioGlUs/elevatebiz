@@ -13,7 +13,7 @@ export const TEXT = {
       "Your business, running on autopilot.",
     heroSubtitle:
       "Stop losing customers to slow replies and hours to manual work. We build the AI agents, automations and custom software that do it for you.",
-    heroBtnPrimary: "Book my free call",
+    heroBtnPrimary: "Book free consultation",
     // Launch offer under the hero buttons. It is for the first clients only: remove it (and the same sentence in
     // the closing text in lib/extra.js) when the offer ends.
     heroAssure: "Launch offer: no contract, cancel anytime.",
@@ -125,9 +125,23 @@ export const TEXT = {
     previewNoteMoreBold: "Need more info?",
     previewNoteMore: "Fill out the contact form.",
     previewNoticeButton: "Got it",
-    cookieText: "We use cookies to measure how the site is used and improve it. You can accept or decline.",
-    cookieAccept: "Accept",
-    cookieDecline: "Decline",
+    cookieText: "We use cookies to measure how the site is used and improve it. You can accept them all or choose which ones to allow.",
+    cookieAccept: "Accept all",
+    cookieSettings: "Cookie settings",
+    cookieModalTitle: "Cookie preferences",
+    cookieModalIntro:
+      "Websites can store or read information in your browser, mostly through cookies. It is used to make the site work as expected, to measure visits and to offer features like our chat assistant. You can choose which categories to allow. Blocking some types may affect your experience on the site.",
+    cookieMore: "More information",
+    cookieManage: "Manage consent preferences",
+    cookieAlways: "Always active",
+    cookieClose: "Close",
+    cookieConfirm: "Confirm my preferences",
+    cookieNecessaryTitle: "Strictly necessary cookies",
+    cookieNecessaryDesc:
+      "These are needed for the site to work and cannot be turned off. They save your choices on this site, such as your language and your cookie preferences, and keep our chat assistant working.",
+    cookiePerformanceTitle: "Performance cookies",
+    cookiePerformanceDesc:
+      "They let us count visits and traffic sources to measure and improve the site, and to see which pages are the most or the least popular. If you do not allow them, we will not know when you visited.",
   },
   es: {
     annBold: "Programas especiales",
@@ -139,7 +153,7 @@ export const TEXT = {
       "Tu negocio, en piloto automático.",
     heroSubtitle:
       "Deja de perder clientes por responder tarde y horas en trabajo manual. Construimos los agentes de IA, las automatizaciones y el software a la medida que lo hacen por ti.",
-    heroBtnPrimary: "Agendar mi llamada gratis",
+    heroBtnPrimary: "Agendar consulta gratis",
     heroAssure: "Oferta de lanzamiento: sin contrato, cancelas cuando quieras.",
     heroBtnSecondary: "Ver cómo funciona",
     trustedBy: "La confianza de dueños de negocio en distintas industrias",
@@ -242,9 +256,23 @@ export const TEXT = {
     previewNoteMoreBold: "¿Necesitas más información?",
     previewNoteMore: "Llena el formulario de contacto.",
     previewNoticeButton: "Entendido",
-    cookieText: "Usamos cookies para medir cómo se usa el sitio y mejorarlo. Puedes aceptar o rechazar.",
-    cookieAccept: "Aceptar",
-    cookieDecline: "Rechazar",
+    cookieText: "Usamos cookies para medir cómo se usa el sitio y mejorarlo. Puedes aceptarlas todas o elegir cuáles permitir.",
+    cookieAccept: "Aceptar todas",
+    cookieSettings: "Configuración de cookies",
+    cookieModalTitle: "Preferencias de cookies",
+    cookieModalIntro:
+      "Los sitios web pueden guardar o leer información en tu navegador, sobre todo mediante cookies. Se usa para que el sitio funcione como se espera, para medir las visitas y para ofrecer funciones como nuestro asistente de chat. Puedes elegir qué categorías permitir. Bloquear algunos tipos puede afectar tu experiencia en el sitio.",
+    cookieMore: "Más información",
+    cookieManage: "Gestionar preferencias de consentimiento",
+    cookieAlways: "Siempre activas",
+    cookieClose: "Cerrar",
+    cookieConfirm: "Confirmar mis preferencias",
+    cookieNecessaryTitle: "Cookies estrictamente necesarias",
+    cookieNecessaryDesc:
+      "Son necesarias para que el sitio funcione y no se pueden desactivar. Guardan tus elecciones en este sitio, como tu idioma y tus preferencias de cookies, y mantienen funcionando nuestro asistente de chat.",
+    cookiePerformanceTitle: "Cookies de rendimiento",
+    cookiePerformanceDesc:
+      "Nos permiten contar las visitas y las fuentes de tráfico para medir y mejorar el sitio, y saber qué páginas son las más o las menos populares. Si no las permites, no sabremos cuándo nos visitaste.",
   },
 } as const;
 
@@ -308,23 +336,19 @@ export const NAV_DATA = [
     ],
   },
   {
-    label: { en: "Resources", es: "Recursos" },
-    items: [
-      { en: "Case Studies", es: "Casos de éxito" },
-      { en: "Blog", es: "Blog" },
-      { en: "Free Guide", es: "Guía gratuita" },
-    ],
+    // Direct link (no dropdown): library of videos and tutorials on using AI in daily business tasks (some free, some
+    // members-only). Without `href` it leads to coming-soon until the page exists.
+    label: { en: "AI Library", es: "Biblioteca IA" },
   },
   {
     label: { en: "Demos", es: "Demos" },
     items: [
       // `href` is optional: items without it lead to the coming-soon page
-      { en: "Dental Clinic", es: "Clínica dental", href: "/demos/dental" },
+      // Demo disabled until it is ready: re-enable by adding back `href: "/demos/dental"`
+      { en: "Dental Clinic", es: "Clínica dental" },
       { en: "Real Estate", es: "Bienes raíces" },
       { en: "Law Firm", es: "Despacho de abogados" },
       { en: "Online Store", es: "Tienda en línea" },
-      { en: "Nutritionist", es: "Nutriólogo" },
-      { en: "Insurance", es: "Seguros" },
     ],
   },
   {
@@ -335,7 +359,7 @@ export const NAV_DATA = [
     label: { en: "About Us", es: "Nosotros" },
     items: [
       { en: "About Us", es: "Sobre nosotros" },
-      { en: "Contact", es: "Contacto" },
+      { en: "Contact", es: "Contacto", href: "#contact-form" }, // scrolls to the contact form on the home page
       { en: "Careers", es: "Empleo" },
     ],
   },

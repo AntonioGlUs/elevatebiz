@@ -10,6 +10,7 @@ import NavBar from './SiteNav'
 import LeadRouting from './LeadRouting'
 import Newsletter from './Newsletter'
 import CookieNotice from '../CookieNotice'
+import { openCookieSettings } from '../cookiePrefs'
 import IntroVideoModal from '../IntroVideoModal'
 import BookingModal from '../BookingModal'
 import DemosSheet from './DemosSheet'
@@ -945,7 +946,7 @@ export default function Site({ lang = 'en' }) {
           </div>
         </section>
 
-        <section className="container sec" data-env="white">
+        <section id="contact-form" className="container sec" data-env="white">
           <Newsletter t={t} lang={lang} />
         </section>
 
@@ -992,9 +993,14 @@ export default function Site({ lang = 'en' }) {
           <span>
             {t.footerCopyright}
           </span>
-          <a href="/privacy/" className="ft-privacy">
-            {x.closing.privacy}
-          </a>
+          <span className="ft-legal">
+            <button type="button" className="ft-privacy ft-cookies" onClick={openCookieSettings}>
+              {x.closing.cookies}
+            </button>
+            <a href="/privacy/" className="ft-privacy">
+              {x.closing.privacy}
+            </a>
+          </span>
         </div>
       </footer>
       </div>

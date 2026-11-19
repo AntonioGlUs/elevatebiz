@@ -36,8 +36,8 @@ const COPY: Record<Lang, { back: string; title: string; updated: string; intro: 
         title: "Cookies, Google Analytics and the chat",
         body: [
           "We use Google Analytics, a service from Google LLC, to measure visits. It uses cookies and similar technologies to tell visits apart and collect usage statistics.",
-          "Google Analytics is loaded only if you press Accept in the cookie notice. If you press Decline, it is not loaded. We save your answer in your browser so we do not ask again.",
-          "The chat assistant is provided by GoHighLevel (HighLevel Inc.). It is part of the site and loads on every visit, whether or not you accept analytics cookies. It may store information in your browser to keep your conversation, and it receives the messages you send.",
+          "Google Analytics is a performance cookie. It is loaded only if you allow it, with Accept all in the cookie notice or by turning on Performance cookies in Cookie settings. If you do not allow it, it is not loaded. We save your choices in your browser so we do not ask again, and you can change them at any time with the Cookie settings link at the bottom of the page.",
+          "The chat assistant is provided by GoHighLevel (HighLevel Inc.). It is part of the site and loads on every visit, whether or not you allow analytics cookies. It may store information in your browser to keep your conversation, and it receives the messages you send.",
           "By using the chat, you agree that we store your messages and the information you share in it to answer you and follow up on your request.",
           "If you do not agree to us storing your personal data or statistics about your conversation, please do not use the chat. You can reach us at hello@elevatebiz.ai instead.",
           "You can block or delete cookies in your browser settings, or install the Google Analytics opt-out browser add-on at tools.google.com/dlpage/gaoptout.",
@@ -113,8 +113,8 @@ const COPY: Record<Lang, { back: string; title: string; updated: string; intro: 
         title: "Cookies, Google Analytics y el chat",
         body: [
           "Usamos Google Analytics, un servicio de Google LLC, para medir las visitas. Usa cookies y tecnologías similares para distinguir las visitas y reunir estadísticas de uso.",
-          "Google Analytics solo se carga si pulsas Aceptar en el aviso de cookies. Si pulsas Rechazar, no se carga. Guardamos tu respuesta en tu navegador para no volver a preguntarte.",
-          "El asistente de chat lo provee GoHighLevel (HighLevel Inc.). Es parte del sitio y se carga en cada visita, aceptes o no las cookies de analítica. Puede guardar información en tu navegador para mantener tu conversación, y recibe los mensajes que envías.",
+          "Google Analytics es una cookie de rendimiento. Solo se carga si la permites, con Aceptar todas en el aviso de cookies o activando las cookies de rendimiento en Configuración de cookies. Si no la permites, no se carga. Guardamos tus elecciones en tu navegador para no volver a preguntarte, y puedes cambiarlas cuando quieras con el enlace Configuración de cookies al final de la página.",
+          "El asistente de chat lo provee GoHighLevel (HighLevel Inc.). Es parte del sitio y se carga en cada visita, permitas o no las cookies de analítica. Puede guardar información en tu navegador para mantener tu conversación, y recibe los mensajes que envías.",
           "Al usar el chat, aceptas que guardemos tus mensajes y los datos que compartas en él para responderte y dar seguimiento a tu solicitud.",
           "Si no estás de acuerdo con que guardemos tus datos personales o estadísticas de tu conversación, te pedimos no usar el chat. Puedes escribirnos a hello@elevatebiz.ai.",
           "Puedes bloquear o borrar las cookies en la configuración de tu navegador, o instalar el complemento de inhabilitación de Google Analytics en tools.google.com/dlpage/gaoptout.",

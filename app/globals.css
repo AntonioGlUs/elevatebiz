@@ -1935,6 +1935,19 @@ body:not(:has(.site)) a:hover {
   color: rgba(255, 255, 255, 0.72);
   text-decoration: underline;
 }
+.ft-legal {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 20px;
+}
+.ft-cookies {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}
 .ft-demo {
   margin-top: 16px;
   text-align: center;
@@ -2563,7 +2576,7 @@ body:not(:has(.site)) a:hover {
   font-family: Fraunces, serif;
   font-weight: 600;
   font-size: 19px;
-  color: #142720;
+  color: #54615b; /* soft slate gray instead of near-black on the white bar */
 }
 
 /* ---------- Desktop dropdown menus ---------- */
@@ -2588,7 +2601,7 @@ body:not(:has(.site)) a:hover {
   padding: 8px 12px;
   font-size: 15px;
   font-weight: 500;
-  color: #142720;
+  color: #54615b;
   cursor: pointer;
   border-radius: 8px;
 }
@@ -2636,7 +2649,7 @@ body:not(:has(.site)) a:hover {
   padding: 9px 12px;
   border-radius: 6px;
   font-size: 14.5px;
-  color: #142720;
+  color: #54615b;
   text-decoration: none;
 }
 
@@ -2655,6 +2668,13 @@ body:not(:has(.site)) a:hover {
   border-radius: 999px;
   padding: 3px;
   gap: 2px;
+  cursor: pointer;
+  text-decoration: none; /* the whole toggle is one link to the other language */
+}
+
+.nb-lang-toggle:focus-visible {
+  outline: 2px solid #2ec7bd;
+  outline-offset: 2px;
 }
 
 .nb-lang-button {
@@ -2679,7 +2699,7 @@ body:not(:has(.site)) a:hover {
   display: flex;
   align-items: center;
   gap: 6px;
-  color: #142720;
+  color: #54615b;
   text-decoration: none;
   font-weight: 500;
   font-size: 14px;
@@ -2929,6 +2949,53 @@ body:not(:has(.site)) a:hover {
 
 .nb-bar-top .nb-phone svg {
   stroke: #ffffff;
+}
+
+/* The call button has no border (it crowded the bar); the padding keeps its click area */
+.nb-phone {
+  padding: 8px 12px;
+  border-radius: 999px;
+}
+
+/* The number and "Virtual assistant 24/7" fade into each other, in a loop, in the same space (the button never resizes) */
+.nb-call-swap {
+  display: grid;
+  text-align: center;
+}
+
+.nb-call-swap > span {
+  grid-area: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  animation: nb-call-a 8s ease-in-out infinite;
+}
+
+.nb-call-swap > .nb-call-b {
+  animation-name: nb-call-b;
+}
+/* 8 s loop: each text holds ~2.4 s and the crossfade lasts ~1.6 s */
+@keyframes nb-call-a {
+  0%, 30% { opacity: 1; }
+  50%, 80% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes nb-call-b {
+  0%, 30% { opacity: 0; }
+  50%, 80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Visitors who ask for less motion just see the number */
+@media (prefers-reduced-motion: reduce) {
+  .nb-call-swap > span {
+    animation: none;
+  }
+  .nb-call-swap > .nb-call-b {
+    opacity: 0;
+  }
 }
 
 .nb-bar-top .nb-lang-toggle {
