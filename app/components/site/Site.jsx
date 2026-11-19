@@ -534,7 +534,10 @@ export default function Site({ lang = 'en' }) {
   const quotes = x.quotes
 
   // Headline: the text before the comma is plain, the rest goes on its own line in the accent italic
-  const [h1a, ...h1rest] = t.heroTitle.split(', ')
+  // The text after the LAST comma is the accent (own line, turquoise); everything before it stays plain
+  const h1cut = t.heroTitle.lastIndexOf(', ')
+  const h1a = t.heroTitle.slice(0, h1cut)
+  const h1rest = [t.heroTitle.slice(h1cut + 2)]
 
   return (
     <>
@@ -614,7 +617,6 @@ export default function Site({ lang = 'en' }) {
               {h1a}, <em>{h1rest.join(', ')}</em>
             </h1>
             <p className="lead">{t.heroSubtitle}</p>
-            <p className="hero-kicker">{t.heroTagline}</p>
             <button type="button" className="hero-video" data-fx="breathe" onClick={() => setVideoOpen(true)}>
               {lang === 'es' ? 'Mira la IA en acción' : 'See AI in action'}
               <span aria-hidden="true">
@@ -632,7 +634,9 @@ export default function Site({ lang = 'en' }) {
                 Demos
               </button>
             </div>
-            <p className="hero-assure">{t.heroAssure}</p>
+            <p className="hero-assure">
+              <a href="#launch-note">{t.heroAssure}</a>
+            </p>
           </div>
         </section>
 
@@ -976,6 +980,8 @@ export default function Site({ lang = 'en' }) {
               <span className="ft-brand-name">ElevateBiz</span>
             </div>
             <p className="ft-tagline">{x.closing.tagline}</p>
+            {/* Brand slogan (it used to sit in the hero) */}
+            <p className="ft-slogan">{t.heroTagline}</p>
           </div>
           <div className="ft-contact">
             <p className="ft-label">{x.closing.contact}</p>
@@ -989,6 +995,7 @@ export default function Site({ lang = 'en' }) {
             </div>
           </div>
         </div>
+        <p className="ft-note" id="launch-note">{t.footerAssureNote}</p>
         <div className="ft-bottom">
           <span>
             {t.footerCopyright}
@@ -1002,6 +1009,12 @@ export default function Site({ lang = 'en' }) {
             </a>
           </span>
         </div>
+        <a href="#top" className="ft-backtop">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M12 19V5M5 12l7-7 7 7" />
+          </svg>
+          {t.footerBackToTop}
+        </a>
       </footer>
       </div>
 

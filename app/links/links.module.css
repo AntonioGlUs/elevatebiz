@@ -22,6 +22,74 @@
   pointer-events: none;
 }
 
+/* Soft glowing orbs that float across the whole page behind the card */
+.blobs {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.blobs span {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(44px);
+  will-change: transform;
+}
+.b1 {
+  top: 6%; left: -12%;
+  width: 62vmax; height: 62vmax; max-width: 520px; max-height: 520px;
+  background: radial-gradient(circle, rgba(23, 207, 192, 0.55), rgba(23, 207, 192, 0) 70%);
+  animation: floatA 11s ease-in-out infinite alternate;
+}
+.b2 {
+  top: 38%; right: -16%;
+  width: 56vmax; height: 56vmax; max-width: 480px; max-height: 480px;
+  background: radial-gradient(circle, rgba(139, 61, 240, 0.4), rgba(139, 61, 240, 0) 70%);
+  animation: floatB 13s ease-in-out infinite alternate;
+}
+.b3 {
+  bottom: -8%; left: 10%;
+  width: 54vmax; height: 54vmax; max-width: 460px; max-height: 460px;
+  background: radial-gradient(circle, rgba(10, 140, 240, 0.45), rgba(10, 140, 240, 0) 70%);
+  animation: floatA 15s ease-in-out infinite alternate-reverse;
+}
+@keyframes floatA {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(40vw, 22vh) scale(1.25); }
+}
+@keyframes floatB {
+  from { transform: translate(0, 0) scale(1.1); }
+  to { transform: translate(-38vw, -24vh) scale(0.9); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .blobs span { animation: none; }
+}
+
+/* Slow drifting waves (each shape moves on its own cycle); off when the visitor prefers reduced motion */
+.waves path {
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform;
+}
+.w1 { animation: driftA 9s ease-in-out infinite alternate; }
+.w2 { animation: driftB 11s ease-in-out infinite alternate; }
+.w3 { animation: driftB 10s ease-in-out infinite alternate-reverse; }
+.w4 { animation: driftA 12s ease-in-out infinite alternate-reverse; }
+
+@keyframes driftA {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(110px, 70px) scale(1.14); }
+}
+@keyframes driftB {
+  from { transform: translate(0, 0) rotate(0deg) scale(1); }
+  to { transform: translate(-100px, 60px) rotate(5deg) scale(1.12); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .waves path { animation: none; }
+}
+
 .langs {
   display: flex;
   gap: 6px;
@@ -224,3 +292,538 @@
   }
 }
 
+
+/* Slimmer, more refined buttons: icon in a soft circle, text on the left, small arrow on the right */
+.list {
+  gap: 12px;
+  max-width: 380px;
+}
+.page .link,
+.page .link:hover {
+  min-height: 56px;
+  gap: 12px;
+  padding: 8px 16px 8px 9px;
+  border-radius: 18px;
+}
+.page .primary,
+.page .primary:hover {
+  min-height: 62px;
+}
+.icon {
+  flex: 0 0 40px;
+  align-self: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(22, 115, 230, 0.1);
+}
+.primary .icon {
+  background: rgba(255, 255, 255, 0.22);
+}
+.icon svg {
+  width: 21px;
+  height: 21px;
+}
+.text {
+  align-items: flex-start;
+  gap: 1px;
+  text-align: left;
+}
+.label {
+  font-size: 1rem;
+  font-weight: 650;
+}
+.hint {
+  font-size: 0.82rem;
+}
+.chevron {
+  display: block;
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  opacity: 0.45;
+}
+.primary .chevron {
+  opacity: 0.85;
+}
+
+@media (max-width: 480px) {
+  .list {
+    max-width: 330px;
+    gap: 10px;
+  }
+  .page .link,
+  .page .link:hover {
+    min-height: 52px;
+    padding: 7px 14px 7px 8px;
+    border-radius: 16px;
+  }
+  .page .primary,
+  .page .primary:hover {
+    min-height: 58px;
+  }
+  .icon {
+    flex-basis: 36px;
+    width: 36px;
+    height: 36px;
+  }
+  .icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  .label {
+    font-size: 0.95rem;
+  }
+  .hint {
+    font-size: 0.76rem;
+  }
+}
+
+/* Editorial style: flat white rectangles, small uppercase letter-spaced text, centered, no icons or hints */
+.list {
+  gap: 12px;
+  max-width: 400px;
+}
+.page .link,
+.page .link:hover {
+  justify-content: center;
+  min-height: 54px;
+  padding: 12px 18px;
+  border: 1px solid rgba(11, 27, 45, 0.06);
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 1px 2px rgba(11, 27, 45, 0.06);
+}
+.page .link:hover {
+  background: #fff;
+  box-shadow: 0 6px 16px rgba(11, 27, 45, 0.1);
+}
+.page .primary,
+.page .primary:hover {
+  min-height: 58px;
+  border-color: transparent;
+  background: linear-gradient(100deg, #17cfc0 0%, #08a6d6 55%, #0a8cf0 100%);
+  box-shadow: 0 6px 18px rgba(8, 150, 220, 0.25);
+}
+.icon,
+.hint,
+.chevron {
+  display: none;
+}
+.text {
+  flex: 0 1 auto;
+  align-items: center;
+  text-align: center;
+}
+.label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+.primary .label {
+  font-weight: 600;
+}
+
+@media (max-width: 480px) {
+  .list {
+    max-width: 340px;
+    gap: 10px;
+  }
+  .page .link,
+  .page .link:hover {
+    min-height: 50px;
+    padding: 10px 14px;
+    border-radius: 2px;
+  }
+  .page .primary,
+  .page .primary:hover {
+    min-height: 54px;
+  }
+  .label {
+    font-size: 0.74rem;
+  }
+}
+
+/* Soft pastel style: tone-on-tone pills, serif text, nothing else */
+.list {
+  gap: 12px;
+  max-width: 360px;
+}
+.page .link,
+.page .link:hover {
+  min-height: 48px;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(23, 207, 192, 0.16);
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.page .link:hover {
+  background: rgba(23, 207, 192, 0.28);
+  box-shadow: none;
+}
+.page .primary,
+.page .primary:hover {
+  min-height: 54px;
+  background: linear-gradient(100deg, #17cfc0 0%, #08a6d6 55%, #0a8cf0 100%);
+  box-shadow: 0 6px 16px rgba(8, 150, 220, 0.22);
+}
+.label {
+  font-family: Fraunces, serif;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.primary .label {
+  font-weight: 600;
+}
+
+@media (max-width: 480px) {
+  .list {
+    max-width: 320px;
+    gap: 10px;
+  }
+  .page .link,
+  .page .link:hover {
+    min-height: 46px;
+    padding: 9px 16px;
+    border-radius: 999px;
+  }
+  .page .primary,
+  .page .primary:hover {
+    min-height: 50px;
+  }
+  .label {
+    font-size: 0.9rem;
+  }
+}
+
+/* Photo banner on top (logo, name, tagline and social icons over it), pills below */
+.page,
+.page:is(*) {
+  padding: 0 0 56px;
+  gap: 22px;
+}
+.banner {
+  position: relative;
+  width: 100%;
+  padding: 60px 20px 28px;
+  border-radius: 0 0 34px 34px;
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 14px 34px rgba(11, 27, 45, 0.18);
+}
+.banner .langs {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  align-self: auto;
+}
+.banner .name {
+  color: #fff;
+  margin: 6px 0 8px;
+  text-shadow: 0 2px 14px rgba(7, 18, 31, 0.5);
+}
+.banner .tagline {
+  margin: 0 auto 20px;
+  color: rgba(255, 255, 255, 0.88);
+}
+.banner .logo {
+  width: 84px;
+  height: 84px;
+}
+.social {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+.social a {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  background: rgba(255, 255, 255, 0.14);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  transition: background 0.2s, transform 0.2s;
+}
+.social a:hover {
+  background: rgba(255, 255, 255, 0.28);
+  transform: translateY(-2px);
+}
+.card {
+  padding: 0 16px;
+  margin-top: 0;
+}
+
+@media (max-width: 480px) {
+  .page {
+    gap: 18px;
+    padding: 0 0 28px;
+  }
+  .banner {
+    padding: 56px 16px 22px;
+    border-radius: 0 0 28px 28px;
+  }
+  .banner .logo {
+    width: 64px;
+    height: 64px;
+  }
+  .banner .name {
+    font-size: 1.9rem;
+    margin: 4px 0 6px;
+  }
+  .banner .tagline {
+    margin-bottom: 16px;
+  }
+}
+.page .social a,
+.page .social a:hover {
+  color: #fff;
+}
+
+/* Professional dark theme (same navy and teal as the website hero) */
+.page {
+  background: #07121f;
+  color: #f6f1e8;
+}
+.waves {
+  display: none;
+}
+.b1 { background: radial-gradient(circle, rgba(1, 195, 204, 0.32), rgba(1, 195, 204, 0) 70%); }
+.b2 { background: radial-gradient(circle, rgba(30, 90, 200, 0.34), rgba(30, 90, 200, 0) 70%); }
+.b3 { background: radial-gradient(circle, rgba(1, 150, 190, 0.28), rgba(1, 150, 190, 0) 70%); }
+.banner {
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.4);
+}
+.page .link,
+.page .link:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #f6f1e8;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+.page .link:hover {
+  background: rgba(1, 195, 204, 0.14);
+  border-color: rgba(1, 195, 204, 0.5);
+}
+.page .primary,
+.page .primary:hover {
+  border-color: transparent;
+  background: linear-gradient(100deg, #01c3cc 0%, #0796c7 55%, #0a6fd6 100%);
+  box-shadow: 0 8px 22px rgba(1, 160, 200, 0.28);
+  color: #fff;
+}
+.label {
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+}
+.primary .label {
+  font-weight: 600;
+}
+.page .link,
+.page .link:hover {
+  border-radius: 10px;
+}
+@media (max-width: 480px) {
+  .page .link,
+  .page .link:hover {
+    border-radius: 10px;
+  }
+  .label {
+    font-size: 0.76rem;
+  }
+}
+
+/* Banner photo: slow zoom and drift (Ken Burns), with a dark gradient on top for the text */
+.banner {
+  isolation: isolate;
+  overflow: hidden;
+  background: #07121f;
+}
+.bannerBg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(180deg, rgba(7, 18, 31, 0.45) 0%, rgba(7, 18, 31, 0.82) 100%),
+    url(/images/hero-building.webp);
+  background-size: cover;
+  background-position: center;
+  animation: bannerPan 14s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes bannerPan {
+  from { transform: scale(1) translate(0, 0); }
+  to { transform: scale(1.25) translate(-3%, 2%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bannerBg { animation: none; }
+}
+
+/* "Book a free call" buzzes for a moment every few seconds to draw the eye */
+.page .primary {
+  animation: buzz 3.6s ease-in-out infinite;
+}
+@keyframes buzz {
+  0%, 62%, 100% { transform: translateX(0) rotate(0); }
+  64% { transform: translateX(-4px) rotate(-1deg); }
+  66% { transform: translateX(4px) rotate(1deg); }
+  68% { transform: translateX(-4px) rotate(-1deg); }
+  70% { transform: translateX(4px) rotate(1deg); }
+  72% { transform: translateX(-3px) rotate(-0.6deg); }
+  74% { transform: translateX(3px) rotate(0.6deg); }
+  76% { transform: translateX(-2px) rotate(0); }
+  78% { transform: translateX(2px) rotate(0); }
+  80% { transform: translateX(0) rotate(0); }
+}
+.page .primary:hover {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .page .primary { animation: none; }
+}
+
+/* Everything 30px lower, and more room between the tagline and the social icons */
+.banner {
+  padding-top: 90px;
+}
+.banner .tagline {
+  margin-bottom: 34px;
+}
+@media (max-width: 480px) {
+  .banner {
+    padding-top: 86px;
+  }
+  .banner .tagline {
+    margin-bottom: 30px;
+  }
+}
+
+/* Icons at the bottom of the page; the banner keeps the room they used to take so the buttons stay where they were */
+.social {
+  margin-top: auto;
+  padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+}
+.banner {
+  padding-bottom: 74px;
+}
+@media (max-width: 480px) {
+  .banner {
+    padding-bottom: 68px;
+  }
+}
+
+/* WhatsApp as a floating assistant button, bottom right */
+.page .waFab,
+.page .waFab:hover {
+  position: fixed;
+  right: 18px;
+  bottom: calc(18px + env(safe-area-inset-bottom));
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #25d366;
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4), 0 0 0 0 rgba(37, 211, 102, 0.5);
+  animation: waPulse 2.6s ease-out infinite;
+  transition: transform 0.2s;
+}
+.page .waFab:hover {
+  transform: scale(1.06);
+}
+@keyframes waPulse {
+  0% { box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4), 0 0 0 0 rgba(37, 211, 102, 0.5); }
+  70%, 100% { box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4), 0 0 0 16px rgba(37, 211, 102, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page .waFab { animation: none; }
+}
+
+/* "Coming soon" dialog (Facebook icon) */
+.page .social button {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  background: rgba(255, 255, 255, 0.14);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.page .social button:hover {
+  background: rgba(255, 255, 255, 0.28);
+  transform: translateY(-2px);
+}
+
+/* Small "Coming soon" bubble right above the Facebook icon */
+.fbWrap {
+  position: relative;
+  display: inline-flex;
+}
+.tip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 7px 12px;
+  border-radius: 8px;
+  background: #fff;
+  color: #0b1b2d;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  animation: tipIn 0.2s ease both;
+  pointer-events: none;
+}
+.tip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border: 5px solid transparent;
+  border-top-color: #fff;
+}
+@keyframes tipIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(4px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* Touch screens: no "stuck" hover or focus look on the icons after a tap */
+.page .social a,
+.page .social button {
+  -webkit-tap-highlight-color: transparent;
+}
+.page .social button:focus:not(:focus-visible) {
+  outline: none;
+}
+@media (hover: none) {
+  .page .social a:hover,
+  .page .social button:hover {
+    background: rgba(255, 255, 255, 0.14);
+    transform: none;
+  }
+}

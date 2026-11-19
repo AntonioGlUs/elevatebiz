@@ -10,13 +10,15 @@ export const TEXT = {
     heroTagline: "Do what you love. Let AI handle the rest.",
     // Headline: the text before the comma is plain, the rest is set in the accent italic on its own line
     heroTitle:
-      "Your business, running on autopilot.",
+      "More customers, less manual work, all on autopilot.",
     heroSubtitle:
-      "Stop losing customers to slow replies and spending hours on manual work. We build the AI agents, automations and custom software that do it for you.",
+      "Stop losing customers to slow replies and spending hours on manual work. We build the AI agents and automations that do it for you.",
     heroBtnPrimary: "Book free consultation",
     // Launch offer under the hero buttons. It is for the first clients only: remove it (and the same sentence in
     // the closing text in lib/extra.js) when the offer ends.
-    heroAssure: "Launch offer: no contract, cancel anytime.",
+    heroAssure: "No contract · Cancel anytime*",
+    // Footnote for the asterisk above, shown in the footer
+    footerAssureNote: "* Limited-time offer, for the launch only: no contract and cancel anytime.",
     heroBtnSecondary: "See how it works",
     trustedBy: "Trusted by business owners across industries",
     worksWith: "Built with technology you can trust",
@@ -113,6 +115,7 @@ export const TEXT = {
     footerTagline:
       "AI automation and marketing for small and medium businesses.",
     footerBookCall: "Take the assessment",
+    footerBackToTop: "Back to top",
     footerCopyright: "© 2026 ElevateBiz. All rights reserved.",
     footerDemoNotice: "This is a demo site, still a work in progress.",
     footerPrivacy: "Privacy Policy",
@@ -150,11 +153,12 @@ export const TEXT = {
     navBookCall: "Agenda una llamada",
     heroTagline: "Haz lo que amas. Deja que la IA se encargue del resto.",
     heroTitle:
-      "Tu negocio, en piloto automático.",
+      "Más clientes, menos trabajo manual, todo en piloto automático.",
     heroSubtitle:
-      "Deja de perder clientes por responder tarde y de invertir horas en trabajo manual. Construimos los agentes de IA, las automatizaciones y el software a la medida que lo hacen por ti.",
+      "Deja de perder clientes por responder tarde y de invertir horas en trabajo manual. Construimos los agentes de IA y las automatizaciones que lo hacen por ti.",
     heroBtnPrimary: "Agendar consulta gratis",
-    heroAssure: "Oferta de lanzamiento: sin contrato, cancelas cuando quieras.",
+    heroAssure: "Sin contrato · Cancela cuando quieras*",
+    footerAssureNote: "* Oferta por tiempo limitado, solo por lanzamiento: sin contrato y cancelas cuando quieras.",
     heroBtnSecondary: "Ver cómo funciona",
     trustedBy: "La confianza de dueños de negocio en distintas industrias",
     worksWith: "Construido con tecnología de confianza",
@@ -245,6 +249,7 @@ export const TEXT = {
     ctaButton: "Haz el diagnóstico gratis",
     footerTagline: "Automatización y marketing con IA para pequeñas y medianas empresas.",
     footerBookCall: "Haz el diagnóstico",
+    footerBackToTop: "Volver al inicio",
     footerCopyright: "© 2026 ElevateBiz. Todos los derechos reservados.",
     footerDemoNotice: "Este es un sitio de demostración, sigue en desarrollo.",
     footerPrivacy: "Política de privacidad",

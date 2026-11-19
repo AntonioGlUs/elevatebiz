@@ -120,7 +120,27 @@ export default function NavBar({ t, lang, annVisible, annHeight }) {
     }
   }, [openMenu])
 
-  const top = scrolled ? '0' : `${annVisible ? Math.max(42, annHeight + 3) : 42}px`
+  // The mobile (hamburger) panel also closes when the visitor taps outside of it (the burger button itself toggles it)
+  useEffect(() => {
+    if (!mobileNavOpen) return
+    const onPointerDown = (e) => {
+      if (!e.target.closest('.nb-mobile-panel, .nb-burger')) {
+        setMobileNavOpen(false)
+        setOpenMenu(null)
+      }
+    }
+    const onKey = (e) => {
+      if (e.key === 'Escape') setMobileNavOpen(false)
+    }
+    document.addEventListener('pointerdown', onPointerDown)
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown)
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [mobileNavOpen])
+
+  const top = scrolled ? '0' :`${annVisible ? Math.max(42, annHeight + 3) : 42}px`
 
   // "More" shares openMenu with the other menus, so only one dropdown is open at a time
   const MORE = -1
