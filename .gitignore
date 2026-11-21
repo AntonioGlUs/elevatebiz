@@ -9,3 +9,6 @@ out
 elevatebiz-site.zip
 *.tsbuildinfo
 docs/
+
+# Local settings of the Claude app (how to start the dev server); not part of the site
+.claude/

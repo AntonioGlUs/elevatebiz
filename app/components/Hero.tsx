@@ -68,7 +68,7 @@ export default function Hero({ t, heroOffset }: Props) {
       ))}
       <div className={styles.overlay} />
       <div className={`eb-hero-card ${styles.card}`}>
-        <h1 className={`eb-hero-title ${styles.title}`}>{t.heroTitle}</h1>
+        <h1 className={`eb-hero-title ${styles.title}`}>{t.heroTitle.replace('|', '')}</h1>
         <p className={styles.subtitle}>{t.heroSubtitle}</p>
         <div className={styles.actions}>
           <a href={BOOK_CALL_HREF} className={styles.primary}>

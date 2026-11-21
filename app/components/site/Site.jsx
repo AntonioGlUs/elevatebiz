@@ -346,6 +346,17 @@ export default function Site({ lang = 'en' }) {
   }, [])
   // Only the first photo is downloaded at load; the others are added a moment after the page has settled
   const [heroMore, setHeroMore] = useState(false)
+  // Floating "Back to top" button: it appears only when the visitor reaches the bottom of the page
+  const [atBottom, setAtBottom] = useState(false)
+  useEffect(() => {
+    const onScroll = () => {
+      const doc = document.documentElement
+      setAtBottom(window.scrollY > 600 && window.scrollY + window.innerHeight >= doc.scrollHeight - 160)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
   useEffect(() => {
     const t = setTimeout(() => setHeroMore(true), 2500)
     return () => clearTimeout(t)
@@ -533,11 +544,8 @@ export default function Site({ lang = 'en' }) {
   // Testimonials auto-advance with the progress bar's animation end
   const quotes = x.quotes
 
-  // Headline: the text before the comma is plain, the rest goes on its own line in the accent italic
-  // The text after the LAST comma is the accent (own line, turquoise); everything before it stays plain
-  const h1cut = t.heroTitle.lastIndexOf(', ')
-  const h1a = t.heroTitle.slice(0, h1cut)
-  const h1rest = [t.heroTitle.slice(h1cut + 2)]
+  // Headline: the text before the "|" is plain; the text after it is the accent (own line, turquoise italic)
+  const [h1a, h1accent = ''] = t.heroTitle.split('|')
 
   return (
     <>
@@ -614,9 +622,23 @@ export default function Site({ lang = 'en' }) {
           <div className="hero-glow" aria-hidden="true" />
           <div className="container">
             <h1>
-              {h1a}, <em>{h1rest.join(', ')}</em>
+              {h1a}<em>{h1accent}</em>
             </h1>
             <p className="lead">{t.heroSubtitle}</p>
+            <div className="actions">
+              {/* Opens the landing page with the video; the calendar is booked from there */}
+              <a href="/ready-to-scale/" className="btn">
+                {t.heroBtnPrimary}
+              </a>
+              {/* Opens the booking calendar pop-up, like every link marked with data-book */}
+              <a href={BOOK_CALL_HREF} data-book className="btn btn-ghost hero-demos-m">
+                {lang === 'es' ? 'Agenda un demo' : 'Book a demo'}
+              </a>
+            </div>
+            <p className="hero-assure">
+              <a href="#launch-note">{t.heroAssure}</a>
+            </p>
+            {/* The video button sits at the bottom of the hero, where the two buttons used to be */}
             <button type="button" className="hero-video" data-fx="breathe" onClick={() => setVideoOpen(true)}>
               {lang === 'es' ? 'Mira la IA en acción' : 'See AI in action'}
               <span aria-hidden="true">
@@ -625,18 +647,6 @@ export default function Site({ lang = 'en' }) {
                 </svg>
               </span>
             </button>
-            <div className="actions">
-              <a href={BOOK_CALL_HREF} data-book className="btn">
-                {t.heroBtnPrimary}
-              </a>
-              {/* Shortcut to the Demos list, on every screen size (on desktop it repeats the Demos menu of the nav bar) */}
-              <button type="button" className="btn btn-ghost hero-demos-m" onClick={() => setDemosOpen(true)}>
-                Demos
-              </button>
-            </div>
-            <p className="hero-assure">
-              <a href="#launch-note">{t.heroAssure}</a>
-            </p>
           </div>
         </section>
 
@@ -1009,12 +1019,6 @@ export default function Site({ lang = 'en' }) {
             </a>
           </span>
         </div>
-        <a href="#top" className="ft-backtop">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M12 19V5M5 12l7-7 7 7" />
-          </svg>
-          {t.footerBackToTop}
-        </a>
       </footer>
       </div>
 
@@ -1024,6 +1028,12 @@ export default function Site({ lang = 'en' }) {
       <BookingModal lang={lang} open={bookOpen} onClose={() => setBookOpen(false)} />
       <DemosSheet lang={lang} open={demosOpen} onClose={() => setDemosOpen(false)} />
       {/* The chatbot lives here (not in the root layout) so demo sites can have their own bot */}
+      <a href="#top" className={`ft-backtop${atBottom ? ' is-on' : ''}`} aria-label={t.footerBackToTop} title={t.footerBackToTop} tabIndex={atBottom ? 0 : -1}>
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M12 19V5M5 12l7-7 7 7" />
+        </svg>
+        <span>{t.footerBackToTop}</span>
+      </a>
       <GhlChat lang={lang} />
     </>
   )

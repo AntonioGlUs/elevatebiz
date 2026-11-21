@@ -1,0 +1,183 @@
+/* Landing page with one video and one button: dark navy like the home hero, everything centred */
+.page {
+  --bg: #07121f;
+  --text: #b8c4d2;
+  --head: #ffffff;
+  --accent: #01c3cc;
+  --line: rgba(255, 255, 255, 0.14);
+  min-height: 100svh;
+  background:
+    radial-gradient(60% 40% at 50% 0%, rgba(1, 195, 204, 0.16), transparent 70%),
+    radial-gradient(50% 35% at 0% 60%, rgba(30, 90, 200, 0.14), transparent 70%),
+    var(--bg);
+  color: var(--text);
+  font-family: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+/* Thin strip at the very top */
+.ribbon {
+  margin: 0;
+  padding: 9px 16px;
+  border-bottom: 1px solid var(--line);
+  color: var(--head);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.top {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 22px 16px 0;
+}
+.page .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--head);
+  font-family: Fraunces, serif;
+  font-size: 22px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.langs {
+  position: absolute;
+  right: 20px;
+  top: 22px;
+  display: flex;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+}
+.langs button {
+  padding: 5px 11px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--head);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.langs .langOn {
+  background: #007a73;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 34px 16px 72px;
+  text-align: center;
+}
+/* Who the page is for, very large, like a shout */
+.audience {
+  margin: 0;
+  color: var(--accent);
+  font-family: Manrope, Inter, system-ui, sans-serif;
+  font-size: clamp(38px, 7.2vw, 84px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+}
+.page .title {
+  margin: 10px 0 0;
+  color: var(--head);
+  font-family: Manrope, Inter, system-ui, sans-serif;
+  font-size: clamp(24px, 3.6vw, 42px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+.lead {
+  max-width: 640px;
+  margin: 16px 0 0;
+  font-size: clamp(15px, 1.5vw, 18px);
+}
+
+/* The video (16:9), or the space reserved for it */
+.video {
+  width: 100%;
+  max-width: 860px;
+  aspect-ratio: 16 / 9;
+  margin: 30px 0 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #0b1b2e;
+  box-shadow: 0 0 0 1px rgba(1, 195, 204, 0.18), 0 30px 80px rgba(0, 0, 0, 0.55), 0 0 70px rgba(1, 195, 204, 0.14);
+}
+.video video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.videoEmpty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  height: 100%;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.play {
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  padding-left: 4px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--head);
+}
+
+.page .btn {
+  display: inline-block;
+  margin: 34px 0 0;
+  padding: 18px 40px;
+  border-radius: 6px;
+  background: #ff5a3c;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 10px 30px rgba(255, 90, 60, 0.35);
+  transition: transform 0.2s, background 0.2s;
+}
+.page .btn:hover {
+  transform: translateY(-2px);
+  background: #ff6e53;
+}
+@media (max-width: 600px) {
+  .ribbon {
+    font-size: 10px;
+    letter-spacing: 0.05em;
+  }
+  .top {
+    justify-content: flex-start;
+    padding-left: 20px;
+  }
+  .main {
+    padding-top: 26px;
+  }
+  .page .btn {
+    width: 100%;
+    padding: 16px 20px;
+    font-size: 16px;
+  }
+}

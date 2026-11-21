@@ -8,12 +8,12 @@ export const TEXT = {
     navBookCall: "Book a call",
     // Brand phrase, shown small under the subtitle
     heroTagline: "Do what you love. Let AI handle the rest.",
-    // Headline: the text before the comma is plain, the rest is set in the accent italic on its own line
+    // Headline: the text before the "|" is plain, the rest is set in the accent italic on its own line
     heroTitle:
-      "More customers, less manual work, all on autopilot.",
+      "What if you could get more clients |working less?",
     heroSubtitle:
-      "Stop losing customers to slow replies and spending hours on manual work. We build the AI agents and automations that do it for you.",
-    heroBtnPrimary: "Book free consultation",
+      "We combine smart advertising, AI-powered assistance, and automation to bring in new customers, convert more leads, and give you back your time.",
+    heroBtnPrimary: "I'm ready to get more clients",
     // Launch offer under the hero buttons. It is for the first clients only: remove it (and the same sentence in
     // the closing text in lib/extra.js) when the offer ends.
     heroAssure: "No contract · Cancel anytime*",
@@ -153,10 +153,10 @@ export const TEXT = {
     navBookCall: "Agenda una llamada",
     heroTagline: "Haz lo que amas. Deja que la IA se encargue del resto.",
     heroTitle:
-      "Más clientes, menos trabajo manual, todo en piloto automático.",
+      "¿Y si pudieras conseguir más clientes |trabajando menos?",
     heroSubtitle:
-      "Deja de perder clientes por responder tarde y de invertir horas en trabajo manual. Construimos los agentes de IA y las automatizaciones que lo hacen por ti.",
-    heroBtnPrimary: "Agendar consulta gratis",
+      "Combinamos publicidad inteligente, asistentes con IA y automatización para traerte nuevos clientes, convertir más prospectos y devolverte tu tiempo.",
+    heroBtnPrimary: "Estoy listo para conseguir más clientes",
     heroAssure: "Sin contrato · Cancela cuando quieras*",
     footerAssureNote: "* Oferta por tiempo limitado, solo por lanzamiento: sin contrato y cancelas cuando quieras.",
     heroBtnSecondary: "Ver cómo funciona",
@@ -334,10 +334,23 @@ export const NAV_DATA = [
   {
     label: { en: "Solutions", es: "Soluciones" },
     items: [
-      { en: "AI Auto-Replies", es: "Respuestas automáticas con IA" },
-      { en: "Task Automation", es: "Automatización de tareas" },
-      { en: "AI Marketing", es: "Marketing con IA" },
-      { en: "Integrations", es: "Integraciones" },
+      // `href` is optional: items without it lead to the coming-soon page until their page exists
+      { en: "Sales", es: "Ventas", href: "/solutions/sales/" },
+      { en: "Operations", es: "Operaciones", href: "/solutions/operations/" },
+      { en: "Marketing", es: "Marketing", href: "/solutions/marketing/" },
+      { en: "Human Resources", es: "Recursos humanos", href: "/solutions/human-resources/" },
+      { en: "Dental Clinic", es: "Clínica dental", href: "/solutions/dental-clinic/" },
+      { en: "Real Estate", es: "Bienes raíces", href: "/solutions/real-estate/" },
+      { en: "Nutritionist", es: "Nutriólogos", href: "/solutions/nutritionist/" },
+      { en: "Gym", es: "Gimnasios", href: "/solutions/gym/" },
+      { en: "Spa", es: "Spa", href: "/solutions/spa/" },
+      { en: "Restaurants", es: "Restaurantes", href: "/solutions/restaurants/" },
+      { en: "Law Firms", es: "Despachos de abogados", href: "/solutions/law-firms/" },
+      { en: "Online Store", es: "Tienda en línea", href: "/solutions/online-store/" },
+      { en: "Education", es: "Educación", href: "/solutions/education/" },
+      { en: "Insurance", es: "Seguros", href: "/solutions/insurance/" },
+      { en: "Accounting", es: "Contabilidad", href: "/solutions/accounting/" },
+      { en: "Automotive", es: "Automotriz", href: "/solutions/automotive/" },
     ],
   },
   {

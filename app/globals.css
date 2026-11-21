@@ -318,10 +318,21 @@ body:not(:has(.site)) a:hover {
   max-width: 660px;
   margin: 0 0 24px;
   /* Three lines now (two for the sentence, one for the accent word), so a little smaller than before */
-  font-size: clamp(34px, 4.4vw, 58px);
+  font-size: clamp(32px, 4vw, 54px);
+  /* Hero headline in bold Manrope (the other headings keep the serif) */
+  font-family: 'Manrope', var(--sans);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
 }
 .hero em {
   display: inline; /* TEST: accent continues on the same line as the plain text (was block) */
+  white-space: nowrap; /* the accent words stay together: they move to the next line as one piece */
+  font-style: normal; /* Manrope has no italic: the accent is marked by its colour only */
+}
+/* Hero subtitle in Plus Jakarta Sans */
+.hero .lead {
+  font-family: 'Plus Jakarta Sans', var(--sans);
 }
 /* Brand phrase under the subtitle */
 .hero-kicker {
@@ -1967,8 +1978,11 @@ body:not(:has(.site)) a:hover {
     padding: 32px 20px 36px;
   }
   .ft {
-    /* The "Back to top" button now ends the page (it used to need 88px of room for the chat button) */
-    padding: 28px 20px 20px;
+    padding: 28px 20px 24px;
+  }
+  /* Instead of 88px of empty space under the footer, the last row just leaves room at the right for the chat button */
+  .ft-bottom {
+    padding-right: 64px;
   }
 }
 
@@ -2627,6 +2641,8 @@ body:not(:has(.site)) a:hover {
   box-shadow: 0 12px 32px rgba(20, 39, 32, 0.16);
   padding: 8px;
   min-width: 210px;
+  max-height: calc(100vh - 130px); /* long menus (Solutions) scroll inside instead of running off the screen */
+  overflow-y: auto;
   z-index: 40;
 }
 
@@ -3027,25 +3043,30 @@ body:not(:has(.site)) a:hover {
 .eb-mobile-panel {
   display: none;
 }
+/* Priority: Solutions and Demos always stay in the bar. When there is not enough room, AI Library goes into "More" first,
+   then Customers Directory and About Us. */
 @media (max-width: 1270px) {
+  .eb-nav-m1,
   .eb-nav-m3,
   .eb-nav-m4 {
     display: none !important;
   }
   .eb-nav-more,
+  .eb-more-g1,
   .eb-more-g3,
   .eb-more-g4 {
     display: block;
   }
 }
 @media (max-width: 1100px) {
-  .eb-nav-m2,
   .eb-nav-phone {
     display: none !important;
   }
-  .eb-more-g2 {
-    display: block;
-  }
+}
+/* A menu button never wraps onto two lines */
+.nb-menu-button,
+.nb-menu-button span {
+  white-space: nowrap;
 }
 @media (max-width: 900px) {
   .eb-nav-menus {
@@ -4403,19 +4424,20 @@ main#top > .hero {
 }
 .nb-callout-text {
   position: absolute;
-  left: 62px;
-  top: 104px;
-  width: 250px;
+  left: 80px;
+  top: 58px;
+  /* Two short lines, so the note stays between the menu and the hero headline instead of covering it */
+  width: 340px;
   font-family: Caveat, 'Bradley Hand', cursive;
   font-weight: 700;
-  font-size: 28px;
+  font-size: 26px;
   line-height: 1.02;
   color: #d9fdff;
   text-shadow:
     0 0 4px #01c3cc,
     0 0 14px rgba(1, 195, 204, 0.9),
     0 0 30px rgba(1, 195, 204, 0.5);
-  transform: rotate(-4deg);
+  transform: rotate(-2deg);
   transform-origin: left top;
   animation: nb-callout-write 600ms ease-out both;
 }
@@ -4657,25 +4679,206 @@ chat-widget:not([data-eb-ready]) {
   100% { background: transparent; }
 }
 
-/* "Back to top" button at the very bottom of the page */
+/* Floating "Back to top" button: bottom center, arrow and label; it fades in when the visitor reaches the bottom of the page */
 .ft-backtop {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  z-index: 1500;
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 8px;
-  width: fit-content;
-  margin: 26px auto 8px;
-  padding: 11px 22px;
-  border: 1px solid currentColor;
+  height: 46px;
+  padding: 0 18px 0 14px;
   border-radius: 999px;
   font-size: 14px;
   font-weight: 600;
-  color: inherit;
   text-decoration: none;
-  opacity: 0.8;
-  transition: opacity 0.2s, transform 0.2s;
+  border: 0;
+  background: #ffc933;
+  color: #0b1b2d;
+  box-shadow: 0 8px 22px rgba(7, 18, 31, 0.4), 0 0 0 4px rgba(255, 201, 51, 0.25);
+  opacity: 0;
+  transform: translate(-50%, 12px);
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s, background 0.2s;
+}
+.ft-backtop.is-on {
+  opacity: 1;
+  transform: translateX(-50%);
+  pointer-events: auto;
 }
 .ft-backtop:hover {
-  opacity: 1;
-  transform: translateY(-2px);
+  background: #ffd75e;
+}
+@media (hover: none) {
+  .ft-backtop:hover { background: #ffc933; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ft-backtop { transition: none; }
+}
+
+/* Phones: at the very bottom the floating Back to top button sits between the footnote and the copyright row, over the divider */
+@media (max-width: 768px) {
+  .ft-note {
+    margin-bottom: 30px;
+  }
+  .ft-bottom {
+    padding-top: 10px;
+  }
+  .ft-backtop {
+    bottom: 85px;
+    height: 28px;
+    gap: 5px;
+    padding: 0 11px 0 8px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .ft-backtop svg {
+    width: 13px;
+    height: 13px;
+  }
+}
+
+/* The Back to top button hovers gently like a ghost: slow bobbing with a slight sway and a pulsing glow.
+   It uses the separate "translate" and "rotate" properties so it does not fight the centering transform. */
+.ft-backtop.is-on {
+  animation: ghostFloat 3.6s ease-in-out infinite;
+}
+@keyframes ghostFloat {
+  0%, 100% { translate: 0 0; rotate: -1.5deg; box-shadow: 0 8px 22px rgba(7, 18, 31, 0.4), 0 0 0 4px rgba(255, 201, 51, 0.2); }
+  50% { translate: 0 -7px; rotate: 1.5deg; box-shadow: 0 16px 26px rgba(7, 18, 31, 0.3), 0 0 0 8px rgba(255, 201, 51, 0.1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ft-backtop.is-on { animation: none; }
+}
+
+/* Solutions: wide menu, columns of 4 buttons (filled column by column) */
+@media (min-width: 901px) {
+  .nb-menu:has(> .nb-dropdown-grid) {
+    position: static;
+  }
+  .nb-dropdown-grid {
+    left: 0;
+    right: auto;
+    width: max-content; /* as wide as its content, so no button falls outside the panel */
+    max-width: calc(100vw - 32px);
+    min-width: 0;
+    max-height: none;
+    overflow: visible;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(4, auto);
+    grid-auto-columns: max-content; /* as many columns as needed, 4 buttons each */
+    column-gap: 10px;
+    padding: 14px;
+  }
+  .nb-dropdown-grid .nb-dropdown-link {
+    white-space: nowrap;
+  }
+}
+
+/* Desktop dropdowns (Solutions, Demos, More...): dark glass in the same navy as the hero instead of white */
+.nb-dropdown {
+  background: rgba(9, 22, 38, 0.94);
+  border-color: rgba(255, 255, 255, 0.14);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  backdrop-filter: blur(16px) saturate(1.2);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+}
+.nb-dropdown .nb-dropdown-link,
+.nb-dropdown .nb-dropdown-link:visited {
+  color: rgba(232, 238, 245, 0.88);
+}
+.nb-dropdown .nb-dropdown-link:hover,
+.nb-dropdown .nb-dropdown-link:focus-visible {
+  background: rgba(1, 195, 204, 0.18);
+  color: #ffffff;
+}
+.nb-dropdown .nb-more-label {
+  color: rgba(232, 238, 245, 0.5);
+}
+
+/* Scrolled (white bar): dropdowns switch to light glass so they match the bar */
+.nb-bar-scrolled .nb-dropdown {
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(20, 39, 32, 0.1);
+  box-shadow: 0 14px 36px rgba(20, 39, 32, 0.16);
+}
+.nb-bar-scrolled .nb-dropdown .nb-dropdown-link,
+.nb-bar-scrolled .nb-dropdown .nb-dropdown-link:visited {
+  color: #142720;
+}
+.nb-bar-scrolled .nb-dropdown .nb-dropdown-link:hover,
+.nb-bar-scrolled .nb-dropdown .nb-dropdown-link:focus-visible {
+  background: rgba(1, 169, 180, 0.14);
+  color: #004f54;
+}
+.nb-bar-scrolled .nb-dropdown .nb-more-label {
+  color: #5e6d64;
+}
+
+/* Scrolled: anchor the wide Solutions menu to the menu group (like at the top), not the screen edge */
+@media (min-width: 901px) {
+  .nb-bar-scrolled .nb-menus {
+    position: relative;
+  }
+}
+
+/* ---------- Nav "Onboarding" link (client area) ---------- */
+.nb-onboarding {
+  padding: 8px 14px;
+  border: 1px solid rgba(20, 39, 32, 0.22);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #142720;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background 200ms ease,
+    border-color 200ms ease;
+}
+.nb-onboarding:hover {
+  background: rgba(20, 39, 32, 0.06);
+}
+.nb-bar-top .nb-onboarding {
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #fff;
+}
+.nb-bar-top .nb-onboarding:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.nb-mobile-onboarding {
+  display: block;
+  margin-top: 12px;
+  padding: 13px 16px;
+  border: 1px solid rgba(20, 39, 32, 0.2);
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #142720;
+  text-align: center;
+  text-decoration: none;
+}
+/* On small screens it lives inside the burger menu */
+@media (max-width: 900px) {
+  .eb-nav-onboarding {
+    display: none;
+  }
+}
+
+/* ---------- Hero order: headline, subtitle, the two buttons, and the video button at the bottom ---------- */
+.hero .container .actions {
+  margin-top: 4px;
+}
+.hero .container .hero-assure {
+  margin-bottom: 28px;
+}
+.hero .container .hero-video {
+  margin: auto 0 0;
+}
+@media (max-width: 720px) {
+  .hero .container .actions { margin-top: 4px; }
+  .hero .container .hero-assure { margin-bottom: 20px; }
 }

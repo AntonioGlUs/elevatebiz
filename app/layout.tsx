@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 };
 
 const FONTS_URL =
-  "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Karla:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap";
+  "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Karla:wght@400;500;600;700&family=Caveat:wght@600;700&family=Manrope:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap";
 
 export default function RootLayout({
   children,

@@ -27,7 +27,7 @@ function DemosCallout({ lang, leaving }) {
       <svg className="nb-callout-ring" width="130" height="64" viewBox="0 0 130 64" fill="none">
         <path pathLength="1" d="M30 12C60 2 112 6 122 28C130 50 90 60 58 59C26 58 4 48 8 30C11 14 44 6 84 9" />
       </svg>
-      <svg className="nb-callout-arrow" width="90" height="84" viewBox="0 0 90 84" fill="none">
+      <svg className="nb-callout-arrow" width="60" height="56" viewBox="0 0 90 84" fill="none">
         <path pathLength="1" d="M72 78C68 48 48 23 14 12" />
         <path pathLength="1" className="nb-callout-head" d="M23.7 23.4L14 12L28.5 8.3" />
       </svg>
@@ -180,7 +180,7 @@ export default function NavBar({ t, lang, annVisible, annHeight }) {
               )}
               {i === DEMOS_INDEX && showCallout && <DemosCallout lang={lang} leaving={callout === 'leaving'} />}
               {menu.open && (
-                <div className="nb-dropdown">
+                <div className={`nb-dropdown${menu.items.length > 8 ? ' nb-dropdown-grid' : ''}`}>
                   {menu.items.map((item, j) => (
                     <a key={j} href={item.href} onClick={() => setOpenMenu(null)} className="nb-dropdown-link">
                       {item.text}
@@ -235,6 +235,7 @@ export default function NavBar({ t, lang, annVisible, annHeight }) {
           <a href="tel:+16506908587" className="eb-nav-phone nb-phone" aria-label={`${CALL_TEXT[lang] ?? CALL_TEXT.en}: ${PHONE}`}>
             <CallLabel lang={lang} />
           </a>
+          {/* The Onboarding link (to /onboarding/) is hidden until that area is ready to launch */}
           <a href={BOOK_CALL_HREF} data-book className="eb-nav-book nb-book">
             {t.navBookCall}
           </a>
