@@ -16,3 +16,6 @@ export const BOOKING_URL = "https://api.leadconnectorhq.com/widget/booking/Ybs2P
 
 // URL of the ElevateBiz API (use "http://localhost:8000" when testing the API locally)
 export const API_URL = "https://api.elevatebiz.ai";
+
+// GoHighLevel workflow "Website - Business Assessment" (Inbound Webhook): receives the answers of the "Book a demo" pop-up
+export const ASSESSMENT_WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/mr9wWTqxaQs94D58BtaT/webhook-trigger/SMcywWrc2EgMzp1mnMh5";

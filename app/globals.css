@@ -4882,3 +4882,8 @@ chat-widget:not([data-eb-ready]) {
   .hero .container .actions { margin-top: 4px; }
   .hero .container .hero-assure { margin-bottom: 20px; }
 }
+
+/* While a pop-up (booking calendar, Book a demo) is open, the floating chat button would cover it */
+html.eb-modal-open chat-widget {
+  display: none !important;
+}

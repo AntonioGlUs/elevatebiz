@@ -36,12 +36,14 @@ export default function BookingModal({ lang, open, onClose }: Props) {
     const html = document.documentElement;
     const previous = html.style.overflow;
     html.style.overflow = "hidden";
+    html.classList.add("eb-modal-open"); // hides the floating chat button, which would cover the pop-up
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", onKey);
     return () => {
       html.style.overflow = previous;
+      html.classList.remove("eb-modal-open");
       window.removeEventListener("keydown", onKey);
     };
   }, [open, onClose, lang]);

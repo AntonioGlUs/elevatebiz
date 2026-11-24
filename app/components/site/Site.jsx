@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import Lenis from 'lenis'
 import { TEXT, STATS, TOOLS, TEAM_MEMBERS, FAQ_DATA, CHAT_SCRIPT } from '@/lib/content'
 import { EXTRA, SERVICE_PHOTOS } from '@/lib/extra'
@@ -13,6 +13,7 @@ import CookieNotice from '../CookieNotice'
 import { openCookieSettings } from '../cookiePrefs'
 import IntroVideoModal from '../IntroVideoModal'
 import BookingModal from '../BookingModal'
+import DemoModal from '../DemoModal'
 import DemosSheet from './DemosSheet'
 // Chat: GoHighLevel widget (agent Bizzy). The previous n8n chat is still in ../Chatbot; to go back, import it here and render <Chatbot lang={lang} /> instead.
 import GhlChat from '../GhlChat'
@@ -333,6 +334,21 @@ export default function Site({ lang = 'en' }) {
   const [videoOpen, setVideoOpen] = useState(false)
   const [bookOpen, setBookOpen] = useState(false)
   const [demosOpen, setDemosOpen] = useState(false)
+  // "Book a demo": short qualification, then the calendar. Also opened by links to #book-demo (ads, WhatsApp, linktree)
+  const [demoOpen, setDemoOpen] = useState(false)
+  useEffect(() => {
+    const check = () => {
+      if (window.location.hash === '#book-demo') setDemoOpen(true)
+    }
+    check()
+    window.addEventListener('hashchange', check)
+    return () => window.removeEventListener('hashchange', check)
+  }, [])
+  const closeDemo = useCallback(() => {
+    setDemoOpen(false)
+    // Clears #book-demo, so the same link opens it again
+    if (window.location.hash === '#book-demo') history.replaceState(null, '', window.location.pathname + window.location.search)
+  }, [])
   // Every "Book a call" link (marked with data-book) opens the calendar pop-up instead of leaving the page
   useEffect(() => {
     const onClick = (e) => {
@@ -630,8 +646,8 @@ export default function Site({ lang = 'en' }) {
               <a href="/ready-to-scale/" className="btn">
                 {t.heroBtnPrimary}
               </a>
-              {/* Opens the booking calendar pop-up, like every link marked with data-book */}
-              <a href={BOOK_CALL_HREF} data-book className="btn btn-ghost hero-demos-m">
+              {/* Opens the short qualification, then the calendar with the visitor's details filled in */}
+              <a href="#book-demo" onClick={(e) => { e.preventDefault(); setDemoOpen(true) }} className="btn btn-ghost hero-demos-m">
                 {lang === 'es' ? 'Agenda un demo' : 'Book a demo'}
               </a>
             </div>
@@ -1026,6 +1042,7 @@ export default function Site({ lang = 'en' }) {
       <CookieNotice t={t} />
       <IntroVideoModal lang={lang} open={videoOpen} onClose={() => setVideoOpen(false)} />
       <BookingModal lang={lang} open={bookOpen} onClose={() => setBookOpen(false)} />
+      <DemoModal lang={lang} open={demoOpen} onClose={closeDemo} />
       <DemosSheet lang={lang} open={demosOpen} onClose={() => setDemosOpen(false)} />
       {/* The chatbot lives here (not in the root layout) so demo sites can have their own bot */}
       <a href="#top" className={`ft-backtop${atBottom ? ' is-on' : ''}`} aria-label={t.footerBackToTop} title={t.footerBackToTop} tabIndex={atBottom ? 0 : -1}>
